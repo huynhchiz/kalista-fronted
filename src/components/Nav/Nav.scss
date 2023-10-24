@@ -1,0 +1,10 @@
+.nav {
+    position: fixed;
+    width: 500px;
+    height: var(--nav-height);
+    background-color: #fff;
+
+    .nav-introduce {
+        text-align: center;
+    }
+}
