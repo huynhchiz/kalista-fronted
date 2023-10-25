@@ -1,0 +1,49 @@
+.register {
+    width: 100%;
+    height: calc(100vh - var(--nav-height));
+    background-color: var(--background-color-light);
+
+    .register-theme {        
+        width: 100%;
+        height: 100%;  
+    }
+
+    .light-theme {
+        background-color: var(--background-color-light);
+    }
+
+    .dark-theme {
+        background-color: var(--background-color-dark);
+    }
+
+    .register-content {
+        height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .register-form {
+        margin-bottom: 14px;
+        width: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .register-enter-btn {
+        background-color: var(--color-primary);
+        color: var(--text-white);
+        margin-bottom: 12px;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}
+
+.register-dark {
+    background-color: var(--background-color-dark);
+}

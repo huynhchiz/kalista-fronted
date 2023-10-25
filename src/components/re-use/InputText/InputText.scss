@@ -24,9 +24,9 @@
 .input-text-dark {
     border: 1px solid #444444;
     background-color: var(--background-color-dark);
-    color: var(--text-white);    
+    color: rgb(230, 230, 230);
 
     &::placeholder {
-        color: var(--text-white);
+        color: rgb(230, 230, 230);
     }
 }

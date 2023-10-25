@@ -23,7 +23,7 @@ const Login = () => {
                         <InputText placeholder={'Password'} />
                     </div>
 
-                    <BigButton className='login-enter-btn'>ENTER</BigButton>
+                    <BigButton className='login-enter-btn'>ENTER TO LOGIN</BigButton>
                     
                     <BigButton onClick={redirectToIntroduce}>GO BACK</BigButton>
 
