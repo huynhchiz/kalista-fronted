@@ -1,12 +1,25 @@
-import { useState } from 'react'
 import './Introduce.scss'
 
 import logoLight from '../../assets/images/navlogo-white.png'
 import logoDark from '../../assets/images/navlogo-black.png'
 
+import { useSelector } from 'react-redux'
+import { themeSelector } from '../../redux/selector'
+import { useNavigate } from 'react-router-dom'
+import BigButton from '../re-use/BigButton/BigButton'
+
 const Introduce = () => {
-    const [darkTheme, setDarkTheme] = useState(true)
-    
+    const darkTheme = useSelector(themeSelector)
+    const navigate = useNavigate()
+
+    const redirectToLogin = () => {
+        navigate('/login')
+    }
+
+    const redirectToRegister = () => {
+        navigate('/register')
+    }
+
     return (
         <div className='introduce'>
             <div className={`introduce-theme ${darkTheme ? 'dark-theme' : 'light-theme'}`}>
@@ -14,10 +27,10 @@ const Introduce = () => {
                     <div className='introduce-logo'>
                         <img className='introduce-logo-img' src={!darkTheme ? logoLight : logoDark} />
                     </div>
-
-                    <button className={`login-button ${darkTheme && 'button-dark'}`}>LOGIN</button>
-                    <button className={`register-button ${darkTheme && 'button-dark'}`}>REGISTER</button>
-
+                    
+                    <BigButton onClick={redirectToLogin}>LOGIN</BigButton>
+                    <BigButton onClick={redirectToRegister}>REGISTER</BigButton>
+                    
                 </div>
             </div>
         </div>

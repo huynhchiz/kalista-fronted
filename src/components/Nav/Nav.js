@@ -5,13 +5,17 @@ import ThemeToggle from '../re-use/ThemeToggle/ThemeToggle'
 import navWhiteLogo from '../../assets/images/navlogo-white.png'
 import navDarkLogo from '../../assets/images/navlogo-black.png'
 
+import { useSelector } from 'react-redux'
+import { themeSelector } from '../../redux/selector'
+
 const Nav = () => {
+    const darkTheme = useSelector(themeSelector)
     const [logged, setLogged] = useState(false)
 
     return (
-        <div className='nav nav-dark'>
+        <div className={`nav ${darkTheme && 'nav-dark'}`}>
             <div className='nav-logo'>
-                <img className='nav-logo-img' src={navDarkLogo} alt='nav logo'/>
+                <img className='nav-logo-img' src={darkTheme ? navDarkLogo : navWhiteLogo} alt='nav logo'/>
             </div>
 
             {!logged ? <div className='nav-introduce'>

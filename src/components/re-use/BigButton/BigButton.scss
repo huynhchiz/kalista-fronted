@@ -1,0 +1,29 @@
+.big-button {
+    width: 80%;
+    height: 40px;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-primary);
+    text-shadow: 0 0 1px #000;
+    letter-spacing: 4px;
+    background-color: var(--background-color-light);
+    border-radius: 5px;
+    border: 1px solid var(--color-primary);
+
+    +.big-button {
+        margin-top: 16px;
+    }
+
+    &:hover {                
+        color: var(--text-white);
+        background-color: var(--color-primary);
+        cursor: pointer;
+    }
+}
+
+.dark-button {
+    color: var(--color-primary);
+    background-color: var(--background-color-dark);
+    border: 1px solid rgb(65, 62, 62);
+    box-shadow: none;
+}

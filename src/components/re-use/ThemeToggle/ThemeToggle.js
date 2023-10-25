@@ -1,17 +1,21 @@
-import { useEffect, useState } from 'react'
 import './ThemeToggle.scss'
 
-const ThemeToggle = () => {
-    const [darkToggle, setDarkToggle] = useState(false)
+import { useDispatch, useSelector } from 'react-redux'
+import themeSlice from '../../../redux/themeSlice'
+import { themeSelector } from '../../../redux/selector'
 
-    const handleToggle = () => {
-        setDarkToggle(!darkToggle)
+const ThemeToggle = () => {
+    const dispatch = useDispatch()
+    const darkTheme = useSelector(themeSelector)
+
+    const handleToggleTheme = () => {
+        dispatch(themeSlice.actions.toggleTheme())
     }
 
     return (
-        <div className='theme-toggle' onClick={handleToggle}>
-            <div className={!darkToggle ? 'toggle-button-light' : 'toggle-button-dark'} >
-                <div className={!darkToggle ? 'select-button-light': 'select-button-dark'}></div>
+        <div className='theme-toggle' onClick={handleToggleTheme}>
+            <div className={!darkTheme ? 'toggle-button-light' : 'toggle-button-dark'} >
+                <div className={!darkTheme ? 'select-button-light': 'select-button-dark'}></div>
             </div>
         </div>
     )
