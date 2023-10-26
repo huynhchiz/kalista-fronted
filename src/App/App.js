@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import './App.scss'
 import Nav from '../components/Nav/Nav';
 import AppRoutes from '../routes/AppRoutes';
+import LoadPage from '../components/re-use/LoadPage/LoadPage';
 
 function App() {
   const userLogin = useSelector(userLoginSelector)
@@ -24,6 +25,8 @@ function App() {
           <div className='app-header'>
             <Nav />
           </div>
+
+          <LoadPage />
 
           <div className='app-content' >
             <AppRoutes />
