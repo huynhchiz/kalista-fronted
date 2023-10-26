@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const themeSlice = createSlice({
     name: 'theme',
@@ -8,6 +8,12 @@ const themeSlice = createSlice({
             state.darkTheme = !state.darkTheme
         }
     }
+
+
+})
+
+export const fetchUserTheme = createAsyncThunk('theme/fetchUserTheme', async () => {
+    
 })
 
 export default themeSlice

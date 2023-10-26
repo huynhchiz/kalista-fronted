@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import './Register.scss'
 import BigButton from '../re-use/BigButton/BigButton'
 import InputText from '../re-use/InputText/InputText'
-import { registerUser } from '../../service/signService'
+import { registerUserService } from '../../service/signService'
 import { checkValidEmail, checkValidPassword } from '../../checkValidFunctions/index.js'
 import loadPageSlice from '../../redux/loadPageSlice'
 
@@ -94,7 +94,7 @@ const Register = () => {
         if(email && isValidEmail && phone && username && password && isValidPassword && cfPassword && isConfirmPassword) {
             let data = buildDataToRegister()
             
-            let res = await registerUser(data)
+            let res = await registerUserService(data)
             if(res && +res.EC === 0) {
                 dispatch(loadPageSlice.actions.toggleShow())
 
@@ -116,6 +116,11 @@ const Register = () => {
         <div className={`register ${darkTheme && 'register-dark'}`}>
             <div className={`register-theme ${darkTheme ? 'dark-theme' : 'light-theme'}`}>
                 <div className='register-content'>
+                    <div className='form-title'>
+                        <h1 className={`${darkTheme && 'form-title-dark'}`}>
+                            REGISTER
+                        </h1>
+                    </div>
                     <div className='register-form'>
                         <InputText placeholder={'Email'} name={'email'}
                             type='text' value={email}
