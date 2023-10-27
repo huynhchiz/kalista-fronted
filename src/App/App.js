@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 
 import './App.scss'
 import Nav from '../components/Nav/Nav';
+import Menu from '../components/Menu/Menu';
 import AppRoutes from '../routes/AppRoutes';
 import LoadPage from '../components/re-use/LoadPage/LoadPage';
 import { getAccount } from '../redux/userLoginSlice';
@@ -38,6 +39,10 @@ function App() {
 
           <div className='app-content' >
             <AppRoutes />
+          </div>
+
+          <div className='app-footer'>
+            <Menu />
           </div>
 
         </div>

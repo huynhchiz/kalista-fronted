@@ -17,6 +17,15 @@
         .app-content {
             margin-top: var(--nav-height);
         }
+
+        .app-footer {
+            position: fixed;
+            bottom: 0;
+        }
+
+        @media (max-width: 500px) {
+            width: var(--app-width-responsive)
+        }
     }
 
     
