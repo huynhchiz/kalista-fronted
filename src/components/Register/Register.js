@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useImmer } from 'use-immer'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { themeSelector } from '../../redux/selector'
 import { useNavigate } from 'react-router-dom'
 
@@ -9,10 +9,8 @@ import BigButton from '../re-use/BigButton/BigButton'
 import InputText from '../re-use/InputText/InputText'
 import { registerUserService } from '../../service/signService'
 import { checkValidEmail, checkValidPassword } from '../../checkValidFunctions/index.js'
-import loadPageSlice from '../../redux/loadPageSlice'
 
 const Register = () => {
-    const dispatch = useDispatch()
     const darkTheme = useSelector(themeSelector)
     
     const [email, setEmail] = useState('')
@@ -96,14 +94,7 @@ const Register = () => {
             
             let res = await registerUserService(data)
             if(res && +res.EC === 0) {
-                dispatch(loadPageSlice.actions.toggleShow())
-
-                // loading tam
-                setTimeout(() => {
-                    dispatch(loadPageSlice.actions.toggleShow())
-                    navigate('/login')
-                }, 3000)
-
+                navigate('/login')
             } else if (res && +res.EC === -2) {
                 setEmailWarn({...warnInvalid, message: res.EM})
             } else if (res && +res.EC === -3) {

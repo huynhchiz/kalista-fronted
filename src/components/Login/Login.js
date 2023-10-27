@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { useImmer } from 'use-immer'
@@ -8,8 +8,10 @@ import './Login.scss'
 import BigButton from '../re-use/BigButton/BigButton'
 import InputText from '../re-use/InputText/InputText'
 import { loginUserService } from '../../service/signService'
+import userLoginSlice from '../../redux/userLoginSlice'
 
 const Login = () => {
+    const dispatch = useDispatch()
     const darkTheme = useSelector(themeSelector)
     const navigate = useNavigate()
 
@@ -62,7 +64,19 @@ const Login = () => {
 
             if(res && +res.EC === 0) {
                 console.log(res.EM);
-                console.log(res.DT);
+
+                let dataLoginRedux = {
+                    isAuthenticated: true,
+                    accessToken: res.DT.accessToken,
+                    refreshToken: res.DT.refreshToken,
+                    account: {
+                        userGroupWithRoles: res.DT.userGroupWithRoles,
+                        email: res.DT.email,
+                        username: res.DT.username,
+                    },
+                }
+                dispatch(userLoginSlice.actions.login(dataLoginRedux))
+
             } else {
                 setLoginWarning(res.EM)
             }

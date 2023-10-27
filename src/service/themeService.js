@@ -1,9 +1,7 @@
 import axios from '../setup/axios'
-
 import store from '../redux/store'
-let state = store.getState()
 
-console.log(state);
+const state = store.getState()
 
 const getThemeService = (data) => {
     let email = data.userEmail
