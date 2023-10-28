@@ -1,33 +1,26 @@
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { userLoginSelector } from '../redux/selector';
 import { useEffect } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
 import './App.scss'
 import Nav from '../components/Nav/Nav';
 import Menu from '../components/Menu/Menu';
 import AppRoutes from '../routes/AppRoutes';
 import LoadPage from '../components/re-use/LoadPage/LoadPage';
+
 import { getAccount } from '../redux/userLoginSlice';
+import { themeSelector } from '../redux/selector';
 
 function App() {
+  const darkTheme = useSelector(themeSelector)
   const dispatch = useDispatch()
-  const userLogin = useSelector(userLoginSelector)
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    dispatch(getAccount())
-  }, [userLogin])
   
   useEffect(() => {
-    if(userLogin && !userLogin.isAuthenticated) {
-      navigate('/introduce')
-    }
-  }, [userLogin])
-
-  console.log({ userLogin });
+    dispatch(getAccount())
+  }, [])
 
   return (
+    <BrowserRouter>
       <div className="app">
         <div className='app-container'>
 
@@ -37,7 +30,7 @@ function App() {
 
           <LoadPage />
 
-          <div className='app-content' >
+          <div className={`app-content ${darkTheme && 'app-content-dark'}`} >
             <AppRoutes />
           </div>
 
@@ -47,6 +40,8 @@ function App() {
 
         </div>
       </div>
+    </BrowserRouter>
+      
   );
 }
 

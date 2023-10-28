@@ -1,16 +1,26 @@
-import './Introduce.scss'
-
-import logoLight from '../../assets/images/navlogo-white.png'
-import logoDark from '../../assets/images/navlogo-black.png'
-
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { themeSelector } from '../../redux/selector'
 import { useNavigate } from 'react-router-dom'
+
+import './Introduce.scss'
+import logoLight from '../../assets/images/navlogo-white.png'
+import logoDark from '../../assets/images/navlogo-black.png'
 import BigButton from '../re-use/BigButton/BigButton'
 
+import { userLoginSelector } from '../../redux/selector'
+
 const Introduce = () => {
-    const darkTheme = useSelector(themeSelector)
     const navigate = useNavigate()
+
+    const darkTheme = useSelector(themeSelector)
+    const userLogin = useSelector(userLoginSelector)
+
+    useEffect(() => {
+        if(userLogin && userLogin.isAuthenticated) {
+            navigate('/')
+        }
+    }, [userLogin])
 
     const redirectToLogin = () => {
         navigate('/login')

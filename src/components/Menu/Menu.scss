@@ -3,8 +3,6 @@
     justify-content: space-between;
     width: var(--app-width);
     height: var(--footer-height);
-    background-color: var(--background-color-light);
-    border-top: 1px solid #e7e7e7;
 
     @media (max-width: 500px) {
         width: var(--app-width-responsive)
@@ -15,70 +13,82 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: var(--background-color-light);
 
         &:hover {
             cursor: pointer;
-            background-color: var(--color-primary);
+            opacity: 0.8;
         }
     }
     
     .menu-active {
-        box-shadow: 0 -1px 0 var(--background-color-light);
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        border-left: 1px solid #e7e7e7;
-        border-right: 1px solid #e7e7e7;
-    
+        background-color: transparent;
+
         &:hover {
             cursor: unset;
-            background-color: transparent;
+            opacity: 1;
         }
+
         .menu-title {
             margin-bottom: 8px; 
         }
+    }
+    
+    .menu-next {
+        border-top-left-radius: 6px;
+    }
+
+    .menu-prev {
+        border-top-right-radius: 6px;
     }
     
     .menu-title {
         font-size: 20px;
     }
+
+    .menu-feed {
+        border-left: none;
+    }
+
+    .menu-account {
+        border-right: none;
+    }
 }
 
 .menu-dark {
-    background-color: var(--background-color-dark);
-    box-shadow: 0;
-    border-top: 0.5px solid #5f5b5b;
-
     .menu-feed, .menu-explore, .menu-post, .menu-account {
-        // border-left: 1px solid rgb(143, 143, 143);
-
-        &:hover .menu-title {
-            color: var(--text-black);
-        }
+        background-color: var(--background-color-dark);
     }
 
     .menu-active {
-        box-shadow: 0 -1px 0 var(--background-color-dark);
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        border-left: 1px solid #5f5b5b;
-        border-right: 1px solid #5f5b5b;
-    
+        background-color: transparent;
         &:hover {
             cursor: unset;
-            background-color: transparent;
+            opacity: 1;
         }
 
-        &:hover .menu-title {
-            color: var(--color-primary) !important;
-        }
-        
         .menu-title {
             margin-bottom: 8px; 
         }
     }
+
+    .menu-next {
+        border-top-left-radius: 6px;
+    }
     
+    .menu-prev {
+        border-top-right-radius: 6px;
+    }
+
     .menu-title {
         color: var(--color-primary);
     }
-}
+    
+    .menu-feed {
+        border-left: none;
+    }
 
+    .menu-account {
+        border-right: none;
+    }
+}

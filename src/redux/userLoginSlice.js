@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getAccountService, refreshNewToken } from "../service/userService";
-// import { loginUserService } from "../service/signService";
 
 const initUserLogin = {
     isAuthenticated: false,
@@ -33,33 +32,26 @@ const userLoginSlice = createSlice({
                 state.status = 'loading';
             })
             .addCase(getAccount.fulfilled, (state, action) => {
-                state.currentUser = action.payload;
+                state.userLogin = action.payload;
                 state.status = 'idle';
             })
             .addCase(getAccount.rejected, (state, action) => {
-                state.currentUser = initUserLogin;
+                state.userLogin = initUserLogin;
                 state.status = 'idle';
             })
             .addCase(refreshNewAccessToken.pending, (state, action) => {
                 state.status = 'loading';
             })
             .addCase(refreshNewAccessToken.fulfilled, (state, action) => {
-                state.currentUser = action.payload;
+                state.userLogin = action.payload;
                 state.status = 'idle';
             })
             .addCase(refreshNewAccessToken.rejected, (state, action) => {
-                state.currentUser = initUserLogin;
+                state.userLogin = initUserLogin;
                 state.status = 'idle';
             })
     }
 })
-
-// export const loginAccount = createAsyncThunk('userLogin/loginAccount', async (data) => {
-//     let res = await loginUserService(data)
-//     if(res && +res.EC === 0) {
-
-//     }
-// })
 
 export const getAccount = createAsyncThunk('userLogin/getAccount', async () => {
     let res = await getAccountService()

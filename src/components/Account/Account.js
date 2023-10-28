@@ -1,10 +1,10 @@
-import './Home.scss'
+import './Account.scss'
 
 import Post from '../re-use/Post/Post'
 
-const Home = () => {
+const Account = () => {
     return (
-        <div className='home'>
+        <div className='account'>
             <Post />
             <Post />
             <Post />
@@ -13,4 +13,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default Account

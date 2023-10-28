@@ -18,19 +18,13 @@ const Login = () => {
     const [loginValue, setLoginValue] = useState('')
     const [password, setPassword] = useState('')
 
-    const unwarn = {
-        isShow: false,
-        message: ''
-    }
-    const warnUnfilled = {
-        isShow: true,
-        message: 'Unfilled',
-    }
+    const unwarn = { isShow: false, message: '' }
+    const warnUnfilled = { isShow: true, message: 'Unfilled' }
 
     const [loginValueWarn, setLoginValueWarn] = useImmer(unwarn)
     const [passwordWarn, setPasswordWarn] = useImmer(unwarn)
 
-    const [loginWarning, setLoginWarning] = useState('')
+    const [loginWarningMessage, setLoginWarningMessage] = useState('') // warnning message when incorrect login
 
     const redirectToIntroduce = () => {
         navigate('/introduce')
@@ -39,7 +33,7 @@ const Login = () => {
     const handleChangeInputValue = (e, setState, setWarn) => {
         setState(e.target.value)
         setWarn(unwarn)
-        setLoginWarning('')
+        setLoginWarningMessage('')
     }
 
     const handleBlurInput = (e, setWarn) => {
@@ -77,8 +71,10 @@ const Login = () => {
                 }
                 dispatch(userLoginSlice.actions.login(dataLoginRedux))
 
+                navigate('/')
+
             } else {
-                setLoginWarning(res.EM)
+                setLoginWarningMessage(res.EM)
             }
         }
     }
@@ -87,14 +83,16 @@ const Login = () => {
         <div className={`login ${darkTheme && 'login-dark'}`}>
             <div className={`login-theme ${darkTheme ? 'dark-theme' : 'light-theme'}`}>
                 <div className='login-content'>
+
                     <div className='form-title'>
                         <h1 className={`${darkTheme && 'form-title-dark'}`}>
                             LOGIN
                         </h1>
                         <p className='warning-login'>
-                            {loginWarning}
+                            {loginWarningMessage}
                         </p>
                     </div>
+
                     <div className='login-form'>
                         
                         <InputText placeholder={'Email / phone number'} name={'loginValue'}
@@ -110,6 +108,7 @@ const Login = () => {
                             onBlur={e => handleBlurInput(e, setPasswordWarn)}
                             showWarn={passwordWarn.isShow} message={passwordWarn.message}
                         />
+
                     </div>
 
                     <BigButton className='login-enter-btn' onClick={handeLoginUser}>ENTER TO LOGIN</BigButton>
