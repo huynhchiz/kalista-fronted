@@ -1,9 +1,13 @@
 .post {
     width: 100%;
-    height: 85vh;
+    // height: 85vh;
+
+    p {
+        color: var(--text-black)
+    }
 
     + .post {
-        margin-top: 4px;
+        margin-top: 16px;
     }
 
     .post-frame {
@@ -28,11 +32,12 @@
         }
 
         .post-username {
-            margin-left: 4px;
+            margin-left: 8px;
             display: flex;
             align-items: center;
             p {
                 font-size: 16px;
+                font-weight: 600;
             }
         }
     }
@@ -41,12 +46,48 @@
         img {
             width: var(--app-width);
             height: var(--app-width);
+
+            @media (max-width: 500px) {
+                width: var(--app-width-responsive);
+                height: var(--app-width-responsive);
+            }
         }
     }
 
     .post-interactions {
+        padding: 0 4px 0 8px;
         display: flex;
         justify-content: flex-end;
+
+        .post-caption {
+            flex: 1;
+            position: relative;
+            margin-top: 4px;
+            height: 56px;
+            background-color: var(--background-color-light);
+            overflow: hidden;
+
+            .post-caption-opacity {
+                position: absolute;
+                width: 100%;
+                height: 22px;
+                bottom: 0;
+                background-color: var(--background-color-light);
+                opacity: 0.8;
+            }
+
+            p {
+                font-size: 16px;
+            }
+        }
+
+        .post-comments {
+            padding: 4px 12px 12px 12px;
+            margin-left: 8px;
+            font-size: 24px;
+            color: var(--text-black);
+            cursor: pointer;
+        }
 
         .post-like {
             padding: 4px 12px 12px 12px;
@@ -55,13 +96,15 @@
             color: var(--text-black);
             cursor: pointer;
         }
+    }
 
-        .post-comments {
-            padding: 4px 12px 12px 12px;
-            margin-left: 12px;
-            font-size: 24px;
-            color: var(--text-black);
-            cursor: pointer;
+    .post-info {
+        margin-top: 4px;
+        padding: 0 4px 0 8px;
+
+        p {
+            font-size: 12px;
+            margin-top: 4px;
         }
     }
 }
@@ -72,6 +115,14 @@
     }
 
     .post-interactions {
+        .post-caption {
+            background-color: var(--background-color-dark);
+
+            .post-caption-opacity {
+                background-color: var(--background-color-dark);
+            }
+        }
+
         .post-like {
             color: var(--color-primary);
         }

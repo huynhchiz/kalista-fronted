@@ -23,12 +23,17 @@ const Post = () => {
                 </div>
 
                 <div className='post-image'>
-                    <img src='https://i.pinimg.com/564x/aa/af/76/aaaf76d2debe9f9ba4491605bd29454f.jpg' alt='image'/>
+                    <img src='https://i.pinimg.com/564x/aa/af/76/aaaf76d2debe9f9ba4491605bd29454f.jpg' alt='hi'/>
                 </div>
 
                 <div className='post-interactions'>
                     <div className='post-caption'>
-                        <p>hello world</p>
+                            <p>
+                                hello world hello world hello world hello world hello world hello world hello world hello world
+                                hello world hello world hello world hello world hello world hello world hello world hello world
+                                hello world hello world hello world hello world hello world hello world hello world hello world
+                            </p>
+                        <div className='post-caption-opacity'></div>
                     </div>
                     <div className='post-comments'>
                         <FontAwesomeIcon icon={faComments} />
@@ -36,7 +41,11 @@ const Post = () => {
                     <div className='post-like'>
                         <FontAwesomeIcon icon={faThumbsUp} />
                     </div>
-                    
+                </div>
+
+                <div className='post-info'>
+                    <p>100 comments</p>
+                    <p>2 days ago</p>
                 </div>
 
                 

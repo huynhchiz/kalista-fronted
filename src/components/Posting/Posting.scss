@@ -1,5 +1,113 @@
 .posting {
     margin-top: var(--nav-height);
-    margin-bottom: var(--footer-height);
-    padding-top: 4px;
+    width: 100%;
+    height: calc(100vh - var(--nav-height));
+
+    .posting-content {
+        .space {
+            height: 20px;
+        }
+
+        .posting-preview {
+            position: relative;
+            width: var(--app-width);
+            height: var(--app-width);
+            background-color: #f0f0f0;
+
+            img {
+                width: var(--app-width);
+                height: var(--app-width);
+
+                @media (max-width: 500px) {
+                    width: var(--app-width-responsive);
+                    height: var(--app-width-responsive);
+                }
+            }
+
+            video {
+                width: var(--app-width);
+                height: var(--app-width);
+
+                @media (max-width: 500px) {
+                    width: var(--app-width-responsive);
+                    height: var(--app-width-responsive);
+                }
+            }
+
+            @media (max-width: 500px) {
+                width: var(--app-width-responsive);
+                height: var(--app-width-responsive);
+            }
+            
+            .posting-upload {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 68px;
+                opacity: 0.5;
+            }
+
+            .close-preview-btn {
+                position: absolute;
+                top: 4px;
+                right: 6px;
+                font-size: 24px;
+                color: #c0c0c0;
+            }
+        }
+
+        .posting-caption {
+            margin-top: 4px;
+            padding: 0 4px 0 4px;
+
+            textarea {
+                padding: 4px;
+                width: 100%;
+                height: 60px;
+                border: 1px solid #c0c0c0;
+                border-radius: 3px;
+                font-size: 16px;
+
+                &::placeholder {
+                    font-size: 16px;
+                }
+
+                &:focus-visible {
+                    outline: none;
+                }
+            }
+        }
+
+        .posting-button {
+            margin-top: 16px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+    }
+}
+
+.posting-dark {
+    .posting-preview {
+        background-color: #646464 !important;
+
+        .close-preview-btn {
+            color: var(--text-black) !important;
+        }
+    }
+
+    .posting-caption {
+        textarea {
+            background-color: var(--background-color-dark);
+            border-color: #646464 !important;
+            color: var(--text-white);
+
+            &::placeholder {
+                color: var(--text-white)
+            }
+        }
+    }
+
+
 }
