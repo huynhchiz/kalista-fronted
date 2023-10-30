@@ -8,7 +8,7 @@ import { themeSelector } from '../../redux/selector'
 import { useState } from 'react'
 import BigButton from '../re-use/BigButton/BigButton'
 import { uploadImage as uploadImageSV } from '../../service/imageService'
-import axios from 'axios'
+// import axios from 'axios'
 
 const Posting = () => {
     const darkTheme = useSelector(themeSelector)
@@ -65,14 +65,20 @@ const Posting = () => {
 
         const formdata = new FormData()
         if (fileUpload)  formdata.append('image', fileUpload)
+        
+        let res = await uploadImageSV(formdata)
+        if(res && +res.EC === 0) {
+            console.log(res.DT);
+        }
+    
         // let res = await uploadImageSV(formdata)
         // if(res && +res.EC === 0) {
         //     console.log(res.DT);
         // }
 
-        axios.post('http://localhost:3333/api/image/upload', formdata)
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
+        // axios.post('http://localhost:3333/api/image/upload', formdata)
+        //     .then(res => console.log(res))
+        //     .catch(err => console.log(err))
     }
 
     return (
