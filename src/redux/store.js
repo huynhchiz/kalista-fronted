@@ -1,11 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import themeSlice from "./themeSlice";
-import userLoginSlice from "./userLoginSlice";
+
+import userLoginSlice from "../slices/userLoginSlice.js";
+import themeSlice from "../slices/themeSlice.js";
+import loadPageSlice from "../slices/loadPageSlice.js";
+import notiModalSlice from "../slices/notiModalSlice.js";
 
 const store = configureStore({
     reducer: {
         userLogin: userLoginSlice.reducer,
-        theme: themeSlice.reducer,
+        darkTheme: themeSlice.reducer,
+        loadPage: loadPageSlice.reducer,
+        notiModal: notiModalSlice.reducer
     }
 })
 

@@ -8,16 +8,14 @@ import { themeSelector } from '../../redux/selector'
 import { useState } from 'react'
 import BigButton from '../re-use/BigButton/BigButton'
 import { uploadImage as uploadImageSV } from '../../service/imageService'
-// import axios from 'axios'
 
 const Posting = () => {
     const darkTheme = useSelector(themeSelector)
-
     const [file, setFile] = useState({
         src: '',
         type: ''
     })
-    const [fileUpload, setFileUpload] = useState()
+    const [fileUpload, setFileUpload] = useState('')
     const [caption, setCaption] = useState('')
 
     const handleChangeFile = e => {
@@ -35,19 +33,13 @@ const Posting = () => {
                     type: 'image'
                 })
             }
-
-            // const reader = new FileReader();
-            // reader.readAsDataURL(inputFile);
-            // reader.onloadend = () => {
-            //     setFileUpload(reader.result)
-            // }
-
             setFileUpload(inputFile)
         }       
     }
 
     const handleClosePreview = () => {
         setFile('')
+        setFileUpload('')
     }
 
     const handleChangeCaption = e => {
@@ -55,30 +47,13 @@ const Posting = () => {
     }
 
     const uploadImage = async () => {
-        // if(fileUpload) {
-        //     let res = await uploadImageSV(fileUpload)
-        //     if(res && +res.EC === 0) {
-        //         console.log(res.DT);
-        //     }
-        // }
-
-
         const formdata = new FormData()
-        if (fileUpload)  formdata.append('image', fileUpload)
+        formdata.append('image', fileUpload)
         
         let res = await uploadImageSV(formdata)
         if(res && +res.EC === 0) {
             console.log(res.DT);
         }
-    
-        // let res = await uploadImageSV(formdata)
-        // if(res && +res.EC === 0) {
-        //     console.log(res.DT);
-        // }
-
-        // axios.post('http://localhost:3333/api/image/upload', formdata)
-        //     .then(res => console.log(res))
-        //     .catch(err => console.log(err))
     }
 
     return (

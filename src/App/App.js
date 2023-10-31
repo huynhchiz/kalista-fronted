@@ -8,8 +8,9 @@ import Menu from '../components/Menu/Menu';
 import AppRoutes from '../routes/AppRoutes';
 import LoadPage from '../components/re-use/LoadPage/LoadPage';
 
-import { getAccount } from '../redux/userLoginSlice';
+import { getAccount } from '../slices/userLoginSlice';
 import { themeSelector } from '../redux/selector';
+import NotiModal from '../components/re-use/NotiModal/NotiModal';
 
 function App() {
   const darkTheme = useSelector(themeSelector)
@@ -27,6 +28,8 @@ function App() {
           <div className='app-header'>
             <Nav />
           </div>
+
+          <NotiModal />
 
           <LoadPage />
 

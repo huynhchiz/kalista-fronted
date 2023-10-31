@@ -1,6 +1,7 @@
 import axios from 'axios';
-import store from '../redux/store'
-import { refreshNewAccessToken } from '../redux/userLoginSlice';
+
+import store from '../redux/store.js'
+import { refreshNewAccessToken } from '../slices/userLoginSlice.js';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3333';
 
@@ -49,7 +50,6 @@ instance.interceptors.response.use(
          // forbidden (permission related issues)
          case 403: {
             console.log(`You don't have permission to access...`);
-            console.log('403 err: ', error.response.data);
 
             // token expired => refresh token user
             if (+error.response.data.EC === -100) {

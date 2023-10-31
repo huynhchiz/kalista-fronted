@@ -1,17 +1,21 @@
 import { useState } from 'react'
 import { useImmer } from 'use-immer'
-import { useSelector } from 'react-redux'
-import { themeSelector } from '../../redux/selector'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
 import './Register.scss'
 import BigButton from '../re-use/BigButton/BigButton'
 import InputText from '../re-use/InputText/InputText'
+
+import { themeSelector } from '../../redux/selector'
+import loadPageSlice from '../../slices/loadPageSlice'
 import { registerUserService } from '../../service/signService'
 import { checkValidEmail, checkValidPassword } from '../../checkValidFunctions/index.js'
 
 const Register = () => {
+    const dispatch = useDispatch()
     const darkTheme = useSelector(themeSelector)
+    const loadPage = loadPageSlice.actions.toggleLoadPage
     
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
@@ -91,13 +95,19 @@ const Register = () => {
 
         if(email && isValidEmail && phone && username && password && isValidPassword && cfPassword && isConfirmPassword) {
             let data = buildDataToRegister()
-            
+            dispatch(loadPage())
             let res = await registerUserService(data)
+
             if(res && +res.EC === 0) {
+                dispatch(loadPage())
                 navigate('/login')
+
             } else if (res && +res.EC === -2) {
+                dispatch(loadPage())
                 setEmailWarn({...warnInvalid, message: res.EM})
+                
             } else if (res && +res.EC === -3) {
+                dispatch(loadPage())
                 setPhoneWarn({...warnInvalid, message: res.EM})
             }
         }

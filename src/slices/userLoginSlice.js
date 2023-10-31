@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAccountService, refreshNewToken } from "../service/userService";
+
+import { getAccountService, refreshNewToken } from '../service/userService.js'
 
 const initUserLogin = {
     isAuthenticated: false,
@@ -14,7 +15,7 @@ const initUserLogin = {
 
 const userLoginSlice = createSlice({
     name: 'userLogin',
-    initialState: { status: 'idle', userLogin: initUserLogin },
+    initialState: { userLogin: initUserLogin },
     reducers: {
         login: (state, action) => {
             state.userLogin = action.payload;
@@ -28,34 +29,26 @@ const userLoginSlice = createSlice({
     },
     extraReducers: builder => {
         builder
-            .addCase(getAccount.pending, (state, action) => {
-                state.status = 'loading';
-            })
-            .addCase(getAccount.fulfilled, (state, action) => {
-                state.userLogin = action.payload;
-                state.status = 'idle';
-            })
-            .addCase(getAccount.rejected, (state, action) => {
-                state.userLogin = initUserLogin;
-                state.status = 'idle';
-            })
-            .addCase(refreshNewAccessToken.pending, (state, action) => {
-                state.status = 'loading';
-            })
-            .addCase(refreshNewAccessToken.fulfilled, (state, action) => {
-                state.userLogin = action.payload;
-                state.status = 'idle';
-            })
-            .addCase(refreshNewAccessToken.rejected, (state, action) => {
-                state.userLogin = initUserLogin;
-                state.status = 'idle';
-            })
+        .addCase(getAccount.fulfilled, (state, action) => {
+            state.userLogin = action.payload;
+        })
+        .addCase(getAccount.rejected, (state, action) => {
+            state.userLogin = initUserLogin;
+        })
+        
+        .addCase(refreshNewAccessToken.fulfilled, (state, action) => {
+            state.userLogin = action.payload;
+        })
+        .addCase(refreshNewAccessToken.rejected, (state, action) => {
+            state.userLogin = initUserLogin;
+        })
     }
 })
 
 export const getAccount = createAsyncThunk('userLogin/getAccount', async () => {
     let res = await getAccountService()
     if (res && +res.EC === 0) {
+        console.log(res.EM);
         let data = {
             isAuthenticated: true,
             accessToken: res.DT.accessToken,
@@ -74,6 +67,7 @@ export const getAccount = createAsyncThunk('userLogin/getAccount', async () => {
 export const refreshNewAccessToken = createAsyncThunk('userLogin/refreshNewAccessToken', async () => {
     let res = await refreshNewToken()
     if (res && +res.EC === 0) {
+        console.log(res.EM);
         let data = {
             isAuthenticated: true,
             accessToken: res.DT.accessToken,

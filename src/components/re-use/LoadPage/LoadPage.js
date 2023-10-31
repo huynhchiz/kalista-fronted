@@ -2,14 +2,14 @@ import './LoadPage.scss'
 import { Dna } from 'react-loader-spinner'
 
 import { useSelector } from 'react-redux'
-import { themeSelector } from '../../../redux/selector'
+import { themeSelector, loadPageSelector } from '../../../redux/selector'
 
 const LoadPage = () => {
-    const isShow = false
     const darkTheme = useSelector(themeSelector)
+    const isLoading = useSelector(loadPageSelector)
 
     return (
-        isShow &&
+        isLoading &&
         <div className={`load-page ${darkTheme && 'load-page-dark'}`}>
             <div className='dna-load-page'>
                 <Dna

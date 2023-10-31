@@ -15,6 +15,10 @@
     .dna-load-page {
         margin-top: -150px;
     }
+
+    @media (max-width: 500px) {
+        width: var(--app-width-responsive)
+    }
 }
 
 .load-page-dark {

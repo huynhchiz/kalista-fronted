@@ -1,4 +1,4 @@
-import axios from '../setup/axios.js'
+import axios from '../../src/setup/axios.js'
 
 const registerUserService = (data) => {
     let email = data.email

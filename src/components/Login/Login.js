@@ -3,17 +3,21 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { useImmer } from 'use-immer'
 
-import { themeSelector } from '../../redux/selector'
 import './Login.scss'
 import BigButton from '../re-use/BigButton/BigButton'
 import InputText from '../re-use/InputText/InputText'
+
+import { themeSelector } from '../../redux/selector'
+import userLoginSlice from '../../slices/userLoginSlice'
 import { loginUserService } from '../../service/signService'
-import userLoginSlice from '../../redux/userLoginSlice'
+// import loadPageSlice from '../../redux/loadPageSlice'
 
 const Login = () => {
     const dispatch = useDispatch()
     const darkTheme = useSelector(themeSelector)
     const navigate = useNavigate()
+
+    // const loadPage = loadPageSlice.actions.toggleLoadPage
 
     const [loginValue, setLoginValue] = useState('')
     const [password, setPassword] = useState('')
@@ -54,6 +58,9 @@ const Login = () => {
 
         if(loginValue && password) {
             let data = buildDataToLogin()
+
+            // dispatch(loadPage())
+
             let res = await loginUserService(data)
 
             if(res && +res.EC === 0) {
@@ -71,9 +78,11 @@ const Login = () => {
                 }
                 dispatch(userLoginSlice.actions.login(dataLoginRedux))
 
+                // dispatch(loadPage())
                 navigate('/')
 
             } else {
+                // dispatch(loadPage())
                 setLoginWarningMessage(res.EM)
             }
         }
