@@ -1,16 +1,23 @@
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useRef, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleXmark, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { useNavigate } from 'react-router-dom'
 
 import './Posting.scss'
 import BigButton from '../re-use/BigButton/BigButton'
 
 import { themeSelector } from '../../redux/selector'
 import { userLoginSelector } from '../../redux/selector'
-import { uploadImageCloudinary, uploadImage } from '../../service/imageService'
+import loadPageSlice  from '../../slices/loadPageSlice'
+import notiModalSlice from '../../slices/notiModalSlice'
+import { uploadImageCloudinary, uploadImageService } from '../../service/imageService'
 
 const Posting = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const loadPage = loadPageSlice.actions.toggleLoadPage
+
     const darkTheme = useSelector(themeSelector)
     const userLogin = useSelector(userLoginSelector)
 
@@ -22,6 +29,9 @@ const Posting = () => {
     const [caption, setCaption] = useState('')
     const [alt, setAlt] = useState('')
     const [timeUpload, setTimeUpload] = useState('')
+    const [dateUpload, setDateUpload] = useState('')
+
+    const captionRef = useRef()
 
     const handleChangeFile = e => {
         let inputFile = e.target.files[0]
@@ -38,9 +48,13 @@ const Posting = () => {
                     type: 'image'
                 })
             }
+
             setFileUpload(inputFile)
             setAlt(`${userLogin.account.username}_${Date.now().toString()}`)
-            setTimeUpload((new Date().toLocaleString()).toString())
+            setTimeUpload((new Date().toLocaleTimeString()).toString())
+            setDateUpload((new Date().toLocaleDateString().toString()))
+
+            captionRef.current.focus()
         } 
     }
 
@@ -57,9 +71,10 @@ const Posting = () => {
         let data = {}
         data = {
             src: url,
-            caption: caption,
             alt: alt,
+            caption: caption,
             time: timeUpload,
+            date: dateUpload
         }
         return data
     }
@@ -68,14 +83,26 @@ const Posting = () => {
         const formdata = new FormData()
         formdata.append('image', fileUpload)
 
+        dispatch(loadPage())
         let res = await uploadImageCloudinary(formdata)
         if(res && +res.EC === 0) {
-            let data = buildDataToUpload(res.DT)
+            let data = buildDataToUpload(res.DT.toString())
+            let finalRes = await uploadImageService(data)
 
-            let finalRes = await uploadImage(data)
             if(finalRes && +finalRes.EC === 0) {
-                console.log(finalRes.DT);
+                dispatch(notiModalSlice.actions.setMessage(finalRes.EM))
+                dispatch(notiModalSlice.actions.setShow())
+                
+                dispatch(loadPage())
+                navigate('/')
+            } else {
+                dispatch(loadPage())
+                console.log(finalRes.EM);
             }
+
+        } else {
+            dispatch(loadPage())
+            console.log(res.EM);
         }
     }
 
@@ -113,6 +140,7 @@ const Posting = () => {
 
                 <div className='posting-caption'>
                     <textarea 
+                        ref={captionRef}
                         placeholder='Write something about your post...'
                         value={caption}
                         onChange={handleChangeCaption}

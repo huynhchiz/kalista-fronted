@@ -1,26 +1,29 @@
 .noti-modal {
-    z-index: 10000;
+    z-index: 1000;
     width: var(--app-width);
+    height: 100%;
     position: fixed;
-    bottom: var(--footer-height);
-    top: auto;
-    margin-bottom: 20px;
     display: flex;
     justify-content: center;
-    animation:  show-up ease-in 1s forwards, 
-                hide ease-in 1s 2s forwards;
+
+    // background-color: aqua;
     
     @media (max-width: 500px) {
         width: var(--app-width-responsive)
     }
 
     .noti-modal-content {
+        position: absolute;
+        bottom: var(--footer-height);
+        top: auto;
         width: 96%;
         height: 60px;
         background-color: var(--background-color-light);
         box-shadow: 0px -0px 10px 0px rgba(0,0,0,0.5);        
         border-radius: 4px;
         padding: 8px;
+        animation:  show-up ease-in 1s forwards, 
+                    hide ease-in 1s 2s forwards;
     }
 
     p {
@@ -31,11 +34,14 @@
 }
 
 .noti-modal-upper {
-    margin-top: 16px;
-    top: var(--nav-height);
-    bottom: auto;
-    animation:  show-down ease-in 1s forwards,
-                hide ease-in 1s 2s forwards;
+    .noti-modal-content {
+        position: absolute;
+        margin-top: 16px;
+        top: var(--nav-height);
+        bottom: auto;
+        animation:  show-down ease-in 1s forwards,
+                    hide ease-in 1s 2s forwards;
+    }
 }
 
 .noti-modal-dark {
@@ -72,9 +78,9 @@
         opacity: 1;
     }   
     50% {
-        opacity: 0.5;
+        opacity: 0.8;
     }
     100% {
-        opacity: 0;
+        opacity: 0.5;
     }
 }

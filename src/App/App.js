@@ -30,7 +30,7 @@ function App() {
             <Nav />
           </div>
 
-          <NotiModal />
+          <NotiModal top />
 
           <LoadPage />
 

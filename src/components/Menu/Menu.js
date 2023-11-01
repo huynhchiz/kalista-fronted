@@ -1,5 +1,5 @@
-import { useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { themeSelector, userLoginSelector } from '../../redux/selector'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,10 +11,21 @@ const Menu = () => {
     const userLogin = useSelector(userLoginSelector)
     const darkTheme = useSelector(themeSelector)
 
+    const location = useLocation()
+
     const feedRef = useRef()
     const exploreRef = useRef()
     const postingRef = useRef()
     const accountRef = useRef()
+
+    useEffect(() => {
+        if (location.pathname === '/') {
+            let menuActive = document.querySelector('.menu-active')
+            if (menuActive) { menuActive.classList.remove('menu-active') }
+
+            feedRef.current.classList.add('menu-active')
+        }
+    }, [location.pathname])
     
     const handleActiveMenuOption = (ref) => {
         let menuActive = document.querySelector('.menu-active')
