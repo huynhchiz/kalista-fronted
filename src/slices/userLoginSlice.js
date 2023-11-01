@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { getAccountService, refreshNewToken } from '../service/userService.js'
-
 const initUserLogin = {
     isAuthenticated: false,
     accessToken: '',
@@ -45,7 +43,7 @@ const userLoginSlice = createSlice({
     }
 })
 
-export const getAccount = createAsyncThunk('userLogin/getAccount', async () => {
+export const getAccount = createAsyncThunk('userLogin/getAccount', async (getAccountService) => {
     let res = await getAccountService()
     if (res && +res.EC === 0) {
         console.log(res.EM);
@@ -64,7 +62,7 @@ export const getAccount = createAsyncThunk('userLogin/getAccount', async () => {
     return initUserLogin;   
 })
 
-export const refreshNewAccessToken = createAsyncThunk('userLogin/refreshNewAccessToken', async () => {
+export const refreshNewAccessToken = createAsyncThunk('userLogin/refreshNewAccessToken', async (refreshNewToken) => {
     let res = await refreshNewToken()
     if (res && +res.EC === 0) {
         console.log(res.EM);

@@ -11,7 +11,11 @@ const store = configureStore({
         darkTheme: themeSlice.reducer,
         loadPage: loadPageSlice.reducer,
         notiModal: notiModalSlice.reducer
-    }
-})
+    },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+         serializableCheck: false,
+    }),
+});
 
-export default store
+export default store;

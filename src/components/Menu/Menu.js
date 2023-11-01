@@ -19,18 +19,8 @@ const Menu = () => {
     const handleActiveMenuOption = (ref) => {
         let menuActive = document.querySelector('.menu-active')
         if (menuActive) { menuActive.classList.remove('menu-active') }
-        let menuNext = document.querySelector('.menu-next')
-        if (menuNext) { menuNext.classList.remove('menu-next') }
-        let menuPrev = document.querySelector('.menu-prev')
-        if (menuPrev) { menuPrev.classList.remove('menu-prev') }
 
         ref.current.classList.add('menu-active')
-        if (ref === feedRef) { exploreRef.current.classList.add('menu-next') }
-        if (ref === exploreRef) { feedRef.current.classList.add('menu-prev') }
-        if (ref === exploreRef) { postingRef.current.classList.add('menu-next') }
-        if (ref === postingRef) { exploreRef.current.classList.add('menu-prev') }
-        if (ref === postingRef) { accountRef.current.classList.add('menu-next') }
-        if (ref === accountRef) { postingRef.current.classList.add('menu-prev') }
     }
 
     const navigate = useNavigate()
@@ -58,7 +48,7 @@ const Menu = () => {
 
             <div
                 ref={exploreRef}
-                className='menu-explore menu-next'
+                className='menu-explore'
                 onClick={() => handleChangeMenuOption(exploreRef, '/explore')}
             >
                 <p className='menu-title'>

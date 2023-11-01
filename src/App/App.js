@@ -9,6 +9,7 @@ import AppRoutes from '../routes/AppRoutes';
 import LoadPage from '../components/re-use/LoadPage/LoadPage';
 
 import { getAccount } from '../slices/userLoginSlice';
+import { getAccountService } from '../service/userService';
 import { themeSelector } from '../redux/selector';
 import NotiModal from '../components/re-use/NotiModal/NotiModal';
 
@@ -17,7 +18,7 @@ function App() {
   const dispatch = useDispatch()
   
   useEffect(() => {
-    dispatch(getAccount())
+    dispatch(getAccount(getAccountService))
   }, [])
 
   return (

@@ -10,14 +10,14 @@ import InputText from '../re-use/InputText/InputText'
 import { themeSelector } from '../../redux/selector'
 import userLoginSlice from '../../slices/userLoginSlice'
 import { loginUserService } from '../../service/signService'
-// import loadPageSlice from '../../redux/loadPageSlice'
+import loadPageSlice from '../../slices/loadPageSlice'
 
 const Login = () => {
     const dispatch = useDispatch()
     const darkTheme = useSelector(themeSelector)
     const navigate = useNavigate()
 
-    // const loadPage = loadPageSlice.actions.toggleLoadPage
+    const loadPage = loadPageSlice.actions.toggleLoadPage
 
     const [loginValue, setLoginValue] = useState('')
     const [password, setPassword] = useState('')
@@ -59,10 +59,9 @@ const Login = () => {
         if(loginValue && password) {
             let data = buildDataToLogin()
 
-            // dispatch(loadPage())
+            dispatch(loadPage())
 
             let res = await loginUserService(data)
-
             if(res && +res.EC === 0) {
                 console.log(res.EM);
 
@@ -78,11 +77,13 @@ const Login = () => {
                 }
                 dispatch(userLoginSlice.actions.login(dataLoginRedux))
 
-                // dispatch(loadPage())
+                dispatch(loadPage())
+
                 navigate('/')
 
             } else {
-                // dispatch(loadPage())
+                dispatch(loadPage())
+
                 setLoginWarningMessage(res.EM)
             }
         }
