@@ -12,6 +12,7 @@ import { userLoginSelector } from '../../redux/selector'
 import loadPageSlice  from '../../slices/loadPageSlice'
 import notiModalSlice from '../../slices/notiModalSlice'
 import { uploadImageCloudinary, uploadImageService } from '../../service/imageService'
+// import userLoginSlice from '../../slices/userLoginSlice'
 
 const Posting = () => {
     const navigate = useNavigate()
@@ -87,9 +88,15 @@ const Posting = () => {
         let res = await uploadImageCloudinary(formdata)
         if(res && +res.EC === 0) {
             let data = buildDataToUpload(res.DT.toString())
+            
+            // set api to recall if exprired token and refresh success
+            // dispatch(userLoginSlice.actions.setCurrentApi([uploadImageService, data]))
+
             let finalRes = await uploadImageService(data)
 
             if(finalRes && +finalRes.EC === 0) {
+                // dispatch(userLoginSlice.actions.setCurrentApi(null))
+
                 dispatch(notiModalSlice.actions.setMessage(finalRes.EM))
                 dispatch(notiModalSlice.actions.setShow())
                 
@@ -98,11 +105,13 @@ const Posting = () => {
             } else {
                 dispatch(loadPage())
                 console.log(finalRes.EM);
+                navigate('/')
             }
 
         } else {
             dispatch(loadPage())
             console.log(res.EM);
+            navigate('/')
         }
     }
 

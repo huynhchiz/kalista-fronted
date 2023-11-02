@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -17,12 +17,9 @@ import { getAccountService } from '../service/userService';
 
 const AppRoutes = () => {
     const dispatch = useDispatch()
-    const location = useLocation()
     
     useEffect(() => {
-      if (location && location.pathname !== '/introduce') {
-        dispatch(getAccount(getAccountService))
-      }
+      dispatch(getAccount(getAccountService))
     }, [])
 
     return <>

@@ -1,16 +1,37 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import './MyProfile.scss'
-import { themeSelector } from '../../redux/selector'
+import { themeSelector, userLoginSelector } from '../../redux/selector'
 import { uploadImageCloudinary } from '../../service/imageService'
+import { uploadAvatar, getUserAvatar } from '../../service/userService'
+import loadPageSlice from '../../slices/loadPageSlice'
+import notiModalSlice from '../../slices/notiModalSlice'
 
 const MyProfile = () => {
     const dispatch = useDispatch()
+    const loadPage = loadPageSlice.actions.toggleLoadPage
+
     const darkTheme = useSelector(themeSelector)
+    const userLogin = useSelector(userLoginSelector)
+
     const [fileAvatar, setFileAvatar] = useState()
+    const [avatar, setAvatar] = useState()
+
+    const getUserAvatarSV = async () => {
+        let data = { email: userLogin.account.email }
+        
+        let res = await getUserAvatar(data)
+        if (res && +res.EC === 0) {
+            setAvatar(res.DT.avatar)
+        }
+    }
+
+    useEffect(() => {
+        getUserAvatarSV()
+    }, [fileAvatar])
 
     const handleChangeFile = (e) => {
         let inputFile = e.target.files[0]
@@ -19,14 +40,34 @@ const MyProfile = () => {
         }
     }
 
+    const buildDataToUploadAvt = (url) => {
+        let data = {}
+        data = {
+            email: userLogin.account.email,
+            avatar: url
+        }
+        return data
+    }
+
     const handleUploadAvatar = async () => {
         const formdata = new FormData()
         formdata.append('image', fileAvatar)
 
-        // dispatch(loadPage())
+        dispatch(loadPage())
         let res = await uploadImageCloudinary(formdata)
         if(res && +res.EC === 0) {
-            console.log(res.EM);
+            let data = buildDataToUploadAvt(res.DT)
+            let finalRes = await uploadAvatar(data)
+            if (finalRes && +finalRes.EC === 0) {
+                dispatch(notiModalSlice.actions.setMessage(finalRes.EM))
+                dispatch(notiModalSlice.actions.setShow())
+                dispatch(loadPage())
+                setFileAvatar('')
+            } else {
+                dispatch(loadPage())
+            }
+        } else {
+            dispatch(loadPage())
         }
     }
     
@@ -35,18 +76,16 @@ const MyProfile = () => {
             <div className='my-profile-header'>
                 <div className='my-profile-avatar'>
                     {
-                        fileAvatar ?
+                        fileAvatar &&
                         <button className='upload-avatar-btn' onClick={handleUploadAvatar}>
                             Upload
-                        </button> 
-                        :
-                        <></>
+                        </button>
                     }
-
+                    
                     {
-                        fileAvatar ?
+                        fileAvatar || avatar ?
                         <img
-                            src={URL.createObjectURL(fileAvatar)}
+                            src={fileAvatar ? URL.createObjectURL(fileAvatar) : avatar}
                         />
                         :
                         <div className='avatar-upload'>
@@ -65,7 +104,7 @@ const MyProfile = () => {
                 </div>
 
                 <div className='my-profile-info'>
-                    <h3>Huynh Chi</h3>
+                    <h3>{userLogin && userLogin.account.username ? userLogin.account.username : 'unname'}</h3>
 
                     <div className='info-follow'>
                         <p>100 followers</p>

@@ -21,9 +21,9 @@ const userLoginSlice = createSlice({
         logoutUser: (state, action) => {
             state.userLogin = initUserLogin;
         },
-        setCurrentApi: (state, action) => {
-           state.currentApi = action.payload;
-        },
+        // setCurrentApi: (state, action) => {
+        //    state.currentApi = action.payload;
+        // },
     },
     extraReducers: builder => {
         builder
@@ -62,8 +62,8 @@ export const getAccount = createAsyncThunk('userLogin/getAccount', async (getAcc
     return initUserLogin;   
 })
 
-export const refreshNewAccessToken = createAsyncThunk('userLogin/refreshNewAccessToken', async (refreshNewToken) => {
-    let res = await refreshNewToken()
+export const refreshNewAccessToken = createAsyncThunk('userLogin/refreshNewAccessToken', async (refreshTokenSV) => {
+    let res = await refreshTokenSV()
     if (res && +res.EC === 0) {
         console.log(res.EM);
         let data = {
@@ -75,9 +75,14 @@ export const refreshNewAccessToken = createAsyncThunk('userLogin/refreshNewAcces
                 email: res.DT.email,
                 username: res.DT.username,
             },
-        }; 
+        }
+
+        // let recallApi = functionRefresh[1]
+        // if (typeof recallApi === 'function') {
+        //     await recallApi()
+        // }
         return data;
-    };
+    }
     return initUserLogin;
 })
 
