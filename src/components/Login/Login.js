@@ -1,13 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useImmer } from 'use-immer'
 
 import './Login.scss'
 import BigButton from '../re-use/BigButton/BigButton'
 import InputText from '../re-use/InputText/InputText'
 
-import { themeSelector } from '../../redux/selector'
+import { themeSelector, userLoginSelector } from '../../redux/selector'
 import userLoginSlice from '../../slices/userLoginSlice'
 import { loginUserService } from '../../service/signService'
 import loadPageSlice from '../../slices/loadPageSlice'
@@ -15,6 +15,7 @@ import loadPageSlice from '../../slices/loadPageSlice'
 const Login = () => {
     const dispatch = useDispatch()
     const darkTheme = useSelector(themeSelector)
+    const userLogin = useSelector(userLoginSelector)
     const navigate = useNavigate()
 
     const loadPage = loadPageSlice.actions.toggleLoadPage
@@ -29,6 +30,12 @@ const Login = () => {
     const [passwordWarn, setPasswordWarn] = useImmer(unwarn)
 
     const [loginWarningMessage, setLoginWarningMessage] = useState('') // warnning message when incorrect login
+
+    useEffect(() => {
+        if (userLogin && userLogin.isAuthenticated) {
+            navigate('/')
+        }
+    }, [userLogin])
 
     const redirectToIntroduce = () => {
         navigate('/introduce')

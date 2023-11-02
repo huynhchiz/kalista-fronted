@@ -5,8 +5,6 @@
     position: fixed;
     display: flex;
     justify-content: center;
-
-    // background-color: aqua;
     
     @media (max-width: 500px) {
         width: var(--app-width-responsive)
@@ -27,7 +25,7 @@
     }
 
     p {
-        color: var(--text-black);
+        color: var(--color-primary);
         font-size: 16px;
         letter-spacing: 1px;
     }
@@ -48,10 +46,6 @@
     .noti-modal-content {
         background-color: var(--background-color-dark);
         box-shadow: 0px -0px 10px 0px rgba(192, 192, 192, 0.5);  
-    }
-
-    p {
-        color: var(--color-primary)
     }
 }
 

@@ -1,5 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import './App.scss'
@@ -8,18 +7,11 @@ import Menu from '../components/Menu/Menu';
 import AppRoutes from '../routes/AppRoutes';
 import LoadPage from '../components/re-use/LoadPage/LoadPage';
 
-import { getAccount } from '../slices/userLoginSlice';
-import { getAccountService } from '../service/userService';
 import { themeSelector } from '../redux/selector';
 import NotiModal from '../components/re-use/NotiModal/NotiModal';
 
 function App() {
   const darkTheme = useSelector(themeSelector)
-  const dispatch = useDispatch()
-  
-  useEffect(() => {
-    dispatch(getAccount(getAccountService))
-  }, [])
 
   return (
     <BrowserRouter>

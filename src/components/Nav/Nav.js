@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
 import './Nav.scss'
 import ThemeToggle from '../re-use/ThemeToggle/ThemeToggle'
@@ -7,10 +8,20 @@ import navDarkLogo from '../../assets/images/navlogo-black.png'
 
 import { useSelector } from 'react-redux'
 import { themeSelector } from '../../redux/selector'
+import Setting from '../re-use/Setting/Setting'
 
 const Nav = () => {
+    const location = useLocation()
     const darkTheme = useSelector(themeSelector)
-    const [logged, setLogged] = useState(false)
+    const [showToggle, setShowToggle] = useState(false)
+
+    useEffect(() => {
+        if (location.pathname !== '/my-profile') {
+            setShowToggle(true)
+        } else {
+            setShowToggle(false)
+        }
+    }, [location.pathname])
 
     return (
         <div className={`nav ${darkTheme && 'nav-dark'}`}>
@@ -18,14 +29,14 @@ const Nav = () => {
                 <img className='nav-logo-img' src={darkTheme ? navDarkLogo : navWhiteLogo} alt='nav logo'/>
             </div>
 
-            {!logged ? <div className='nav-introduce'>
+            {showToggle ? <div className='nav-toggle'>
                 <div className='toggle-wrapper'>
                     <ThemeToggle />
                 </div>
             </div>
              :
-            <div className='nav-content'>
-
+            <div className='nav-setting'>
+                <Setting />
             </div>}
 
             

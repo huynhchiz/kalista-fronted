@@ -19,10 +19,11 @@ const Menu = () => {
     const accountRef = useRef()
 
     useEffect(() => {
-        if (location.pathname === '/') {
+        if (userLogin.isAuthenticated && location.pathname === '/') {
             let menuActive = document.querySelector('.menu-active')
-            if (menuActive) { menuActive.classList.remove('menu-active') }
-
+            if (menuActive) { 
+                menuActive.classList.remove('menu-active')
+            }
             feedRef.current.classList.add('menu-active')
         }
     }, [location.pathname])
@@ -49,7 +50,7 @@ const Menu = () => {
         <div className={`menu ${darkTheme && 'menu-dark'}`}>
             <div
                 ref={feedRef}
-                className='menu-feed menu-active'
+                className='menu-feed'
                 onClick={() => handleChangeMenuOption(feedRef, '/')}
             >
                 <p className='menu-title'>
@@ -80,7 +81,7 @@ const Menu = () => {
             <div
                 ref={accountRef}
                 className='menu-account'
-                onClick={() => handleChangeMenuOption(accountRef, '/account')}
+                onClick={() => handleChangeMenuOption(accountRef, '/my-profile')}
             >
                 <p className='menu-title'>
                     <FontAwesomeIcon icon={faUser} />

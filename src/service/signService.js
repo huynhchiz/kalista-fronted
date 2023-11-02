@@ -20,6 +20,10 @@ const loginUserService = (data) => {
     })
 }
 
+const logoutUserService = () => {
+    return axios.post('/api/logout')
+}
+
 export {
-    registerUserService, loginUserService
+    registerUserService, loginUserService, logoutUserService
 }

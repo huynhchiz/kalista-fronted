@@ -1,6 +1,6 @@
 .theme-toggle {
-    width: 72px;
-    height: 30px;
+    width: 60px;
+    height: 24px;
 
     .toggle-button-light {
         width: 100%;
@@ -32,8 +32,8 @@
 
     .select-button-light {
         margin-left: 6px;
-        width: 28px;
-        height: 20px;
+        width: 24px;
+        height: 14px;
         border-radius: 30px;
         box-shadow: 1px 2px 3px 1px rgba(0,0,0,0.82);
         background-color: #ebca47;
@@ -41,8 +41,8 @@
 
     .select-button-dark {
         margin-right: 6px;
-        width: 28px;
-        height: 20px;
+        width: 24px;
+        height: 14px;
         border-radius: 30px;
         box-shadow: -1px 2px 3px 1px rgba(0,0,0,0.82);
         background-color: var(--background-color-dark);
