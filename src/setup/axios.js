@@ -1,8 +1,5 @@
 import axios from 'axios';
-
-import store from '../../src/redux/store'
-import { refreshNewAccessToken } from '../slices/userLoginSlice.js';
-import { refreshNewToken } from '../service/userService';
+import { dispatchRefreshToken } from '../dispatchFunctions/dispatchFunctions';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3333';
 
@@ -54,7 +51,7 @@ instance.interceptors.response.use(
 
             // token expired => refresh token user
             if (+error.response.data.EC === -100) {
-               store.dispatch(refreshNewAccessToken(refreshNewToken));
+               dispatchRefreshToken()
                return error.response.data;
             }
 

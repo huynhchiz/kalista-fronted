@@ -14,12 +14,14 @@ import MyProfile from "../components/MyProfile/MyProfile";
 
 import { getAccount } from '../slices/userLoginSlice';
 import { getAccountService } from '../service/userService';
+import { dispatchGetUserAvt } from "../dispatchFunctions/dispatchFunctions";
 
 const AppRoutes = () => {
     const dispatch = useDispatch()
     
     useEffect(() => {
       dispatch(getAccount(getAccountService))
+      dispatchGetUserAvt()
     }, [])
 
     return <>

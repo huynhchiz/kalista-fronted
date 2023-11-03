@@ -9,13 +9,17 @@ const refreshNewToken = () => {
 }
 
 const uploadAvatar = (data) => {
-    let email = data.email
-    let avatar = data.avatar
-    return axios.post('/api/user/avatar/upload', { email, avatar })
+    return axios.post('/api/user/avatar/upload', { avatar: data })
 }
 
-const getUserAvatar = (data) => {
-    return axios.post('/api/user/avatar/read', {email: data})
+const getUserAvatar = () => {
+    return axios.get('/api/user/avatar/read')
 }
 
-export { getAccountService, refreshNewToken, uploadAvatar, getUserAvatar }
+const deleteUserAvatar = () => {
+    return axios.post('/api/user/avatar/delete')
+}
+
+export {
+    getAccountService, refreshNewToken, uploadAvatar, getUserAvatar, deleteUserAvatar
+}

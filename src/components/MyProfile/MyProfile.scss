@@ -50,6 +50,44 @@
                 border-radius: 50%;
                 object-fit: cover;
             }
+
+            .update-avatar {
+                // background-color: aqua;
+                z-index: 10000;
+                position: fixed;
+                width: var(--app-width);
+                height: 100%;
+                top: 0;
+                @media (max-width: 500px) {
+                    width: var(--app-width-responsive);
+                }
+
+                .update-avt-btns {
+                    position: absolute;
+                    top: 60px;
+                    left: 50px;
+                    display: flex;
+                    flex-direction: column;
+                    button  {
+                        width: 64px;
+                        height: 32px;
+                        border: 1px solid #ddd;
+                        background-color: #ddd;
+                        font-size: 16px;
+                    }
+
+                    label {
+                        margin-top: 10px;
+                        width: 64px;
+                        height: 32px;
+                        border: 1px solid #ddd;
+                        background-color: #ddd;
+                        font-size: 16px;
+                        text-align: center;
+                        line-height: 32px;
+                    }
+                }               
+            }
         }
 
         .my-profile-info {

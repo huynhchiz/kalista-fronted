@@ -86,11 +86,8 @@ export const refreshNewAccessToken = createAsyncThunk('userLogin/refreshNewAcces
     return initUserLogin;
 })
 
-export const getUserAvatar = createAsyncThunk('userLogin/getUserAvatar', async (SVandDT) => {
-    let getUserAvatarSV = SVandDT[0]
-    let email = SVandDT[1]
-
-    let res = await getUserAvatarSV(email)
+export const getUserAvatar = createAsyncThunk('userLogin/getUserAvatar', async (getAvtSV) => {
+    let res = await getAvtSV()
     if(res && +res.EC === 0) {
         console.log(res.EM);
         return res.DT.avatar

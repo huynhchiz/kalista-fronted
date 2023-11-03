@@ -1,30 +1,28 @@
 import { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import './MyProfile.scss'
+import YesNoModal from '../re-use/YesNoModal/YesNoModal'
+
 import { themeSelector, userLoginSelector, userLoginAvtSelector } from '../../redux/selector'
 import { uploadImageCloudinary } from '../../service/imageService'
-import { getUserAvatar as getAvatarSV } from '../../service/userService'
-import { uploadAvatar } from '../../service/userService'
-import loadPageSlice from '../../slices/loadPageSlice'
-import notiModalSlice from '../../slices/notiModalSlice'
-import { getUserAvatar } from '../../slices/userLoginSlice'
+import { deleteUserAvatar, uploadAvatar } from '../../service/userService'
+import { dispatchGetUserAvt, dispatchLoadPage, dispatchNoti } from '../../dispatchFunctions/dispatchFunctions'
 
 const MyProfile = () => {
-    const dispatch = useDispatch()
-    const loadPage = loadPageSlice.actions.toggleLoadPage
-
     const darkTheme = useSelector(themeSelector)
     const userLogin = useSelector(userLoginSelector)
     const userAvatar = useSelector(userLoginAvtSelector)
     
     const [fileAvatar, setFileAvatar] = useState()
+    const [showUpdateAvtBtns, setShowUpdateAvtBtns] = useState(false)
+    const [showModalYesno, setShowModalYesno] = useState(false)
 
     useEffect(() => {
         if(userAvatar === '' || !userAvatar) {
-            dispatch(getUserAvatar([getAvatarSV, userLogin.account.email]))
+            dispatchGetUserAvt()
         }
     }, [fileAvatar])
 
@@ -32,58 +30,91 @@ const MyProfile = () => {
         let inputFile = e.target.files[0]
         if (inputFile) {
             setFileAvatar(inputFile)
-        }
-    }
-
-    const buildDataToUploadAvt = (url) => {
-        let data = {}
-        data = {
-            email: userLogin.account.email,
-            avatar: url
-        }
-        return data
+        }        
+        setShowUpdateAvtBtns(false)
     }
 
     const handleUploadAvatar = async () => {
         const formdata = new FormData()
         formdata.append('image', fileAvatar)
 
-        dispatch(loadPage())
+        dispatchLoadPage()
         let res = await uploadImageCloudinary(formdata)
         if(res && +res.EC === 0) {
-            let data = buildDataToUploadAvt(res.DT)
-            let finalRes = await uploadAvatar(data)
+            let finalRes = await uploadAvatar(res.DT)
             if (finalRes && +finalRes.EC === 0) {
-                dispatch(notiModalSlice.actions.setMessage(finalRes.EM))
-                dispatch(notiModalSlice.actions.setShow())
-                dispatch(loadPage())
+                dispatchNoti(finalRes.EM)
+                dispatchGetUserAvt()
                 setFileAvatar('')
+                dispatchLoadPage()
             } else {
-                dispatch(loadPage())
+                dispatchLoadPage()
             }
         } else {
-            dispatch(loadPage())
+            dispatchLoadPage()
+        }
+    }
+
+    const handleSaveDeleteAvt = async () => {
+        dispatchLoadPage()
+        let res = await deleteUserAvatar()
+        if(res && +res.EC === 0) {
+            dispatchLoadPage()
+            dispatchNoti(res.EM)
+            dispatchGetUserAvt()
+            setShowModalYesno(false)
+        } else {
+            dispatchLoadPage()
         }
     }
     
     return (
         <div className={`my-profile ${darkTheme ? 'my-profile-dark' : ''}`}>
             <div className='my-profile-header'>
+                <YesNoModal
+                    show={showModalYesno}
+                    title={'Delete avatar'}
+                    onClickYes={handleSaveDeleteAvt}
+                    onClickCancel={() => {setShowModalYesno(false)}}
+                />
                 <div className='my-profile-avatar'>
-                    {
-                        fileAvatar &&
+                    {fileAvatar &&
                         <button className='upload-avatar-btn' onClick={handleUploadAvatar}>
                             Upload
-                        </button>
-                    }
+                        </button>}
                     
-                    {
-                        fileAvatar || userAvatar ?
-                        <img
-                            src={fileAvatar ? URL.createObjectURL(fileAvatar) : userAvatar}
-                        />
-                        :
-                        <div className='avatar-upload'>
+                    {fileAvatar || userAvatar ?
+                        (<>
+                            <img
+                                src={fileAvatar ? URL.createObjectURL(fileAvatar) : userAvatar}
+                                onClick={() => {setShowUpdateAvtBtns(true)}}
+                            />
+                            {showUpdateAvtBtns &&
+                                <div className='update-avatar' onClick={e => {
+                                    setShowUpdateAvtBtns(false)
+                                }}>
+                                    <div className='update-avt-btns' onClick={e => e.stopPropagation()}>
+                                        {/* delete avt */}
+                                        <button
+                                            onClick={() => {
+                                                setShowUpdateAvtBtns(false)
+                                                setShowModalYesno(true)
+                                            }}
+                                        >
+                                            Delete
+                                        </button>
+
+                                        {/* change avt */}
+                                        <label htmlFor='change-file-avt'>
+                                            Change
+                                        </label>
+                                        <input hidden type='file' accept='image/*' id='change-file-avt' 
+                                                onChange={handleChangeFile}/>
+
+                                    </div>
+                                </div>}
+                        </>) :
+                        (<div className='avatar-upload'>
                             <label className='icon-upload' htmlFor='avatar-upload-file'>
                                 <FontAwesomeIcon icon={faPlus} />
                             </label>
@@ -91,11 +122,11 @@ const MyProfile = () => {
                                 hidden
                                 id='avatar-upload-file'
                                 type='file'
+                                accept="image/*"
                                 name="upload-file-avatar"
                                 onChange={handleChangeFile}
                             />
-                        </div>
-                    }
+                        </div>)}
                 </div>
 
                 <div className='my-profile-info'>
@@ -112,6 +143,7 @@ const MyProfile = () => {
 
             </div>
 
+            
 
             <div className='my-profile-content'>
 

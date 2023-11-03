@@ -1,15 +1,14 @@
+import {  useSelector } from 'react-redux'
 import './ThemeToggle.scss'
 
-import { useDispatch, useSelector } from 'react-redux'
-import themeSlice from '../../../slices/themeSlice'
 import { themeSelector } from '../../../redux/selector'
+import { dispatchToggleTheme } from '../../../dispatchFunctions/dispatchFunctions'
 
 const ThemeToggle = () => {
-    const dispatch = useDispatch()
     const darkTheme = useSelector(themeSelector)
 
     const handleToggleTheme = () => {
-        dispatch(themeSlice.actions.toggleTheme())
+        dispatchToggleTheme()
     }
 
     return (

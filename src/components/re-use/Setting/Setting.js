@@ -1,26 +1,23 @@
 import { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faBars } from '@fortawesome/free-solid-svg-icons'
 
 import './Setting.scss'
 import BigButton from '../BigButton/BigButton'
 import { themeSelector } from '../../../redux/selector'
-import userLoginSlice from '../../../slices/userLoginSlice'
-import notiModalSlice from '../../../slices/notiModalSlice'
 import { logoutUserService } from '../../../service/signService'
 
+import { dispatchLogout } from '../../../dispatchFunctions/dispatchFunctions'
+
 const Setting = () => {
-    const dispatch = useDispatch()
     const darkTheme = useSelector(themeSelector)
     const [showSetting, setShowSetting] = useState(false)
 
     const handleLogout = async () => {
         let res = await logoutUserService()
         if(res && +res.EC === 0) {
-            dispatch(notiModalSlice.actions.setShow())
-            dispatch(notiModalSlice.actions.setMessage('Log out success!'))
-            dispatch(userLoginSlice.actions.logoutUser())
+            dispatchLogout()
         }
     }
 

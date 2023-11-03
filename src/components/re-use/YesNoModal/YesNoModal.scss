@@ -1,0 +1,74 @@
+.yesno-modal {
+    z-index: 1000;
+    width: var(--app-width);
+    height: 100%;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    
+    @media (max-width: 500px) {
+        width: var(--app-width-responsive)
+    }
+
+    .yesno-modal-content {
+        position: absolute;
+        padding: 16px;
+        width: 300px;
+        top: var(--nav-height);
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #ddd;
+        border-radius: 3px;
+        animation: shows ease-in 0.5s forwards;
+
+        .yesno-title {
+            display: flex;
+            justify-content: center;
+
+            p {
+                color: var(--text-black);
+                font-size: 18px;
+                font-weight: 600;
+            }
+        }
+
+        .yesno-buttons {
+            margin-top: 16px;
+            display: flex;
+            justify-content: space-evenly;
+
+            .yes-btn {
+                width: 120px;
+            }
+
+            .no-btn {
+                margin-top: 0;
+                width: 120px;
+            }
+        }
+    }
+}
+
+.yesno-modal-dark {
+    .yesno-modal-content {
+        background-color: #4d4d4d;
+
+        p {
+            color: var(--color-primary) !important;
+        }
+    }
+}
+
+@keyframes shows {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

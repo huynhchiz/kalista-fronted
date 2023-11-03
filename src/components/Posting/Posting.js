@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleXmark, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
@@ -9,15 +9,11 @@ import BigButton from '../re-use/BigButton/BigButton'
 
 import { themeSelector } from '../../redux/selector'
 import { userLoginSelector } from '../../redux/selector'
-import loadPageSlice  from '../../slices/loadPageSlice'
-import notiModalSlice from '../../slices/notiModalSlice'
 import { uploadImageCloudinary, uploadImageService } from '../../service/imageService'
-// import userLoginSlice from '../../slices/userLoginSlice'
+import { dispatchLoadPage, dispatchNoti } from '../../dispatchFunctions/dispatchFunctions'
 
 const Posting = () => {
     const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const loadPage = loadPageSlice.actions.toggleLoadPage
 
     const darkTheme = useSelector(themeSelector)
     const userLogin = useSelector(userLoginSelector)
@@ -84,32 +80,25 @@ const Posting = () => {
         const formdata = new FormData()
         formdata.append('image', fileUpload)
 
-        dispatch(loadPage())
+        dispatchLoadPage()
         let res = await uploadImageCloudinary(formdata)
         if(res && +res.EC === 0) {
             let data = buildDataToUpload(res.DT.toString())
-            
-            // set api to recall if exprired token and refresh success
-            // dispatch(userLoginSlice.actions.setCurrentApi([uploadImageService, data]))
-
             let finalRes = await uploadImageService(data)
 
             if(finalRes && +finalRes.EC === 0) {
-                // dispatch(userLoginSlice.actions.setCurrentApi(null))
-
-                dispatch(notiModalSlice.actions.setMessage(finalRes.EM))
-                dispatch(notiModalSlice.actions.setShow())
-                
-                dispatch(loadPage())
+                dispatchNoti(finalRes.EM)
+                dispatchLoadPage()
                 navigate('/')
+
             } else {
-                dispatch(loadPage())
+                dispatchLoadPage()
                 console.log(finalRes.EM);
                 navigate('/')
             }
 
         } else {
-            dispatch(loadPage())
+            dispatchLoadPage()
             console.log(res.EM);
             navigate('/')
         }
@@ -139,6 +128,7 @@ const Posting = () => {
                             <input  
                                 id='upload-file'
                                 type='file'
+                                accept='image/*, video/*'
                                 name="upload-file"
                                 hidden 
                                 onChange={handleChangeFile}

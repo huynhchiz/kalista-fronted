@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useImmer } from 'use-immer'
@@ -8,17 +8,13 @@ import BigButton from '../re-use/BigButton/BigButton'
 import InputText from '../re-use/InputText/InputText'
 
 import { themeSelector, userLoginSelector } from '../../redux/selector'
-import userLoginSlice from '../../slices/userLoginSlice'
 import { loginUserService } from '../../service/signService'
-import loadPageSlice from '../../slices/loadPageSlice'
+import { dispatchLogin, dispatchLoadPage, dispatchNoti } from '../../dispatchFunctions/dispatchFunctions'
 
 const Login = () => {
-    const dispatch = useDispatch()
     const darkTheme = useSelector(themeSelector)
     const userLogin = useSelector(userLoginSelector)
     const navigate = useNavigate()
-
-    const loadPage = loadPageSlice.actions.toggleLoadPage
 
     const [loginValue, setLoginValue] = useState('')
     const [password, setPassword] = useState('')
@@ -65,13 +61,10 @@ const Login = () => {
 
         if(loginValue && password) {
             let data = buildDataToLogin()
-
-            dispatch(loadPage())
-
+            dispatchLoadPage()
             let res = await loginUserService(data)
             if(res && +res.EC === 0) {
                 console.log(res.EM);
-
                 let dataLoginRedux = {
                     isAuthenticated: true,
                     accessToken: res.DT.accessToken,
@@ -82,15 +75,13 @@ const Login = () => {
                         username: res.DT.username,
                     },
                 }
-                dispatch(userLoginSlice.actions.login(dataLoginRedux))
-
-                dispatch(loadPage())
-
+                dispatchLogin(dataLoginRedux)
+                dispatchLoadPage()
+                dispatchNoti('Login success!')
                 navigate('/')
 
             } else {
-                dispatch(loadPage())
-
+                dispatchLoadPage()
                 setLoginWarningMessage(res.EM)
             }
         }
