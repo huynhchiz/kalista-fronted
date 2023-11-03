@@ -13,17 +13,15 @@ const initUserLogin = {
 
 const userLoginSlice = createSlice({
     name: 'userLogin',
-    initialState: { userLogin: initUserLogin },
+    initialState: { userLogin: initUserLogin, userAvatar: '' },
     reducers: {
         login: (state, action) => {
             state.userLogin = action.payload;
         },
         logoutUser: (state, action) => {
             state.userLogin = initUserLogin;
+            state.userAvatar = ''
         },
-        // setCurrentApi: (state, action) => {
-        //    state.currentApi = action.payload;
-        // },
     },
     extraReducers: builder => {
         builder
@@ -39,6 +37,13 @@ const userLoginSlice = createSlice({
         })
         .addCase(refreshNewAccessToken.rejected, (state, action) => {
             state.userLogin = initUserLogin;
+        })
+
+        .addCase(getUserAvatar.fulfilled, (state, action) => {
+            state.userAvatar = action.payload;
+        })
+        .addCase(getUserAvatar.rejected, (state, action) => {
+            state.userAvatar = '';
         })
     }
 })
@@ -76,14 +81,22 @@ export const refreshNewAccessToken = createAsyncThunk('userLogin/refreshNewAcces
                 username: res.DT.username,
             },
         }
-
-        // let recallApi = functionRefresh[1]
-        // if (typeof recallApi === 'function') {
-        //     await recallApi()
-        // }
         return data;
     }
     return initUserLogin;
+})
+
+export const getUserAvatar = createAsyncThunk('userLogin/getUserAvatar', async (SVandDT) => {
+    let getUserAvatarSV = SVandDT[0]
+    let email = SVandDT[1]
+
+    let res = await getUserAvatarSV(email)
+    if(res && +res.EC === 0) {
+        console.log(res.EM);
+        return res.DT.avatar
+    }
+
+    return ''
 })
 
 export default userLoginSlice

@@ -4,11 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import './MyProfile.scss'
-import { themeSelector, userLoginSelector } from '../../redux/selector'
+import { themeSelector, userLoginSelector, userLoginAvtSelector } from '../../redux/selector'
 import { uploadImageCloudinary } from '../../service/imageService'
-import { uploadAvatar, getUserAvatar } from '../../service/userService'
+import { getUserAvatar as getAvatarSV } from '../../service/userService'
+import { uploadAvatar } from '../../service/userService'
 import loadPageSlice from '../../slices/loadPageSlice'
 import notiModalSlice from '../../slices/notiModalSlice'
+import { getUserAvatar } from '../../slices/userLoginSlice'
 
 const MyProfile = () => {
     const dispatch = useDispatch()
@@ -16,21 +18,14 @@ const MyProfile = () => {
 
     const darkTheme = useSelector(themeSelector)
     const userLogin = useSelector(userLoginSelector)
-
+    const userAvatar = useSelector(userLoginAvtSelector)
+    
     const [fileAvatar, setFileAvatar] = useState()
-    const [avatar, setAvatar] = useState()
-
-    const getUserAvatarSV = async () => {
-        let data = { email: userLogin.account.email }
-        
-        let res = await getUserAvatar(data)
-        if (res && +res.EC === 0) {
-            setAvatar(res.DT.avatar)
-        }
-    }
 
     useEffect(() => {
-        getUserAvatarSV()
+        if(userAvatar === '' || !userAvatar) {
+            dispatch(getUserAvatar([getAvatarSV, userLogin.account.email]))
+        }
     }, [fileAvatar])
 
     const handleChangeFile = (e) => {
@@ -83,9 +78,9 @@ const MyProfile = () => {
                     }
                     
                     {
-                        fileAvatar || avatar ?
+                        fileAvatar || userAvatar ?
                         <img
-                            src={fileAvatar ? URL.createObjectURL(fileAvatar) : avatar}
+                            src={fileAvatar ? URL.createObjectURL(fileAvatar) : userAvatar}
                         />
                         :
                         <div className='avatar-upload'>
