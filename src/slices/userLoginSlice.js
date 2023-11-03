@@ -17,10 +17,12 @@ const userLoginSlice = createSlice({
     reducers: {
         login: (state, action) => {
             state.userLogin = action.payload;
+            localStorage.setItem('checkLogin', JSON.stringify(true))
         },
         logoutUser: (state, action) => {
             state.userLogin = initUserLogin;
             state.userAvatar = ''
+            localStorage.setItem('checkLogin', JSON.stringify(false))
         },
     },
     extraReducers: builder => {

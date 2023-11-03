@@ -94,13 +94,11 @@ const Posting = () => {
             } else {
                 dispatchLoadPage()
                 console.log(finalRes.EM);
-                navigate('/')
             }
 
         } else {
             dispatchLoadPage()
             console.log(res.EM);
-            navigate('/')
         }
     }
 

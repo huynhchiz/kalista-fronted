@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 
 import Introduce from "../components/Introduce/Introduce";
 import Login from "../components/Login/Login";
@@ -12,17 +11,17 @@ import Explore from "../components/Explore/Explore";
 import Posting from "../components/Posting/Posting";
 import MyProfile from "../components/MyProfile/MyProfile";
 
-import { getAccount } from '../slices/userLoginSlice';
-import { getAccountService } from '../service/userService';
-import { dispatchGetUserAvt } from "../dispatchFunctions/dispatchFunctions";
+import { dispatchGetUserAvt, dispatchGetAccount } from "../dispatchFunctions/dispatchFunctions";
 
 const AppRoutes = () => {
-    const dispatch = useDispatch()
+    let checkLogin = JSON.parse(localStorage.getItem('checkLogin'))
     
     useEffect(() => {
-      dispatch(getAccount(getAccountService))
-      dispatchGetUserAvt()
-    }, [])
+        if (checkLogin === true) {
+            dispatchGetAccount()
+            dispatchGetUserAvt()
+        }
+    }, [checkLogin])
 
     return <>
         <Routes>
