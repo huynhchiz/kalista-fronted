@@ -4,8 +4,13 @@
     height: calc(100vh - var(--nav-height));
 
     .posting-content {
-        .space {
-            height: 20px;
+        .posting-title {
+            padding: 16px;
+            text-align: center;
+            h3 {
+                font-size: 24px;
+                color: #787878;
+            }
         }
 
         .posting-preview {
@@ -89,6 +94,15 @@
 }
 
 .posting-dark {
+    .posting-content {
+        .posting-title {
+            h3 {
+                opacity: 0.8;
+                color: var(--color-primary) !important;
+            }
+        }
+    }
+
     .posting-preview {
         background-color: #646464 !important;
 
@@ -104,7 +118,8 @@
             color: var(--text-white);
 
             &::placeholder {
-                color: var(--text-white)
+                color: var(--text-white);
+                opacity: 0.8;
             }
         }
     }

@@ -132,7 +132,9 @@ const Posting = () => {
     return (
         <div className={`posting ${darkTheme && 'posting-dark'}`}>
             <div className='posting-content'>
-                <div className='space'></div>
+                <div className='posting-title'>
+                    <h3>Upload your photo or video</h3>
+                </div>
 
                 <div className='posting-preview'>
                     {
