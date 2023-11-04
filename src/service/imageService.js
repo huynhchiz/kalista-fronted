@@ -16,4 +16,4 @@ const uploadImageService = (data) => {
 
 export {
     uploadImageCloudinary, uploadImageService
- }
+}

@@ -11,6 +11,7 @@ import { themeSelector } from '../../redux/selector'
 import { userLoginSelector } from '../../redux/selector'
 import { uploadImageCloudinary, uploadImageService } from '../../service/imageService'
 import { dispatchLoadPage, dispatchNoti } from '../../dispatchFunctions/dispatchFunctions'
+import { uploadVideoCloudinary, uploadVideoService } from '../../service/videoService'
 
 const Posting = () => {
     const navigate = useNavigate()
@@ -102,6 +103,32 @@ const Posting = () => {
         }
     }
 
+    const uploadVideo = async () => {
+        const formdata = new FormData()
+        formdata.append('video', fileUpload)
+
+        dispatchLoadPage()
+        let res = await uploadVideoCloudinary(formdata)
+        if(res && +res.EC === 0) {
+            let data = buildDataToUpload(res.DT.toString())
+            let finalRes = await uploadVideoService(data)
+
+            if(finalRes && +finalRes.EC === 0) {
+                dispatchNoti(finalRes.EM)
+                dispatchLoadPage()
+                navigate('/')
+
+            } else {
+                dispatchLoadPage()
+                console.log(finalRes.EM);
+            }
+
+        } else {
+            dispatchLoadPage()
+            console.log(res.EM);
+        }
+    }
+
     return (
         <div className={`posting ${darkTheme && 'posting-dark'}`}>
             <div className='posting-content'>
@@ -144,12 +171,20 @@ const Posting = () => {
                     />
                 </div>
 
-                {filePreview.src ?
-                    <div className='posting-button'>
-                        <BigButton onClick={uploadImage}>SHARE POST</BigButton>
-                    </div>
-                    : 
-                    <></>
+                {filePreview.src &&
+                <>
+                    {   filePreview.type === 'image' ?
+                        <div className='posting-button'>
+                            <BigButton onClick={uploadImage}>SHARE IMAGE</BigButton>
+                        </div>
+                        : 
+                        filePreview.type === 'video' &&
+                        <div className='posting-button'>
+                            <BigButton onClick={uploadVideo}>SHARE VIDEO</BigButton>
+                        </div>
+                    }
+                
+                </>
                 }
             </div>
         </div>

@@ -5,6 +5,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import './MyProfile.scss'
 import YesNoModal from '../re-use/YesNoModal/YesNoModal'
+import ProfilePosts from '../re-use/ProfilePosts/ProfilePosts'
 
 import { themeSelector, userLoginSelector, userLoginAvtSelector } from '../../redux/selector'
 import { uploadImageCloudinary } from '../../service/imageService'
@@ -146,7 +147,7 @@ const MyProfile = () => {
             
 
             <div className='my-profile-content'>
-
+                <ProfilePosts />
             </div>
 
 
