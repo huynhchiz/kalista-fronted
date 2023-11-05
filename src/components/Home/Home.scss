@@ -2,4 +2,48 @@
     margin-top: var(--nav-height);
     margin-bottom: var(--footer-height);
     padding-top: 4px;
+    background-color: var(--background-color-light);
+
+    .home-footer {
+        margin-top: 10px;
+        width: 100%;
+        height: 34px;
+        text-align: center;
+
+        p {
+            line-height: 34px;
+            animation: loading ease-in 1s infinite;
+        }
+
+        .dark {
+            color: var(--text-white)
+        }
+    }
+}
+
+.home-dark {
+    background-color: var(--background-color-dark) !important;
+}
+
+@keyframes loading {
+    0% {
+        opacity: 0.2;
+    }
+
+    25% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 0.2;
+    }
+
 }

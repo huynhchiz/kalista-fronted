@@ -52,7 +52,6 @@ instance.interceptors.response.use(
             // token expired => refresh token user
             if (+error.response.data.EC === -100) {
                dispatchRefreshToken()
-               dispatchGetUserAvt()
                return error.response.data;
             }
 

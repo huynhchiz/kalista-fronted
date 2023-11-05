@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { useEffect } from 'react';
 
 import Introduce from "../components/Introduce/Introduce";
@@ -14,6 +14,7 @@ import MyProfile from "../components/MyProfile/MyProfile";
 import { dispatchGetUserAvt, dispatchGetAccount } from "../dispatchFunctions/dispatchFunctions";
 
 const AppRoutes = () => {
+    const location = useLocation()
     let checkLogin = JSON.parse(localStorage.getItem('checkLogin'))
     
     useEffect(() => {
@@ -22,6 +23,13 @@ const AppRoutes = () => {
             dispatchGetUserAvt()
         }
     }, [checkLogin])
+
+    useEffect(() => {
+        if(location.pathname === '/my-profile') {
+            window.scrollTo(0, 0)
+        }
+    }, [location.pathname])
+
 
     return <>
         <Routes>

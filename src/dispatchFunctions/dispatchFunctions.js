@@ -41,6 +41,7 @@ const dispatchToggleTheme = () => {
     store.dispatch(themeSlice.actions.toggleTheme())
 }
 
+
 export {
     dispatchLogin,
     dispatchLogout,
@@ -49,5 +50,5 @@ export {
     dispatchGetAccount,
     dispatchRefreshToken,
     dispatchGetUserAvt,
-    dispatchToggleTheme
+    dispatchToggleTheme,
 }

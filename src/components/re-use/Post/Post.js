@@ -1,13 +1,16 @@
 import './Post.scss'
+import BigButton from '../BigButton/BigButton'
 
 import { useSelector } from 'react-redux'
-import { themeSelector } from '../../../redux/selector'
+import { themeSelector, userLoginSelector } from '../../../redux/selector'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComments, faPlay, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 import { useRef, useState } from 'react'
+import { followSV } from '../../../service/followService'
 
-const Post = ({ src, type, alt, caption, date, username, avatar }) => {
+const Post = ({ src, type, alt, caption, date, username, email, avatar }) => {
     const darkTheme = useSelector(themeSelector)
+    const userLogin = useSelector(userLoginSelector)
 
     const [playVideo, setPlayVideo] = useState(false)
     const [seeMoreCaption, setSeeMoreCaption] = useState(false)
@@ -30,6 +33,13 @@ const Post = ({ src, type, alt, caption, date, username, avatar }) => {
         }
     }
 
+    const handleFollow = async () => {
+        let res = await followSV(email)
+        if(res && +res.EC === 0) {
+            console.log(res.EM);
+        }
+    }
+
     return (
         <div className={`post ${darkTheme && 'post-dark'}`}>
             <div className='post-frame'>
@@ -42,6 +52,17 @@ const Post = ({ src, type, alt, caption, date, username, avatar }) => {
                     <div className='post-username'>
                         <p>{username}</p>
                     </div>
+
+                    {
+                        userLogin.account.email !== email ? 
+                        <div className='post-follow-btn'>
+                            <BigButton
+                                className={'follow-button'}
+                                onClick={handleFollow}
+                            >Follow</BigButton>
+                        </div> : <></>
+                    }
+                    
                 </div>
 
                 <div className='post-content'>

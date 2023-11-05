@@ -1,25 +1,58 @@
-import './Home.scss'
-
-import Post from '../re-use/Post/Post'
 import { useEffect, useState } from 'react'
-import { getAllPosts } from '../../service/postService'
+import { Waypoint } from 'react-waypoint'
+import { useSelector } from 'react-redux'
+
+import './Home.scss'
+import Post from '../re-use/Post/Post'
+
+import { getFollowingPosts } from '../../service/postService'
+import { themeSelector, userLoginSelector, postsSelector } from '../../redux/selector'
+import { dispatchGetExplorePosts, dispatchGetHomePosts, dispatchGetUserPosts } from "../../dispatchFunctions/dispatchPosts";
 
 const Home = () => {
-    const [posts, setPosts] = useState([])
+    const darkTheme = useSelector(themeSelector)
+    const userLogin = useSelector(userLoginSelector)
+    const posts = useSelector(postsSelector)
+
+    const [postsHome, setPostsHome] = useState(posts.homePosts)
+    const [limit, setLimit] = useState(0)
+    const [fullPost, setFullPost] = useState(false)
+
+    const handleAddLimit = () => {
+        let condition = (+postsHome.length < +limit - 5)
+        if (!condition) {
+            setLimit(limit => limit + 5)
+        } else if (condition) {
+            setFullPost(true)
+        }
+    }
+    
+    useEffect(() => {
+        if(userLogin && userLogin.isAuthenticated) {
+            dispatchGetHomePosts(5)
+            dispatchGetExplorePosts(5)
+            dispatchGetUserPosts(userLogin.account.email, 15)
+        }
+    }, [])
+
     const fetchAllPost = async () => {
-        let res = await getAllPosts()
+        let res = await getFollowingPosts(limit)
         if (res && +res.EC === 0) {
-            setPosts(res.DT)
+            setPostsHome(res.DT)
         }
     }
 
     useEffect(() => {
-        fetchAllPost()
-    }, [])
+        if(limit > 0) {
+            fetchAllPost()
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [limit])
+
 
     return (
-        <div className='home'>
-            {posts && posts.map(post => (
+        <div className={`home ${darkTheme ? 'home-dark' : ''}`}>
+            {postsHome && postsHome.map(post => (
                 <Post
                     key={post.id}
                     src={post.src}
@@ -28,9 +61,26 @@ const Home = () => {
                     caption={post.caption}
                     date={post.date}
                     username={post.User.username}
+                    email={post.User.email}
                     avatar={post.User.avatar}
                 />
             ))}
+            <div className='home-footer'>
+                <Waypoint
+                    onEnter={handleAddLimit}
+                />
+                
+                {
+                    fullPost ?
+                    <p className={darkTheme ? 'dark' : ''}>Nothing new...</p>
+                    :
+                    <p className={darkTheme ? 'dark' : ''}
+                        onClick={fetchAllPost}
+                    >{
+                        postsHome.length > 0 ? 'Loading more posts...' : 'Click to see more posts'
+                    }</p>
+                }
+            </div>
         </div>
     )
 }

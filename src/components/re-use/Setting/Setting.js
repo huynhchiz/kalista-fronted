@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faBars } from '@fortawesome/free-solid-svg-icons'
@@ -12,8 +12,16 @@ import { dispatchLogout } from '../../../dispatchFunctions/dispatchFunctions'
 
 const Setting = () => {
     const darkTheme = useSelector(themeSelector)
-    const [showSetting, setShowSetting] = useState(false)
+    const settingContentRef = useRef()
 
+    const openSetting = () => {
+        settingContentRef.current.style.animation = 'slides ease-in 0.2s forwards'
+    }
+
+    const hideSetting = () => {
+        settingContentRef.current.style.animation = 'hides ease-in 0.2s forwards'
+    }
+    
     const handleLogout = async () => {
         let res = await logoutUserService()
         if(res && +res.EC === 0) {
@@ -23,50 +31,48 @@ const Setting = () => {
 
     return (
         <div className={`setting ${darkTheme ? 'setting-dark' : ''}`}>
-            {!showSetting ? 
-                <div className='setting-toggle' onClick={() => setShowSetting(true)}>
-                    <FontAwesomeIcon icon={faBars} />
+            <div
+                className='setting-toggle'
+                onClick={openSetting}
+            >
+                <FontAwesomeIcon icon={faBars} />
+            </div>
+            <div className='setting-content' ref={settingContentRef}>
+                <div className='setting-content-header'>
+                    <div
+                        className='back-setting'
+                        onClick={hideSetting}
+                    >
+                        <FontAwesomeIcon icon={faArrowLeft} />
+                    </div>
                 </div>
 
-                :
-
-                <div className='setting-content'>
-                    <div className='setting-content-header'>
-                        <div
-                            className='back-setting'
-                            onClick={() => setShowSetting(false)}    
-                        >
-                            <FontAwesomeIcon icon={faArrowLeft} />
-                        </div>
-                    </div>
-
-                    <div className='setting-content-main'>
-                        <div className='setting-main-item'>Setting ...</div>
-                        <div className='setting-main-item'>Setting ...</div>
-                        <div className='setting-main-item'>Setting ...</div>
-                        <div className='setting-main-item'>Setting ...</div>
-                        <div className='setting-main-item'>Setting ...</div>
-                        <div className='setting-main-item'>Setting ...</div>
-                        <div className='setting-main-item'>Setting ...</div>
-                        <div className='setting-main-item'>
-                            <BigButton
-                                className={'logout-btn'}
-                                onClick={handleLogout}
-                            >
-                                LOG OUT
-                            </BigButton>
-                        </div>
-                    </div>
-
-                    <div className='setting-content-footer'>
+                <div className='setting-content-main'>
+                    <div className='setting-main-item'>Setting ...</div>
+                    <div className='setting-main-item'>Setting ...</div>
+                    <div className='setting-main-item'>Setting ...</div>
+                    <div className='setting-main-item'>Setting ...</div>
+                    <div className='setting-main-item'>Setting ...</div>
+                    <div className='setting-main-item'>Setting ...</div>
+                    <div className='setting-main-item'>Setting ...</div>
+                    <div className='setting-main-item'>
                         <BigButton
-                            className={'done-setting-btn'}
+                            className={'logout-btn'}
+                            onClick={handleLogout}
                         >
-                            OK
+                            LOG OUT
                         </BigButton>
                     </div>
                 </div>
-            }
+
+                <div className='setting-content-footer'>
+                    <BigButton
+                        className={'done-setting-btn'}
+                    >
+                        OK
+                    </BigButton>
+                </div>
+            </div>
         </div>
     )
 }

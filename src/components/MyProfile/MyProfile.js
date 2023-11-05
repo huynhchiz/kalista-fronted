@@ -5,27 +5,55 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import './MyProfile.scss'
 import YesNoModal from '../re-use/YesNoModal/YesNoModal'
-import ProfilePosts from '../re-use/ProfilePosts/ProfilePosts'
 
-import { themeSelector, userLoginSelector, userLoginAvtSelector } from '../../redux/selector'
-import { uploadImageCloudinary } from '../../service/imageService'
+import { themeSelector, userLoginSelector, userLoginAvtSelector, postsSelector } from '../../redux/selector'
+import { getUserPosts as getUserPostsSV, uploadImage } from '../../service/postService'
 import { deleteUserAvatar, uploadAvatar } from '../../service/userService'
 import { dispatchGetUserAvt, dispatchLoadPage, dispatchNoti } from '../../dispatchFunctions/dispatchFunctions'
+import { Waypoint } from 'react-waypoint'
+import ProfileContent from '../re-use/ProfileContent/ProfileContent'
 
 const MyProfile = () => {
     const darkTheme = useSelector(themeSelector)
     const userLogin = useSelector(userLoginSelector)
     const userAvatar = useSelector(userLoginAvtSelector)
+    const posts = useSelector(postsSelector)
     
     const [fileAvatar, setFileAvatar] = useState()
     const [showUpdateAvtBtns, setShowUpdateAvtBtns] = useState(false)
     const [showModalYesno, setShowModalYesno] = useState(false)
+    const [listPost, setListPost] = useState(posts.userPosts)
+    const [limit, setLimit] = useState(0)
+
+    console.log({limit});
+
+    const handleAddLimit = () => {
+        let condition = (+listPost.length < +limit - 15)
+        if (!condition) {
+            setLimit(limit + 15)
+        }
+    }
 
     useEffect(() => {
         if(userAvatar === '' || !userAvatar) {
             dispatchGetUserAvt()
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fileAvatar])
+
+    useEffect(() => {
+        if(limit > 0) {
+            fetchUserPosts()
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [limit])
+
+    const fetchUserPosts = async () => {
+        let res = await getUserPostsSV(userLogin.account.email, limit)
+        if (res && +res.EC === 0) {
+            setListPost(res.DT)
+        }
+    }
 
     const handleChangeFile = (e) => {
         let inputFile = e.target.files[0]
@@ -40,7 +68,7 @@ const MyProfile = () => {
         formdata.append('image', fileAvatar)
 
         dispatchLoadPage()
-        let res = await uploadImageCloudinary(formdata)
+        let res = await uploadImage(formdata)
         if(res && +res.EC === 0) {
             let finalRes = await uploadAvatar(res.DT)
             if (finalRes && +finalRes.EC === 0) {
@@ -88,6 +116,7 @@ const MyProfile = () => {
                         (<>
                             <img
                                 src={fileAvatar ? URL.createObjectURL(fileAvatar) : userAvatar}
+                                alt={userLogin.account.username + '_' + userLogin.account.email + '_avatar'}
                                 onClick={() => {setShowUpdateAvtBtns(true)}}
                             />
                             {showUpdateAvtBtns &&
@@ -144,13 +173,13 @@ const MyProfile = () => {
 
             </div>
 
-            
+            <ProfileContent listPost={listPost} />
 
-            <div className='my-profile-content'>
-                <ProfilePosts />
+            <div className='my-profile-footer'>
+                <Waypoint
+                    onEnter={handleAddLimit}
+                />
             </div>
-
-
         </div>
     )
 }

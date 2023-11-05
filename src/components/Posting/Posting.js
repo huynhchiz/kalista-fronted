@@ -9,9 +9,8 @@ import BigButton from '../re-use/BigButton/BigButton'
 
 import { themeSelector } from '../../redux/selector'
 import { userLoginSelector } from '../../redux/selector'
-import { uploadImageCloudinary, uploadImageService } from '../../service/imageService'
+import { uploadImage as uploadImageSV, uploadVideo as uploadVideoSV, uploadPost as uploadPostSV } from '../../service/postService'
 import { dispatchLoadPage, dispatchNoti } from '../../dispatchFunctions/dispatchFunctions'
-import { uploadVideoCloudinary, uploadVideoService } from '../../service/videoService'
 
 const Posting = () => {
     const navigate = useNavigate()
@@ -65,10 +64,11 @@ const Posting = () => {
         setCaption(e.target.value)
     }
 
-    const buildDataToUpload = (url) => {
+    const buildDataToUpload = (url, type) => {
         let data = {}
         data = {
             src: url,
+            type: type,
             alt: alt,
             caption: caption,
             time: timeUpload,
@@ -82,10 +82,10 @@ const Posting = () => {
         formdata.append('image', fileUpload)
 
         dispatchLoadPage()
-        let res = await uploadImageCloudinary(formdata)
+        let res = await uploadImageSV(formdata)
         if(res && +res.EC === 0) {
-            let data = buildDataToUpload(res.DT.toString())
-            let finalRes = await uploadImageService(data)
+            let data = buildDataToUpload(res.DT.toString(), 'image')
+            let finalRes = await uploadPostSV(data)
 
             if(finalRes && +finalRes.EC === 0) {
                 dispatchNoti(finalRes.EM)
@@ -108,10 +108,10 @@ const Posting = () => {
         formdata.append('video', fileUpload)
 
         dispatchLoadPage()
-        let res = await uploadVideoCloudinary(formdata)
+        let res = await uploadVideoSV(formdata)
         if(res && +res.EC === 0) {
-            let data = buildDataToUpload(res.DT.toString())
-            let finalRes = await uploadVideoService(data)
+            let data = buildDataToUpload(res.DT.toString(), 'video')
+            let finalRes = await uploadPostSV(data)
 
             if(finalRes && +finalRes.EC === 0) {
                 dispatchNoti(finalRes.EM)
@@ -170,6 +170,7 @@ const Posting = () => {
                         placeholder='Write something about your post...'
                         value={caption}
                         onChange={handleChangeCaption}
+                        maxLength={120}
                     />
                 </div>
 
