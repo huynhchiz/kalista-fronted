@@ -5,6 +5,7 @@ import themeSlice from "../slices/themeSlice.js";
 import loadPageSlice from "../slices/loadPageSlice.js";
 import notiModalSlice from "../slices/notiModalSlice.js";
 import postsSlice from "../slices/postsSlice.js";
+import followSlice from "../slices/followSlices.js";
 
 const store = configureStore({
     reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
         loadPage: loadPageSlice.reducer,
         notiModal: notiModalSlice.reducer,
         posts: postsSlice.reducer,
+        follow: followSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

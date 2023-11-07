@@ -1,21 +1,19 @@
 import { useEffect, useState } from 'react'
-import { Waypoint } from 'react-waypoint'
 import { useSelector } from 'react-redux'
+import { Waypoint } from 'react-waypoint'
 
 import './Home.scss'
 import Post from '../re-use/Post/Post'
 
 import { getFollowingPosts } from '../../service/postService'
-import { themeSelector, userLoginSelector, postsSelector } from '../../redux/selector'
-import { dispatchGetExplorePosts, dispatchGetHomePosts, dispatchGetUserPosts } from "../../dispatchFunctions/dispatchPosts";
+import { themeSelector,  postsSelector } from '../../redux/selector'
 
 const Home = () => {
     const darkTheme = useSelector(themeSelector)
-    const userLogin = useSelector(userLoginSelector)
     const posts = useSelector(postsSelector)
 
     const [postsHome, setPostsHome] = useState(posts.homePosts)
-    const [limit, setLimit] = useState(0)
+    const [limit, setLimit] = useState(5)
     const [fullPost, setFullPost] = useState(false)
 
     const handleAddLimit = () => {
@@ -26,14 +24,6 @@ const Home = () => {
             setFullPost(true)
         }
     }
-    
-    useEffect(() => {
-        if(userLogin && userLogin.isAuthenticated) {
-            dispatchGetHomePosts(5)
-            dispatchGetExplorePosts(5)
-            dispatchGetUserPosts(userLogin.account.email, 15)
-        }
-    }, [])
 
     const fetchAllPost = async () => {
         let res = await getFollowingPosts(limit)
@@ -63,6 +53,7 @@ const Home = () => {
                     username={post.User.username}
                     email={post.User.email}
                     avatar={post.User.avatar}
+                    followType={post.followType}
                 />
             ))}
             <div className='home-footer'>

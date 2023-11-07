@@ -6,12 +6,13 @@ import Login from "../components/Login/Login";
 import Register from "../components/Register/Register";
 
 import PrivateRoutes from "./PrivatesRoutes";
+import Welcome from "../components/Welcome/Welcome";
 import Home from "../components/Home/Home";
 import Explore from "../components/Explore/Explore";
 import Posting from "../components/Posting/Posting";
 import MyProfile from "../components/MyProfile/MyProfile";
 
-import { dispatchGetUserAvt, dispatchGetAccount } from "../dispatchFunctions/dispatchFunctions";
+import { dispatchGetAccount } from "../dispatchFunctions/dispatchFunctions";
 
 const AppRoutes = () => {
     const location = useLocation()
@@ -20,14 +21,11 @@ const AppRoutes = () => {
     useEffect(() => {
         if (checkLogin === true) {
             dispatchGetAccount()
-            dispatchGetUserAvt()
         }
     }, [checkLogin])
 
     useEffect(() => {
-        if(location.pathname === '/my-profile') {
-            window.scrollTo(0, 0)
-        }
+        window.scrollTo(0, 0)
     }, [location.pathname])
 
 
@@ -37,6 +35,7 @@ const AppRoutes = () => {
             <Route path="/introduce" element={<Introduce />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/welcome" element={<Welcome />} />
 
             {/* privates */}
             <Route element={<PrivateRoutes />}>

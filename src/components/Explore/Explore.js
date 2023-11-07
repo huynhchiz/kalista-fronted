@@ -13,7 +13,7 @@ const Explore = () => {
     const posts = useSelector(postsSelector)
 
     const [postsExplore, setPostsExplore] = useState(posts.explorePosts)
-    const [limit, setLimit] = useState(0)
+    const [limit, setLimit] = useState(5)
     const [fullPost, setFullPost] = useState(false)
 
     const handleAddLimit = () => {
@@ -65,7 +65,7 @@ const Explore = () => {
                 <p className={darkTheme ? 'dark' : ''}
                     // onClick={fetchAllPost}
                 >{
-                    posts.length > 0 ? 'Loading more posts...' : 'Click to see more posts'
+                    postsExplore.length > 0 ? 'Loading more posts...' : 'Click to see more posts'
                 }</p>
             }
         </div>

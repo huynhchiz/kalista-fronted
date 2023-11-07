@@ -6,7 +6,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import './MyProfile.scss'
 import YesNoModal from '../re-use/YesNoModal/YesNoModal'
 
-import { themeSelector, userLoginSelector, userLoginAvtSelector, postsSelector } from '../../redux/selector'
+import { themeSelector, userLoginSelector, userLoginAvtSelector, postsSelector, followSelector } from '../../redux/selector'
 import { getUserPosts as getUserPostsSV, uploadImage } from '../../service/postService'
 import { deleteUserAvatar, uploadAvatar } from '../../service/userService'
 import { dispatchGetUserAvt, dispatchLoadPage, dispatchNoti } from '../../dispatchFunctions/dispatchFunctions'
@@ -18,14 +18,13 @@ const MyProfile = () => {
     const userLogin = useSelector(userLoginSelector)
     const userAvatar = useSelector(userLoginAvtSelector)
     const posts = useSelector(postsSelector)
+    const follow = useSelector(followSelector)
     
     const [fileAvatar, setFileAvatar] = useState()
     const [showUpdateAvtBtns, setShowUpdateAvtBtns] = useState(false)
     const [showModalYesno, setShowModalYesno] = useState(false)
     const [listPost, setListPost] = useState(posts.userPosts)
     const [limit, setLimit] = useState(0)
-
-    console.log({limit});
 
     const handleAddLimit = () => {
         let condition = (+listPost.length < +limit - 15)
@@ -163,8 +162,8 @@ const MyProfile = () => {
                     <h3>{userLogin && userLogin.account.username ? userLogin.account.username : 'unname'}</h3>
 
                     <div className='info-follow'>
-                        <p>100 followers</p>
-                        <p>following 100</p>
+                        <p>{follow.followers.count} followers</p>
+                        <p>following {follow.followings.count}</p>
                     </div>
 
                     <p>100 posts</p>

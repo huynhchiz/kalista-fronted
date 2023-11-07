@@ -29,7 +29,7 @@ const Login = () => {
 
     useEffect(() => {
         if (userLogin && userLogin.isAuthenticated) {
-            navigate('/')
+            navigate('/welcome')
         }
     }, [userLogin])
 
@@ -78,7 +78,8 @@ const Login = () => {
                 dispatchLogin(dataLoginRedux)
                 dispatchLoadPage()
                 dispatchNoti('Login success!')
-                navigate('/')
+                navigate('/welcome')
+                // navigate('/')
 
             } else {
                 dispatchLoadPage()

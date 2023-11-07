@@ -56,6 +56,18 @@
                 font-size: 16px;
             }
         }
+        .post-unfollow-btn {
+            flex: 1;
+            display: flex;
+            justify-content: end;
+            padding-right: 20px;
+
+            .unfollow-button {
+                width: 100px;
+                height: 30px;
+                font-size: 16px;
+            }
+        }
     }
 
     .post-content {

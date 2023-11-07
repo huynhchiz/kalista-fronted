@@ -9,3 +9,5 @@ export const notiModalMessageSelector = state => state.notiModal.text
 export const notiModalShowSelector = state => state.notiModal.show
 
 export const postsSelector = state => state.posts
+
+export const followSelector = state => state.follow

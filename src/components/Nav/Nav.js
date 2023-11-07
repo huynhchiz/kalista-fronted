@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import './Nav.scss'
 import ThemeToggle from '../re-use/ThemeToggle/ThemeToggle'
@@ -12,6 +12,7 @@ import Setting from '../re-use/Setting/Setting'
 
 const Nav = () => {
     const location = useLocation()
+    const navigate = useNavigate()
     const darkTheme = useSelector(themeSelector)
     const [showToggle, setShowToggle] = useState(false)
 
@@ -25,7 +26,7 @@ const Nav = () => {
 
     return (
         <div className={`nav ${darkTheme && 'nav-dark'}`}>
-            <div className='nav-logo'>
+            <div className='nav-logo' onClick={() => navigate('/welcome')}>
                 <img className='nav-logo-img' src={darkTheme ? navDarkLogo : navWhiteLogo} alt='nav logo'/>
             </div>
 

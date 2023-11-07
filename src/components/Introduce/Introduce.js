@@ -18,7 +18,7 @@ const Introduce = () => {
 
     useEffect(() => {
         if(userLogin && userLogin.isAuthenticated) {
-            navigate('/')
+            navigate('/welcome')
         }
     }, [userLogin])
 

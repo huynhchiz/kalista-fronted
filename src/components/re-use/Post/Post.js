@@ -1,14 +1,15 @@
 import './Post.scss'
 import BigButton from '../BigButton/BigButton'
+import userAvatarUnset from '../../../assets/images/user-avatar-unset.png'
 
 import { useSelector } from 'react-redux'
 import { themeSelector, userLoginSelector } from '../../../redux/selector'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComments, faPlay, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 import { useRef, useState } from 'react'
-import { followSV } from '../../../service/followService'
+import { followSV, unfollowSV } from '../../../service/followService'
 
-const Post = ({ src, type, alt, caption, date, username, email, avatar }) => {
+const Post = ({ src, type, alt, caption, date, username, email, avatar, followType }) => {
     const darkTheme = useSelector(themeSelector)
     const userLogin = useSelector(userLoginSelector)
 
@@ -40,13 +41,20 @@ const Post = ({ src, type, alt, caption, date, username, email, avatar }) => {
         }
     }
 
+    const handleUnfollow = async () => {
+        let res = await unfollowSV(email)
+        if(res && +res.EC === 0) {
+            console.log(res.EM);
+        }
+    }
+
     return (
         <div className={`post ${darkTheme && 'post-dark'}`}>
             <div className='post-frame'>
 
                 <div className='post-user'>
                     <div className='post-avatar'>
-                        <img className='' src={avatar} alt='avatar'/>
+                        <img className='' src={avatar ? avatar : userAvatarUnset} alt='avatar'/>
                     </div>
 
                     <div className='post-username'>
@@ -54,13 +62,21 @@ const Post = ({ src, type, alt, caption, date, username, email, avatar }) => {
                     </div>
 
                     {
-                        userLogin.account.email !== email ? 
+                        (userLogin.account.email !== email) && 
+                        (!followType ? 
                         <div className='post-follow-btn'>
                             <BigButton
                                 className={'follow-button'}
                                 onClick={handleFollow}
                             >Follow</BigButton>
-                        </div> : <></>
+                        </div>
+                            :
+                        <div className='post-unfollow-btn'>
+                            <BigButton
+                                className={'unfollow-button'}
+                                onClick={handleUnfollow}
+                            >Unfollow</BigButton>
+                        </div>)
                     }
                     
                 </div>

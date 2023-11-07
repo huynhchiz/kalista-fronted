@@ -8,7 +8,17 @@ const unfollowSV = (email) => {
     return axios.post('/api/user/unfollow', { email: email })
 }
 
+const getUsersFollowingSV = (email, limit) => {
+    return axios.post('/api/user/following/read', { email, limit })
+}
+
+const getFollowersSV = (email, limit) => {
+    return axios.post('/api/user/follower/read', { email, limit })
+}
+
 export {
     followSV,
-    unfollowSV
+    unfollowSV,
+    getUsersFollowingSV,
+    getFollowersSV
 }
