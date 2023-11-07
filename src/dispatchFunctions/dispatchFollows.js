@@ -1,6 +1,6 @@
 import store from "../redux/store"
 
-import { fetchUserFollowing } from "../slices/followSlices"
+import { fetchUserFollowing, fetchUserFollower } from "../slices/followSlices"
 
 import { getUsersFollowingSV, getFollowersSV } from "../service/followService"
 
@@ -12,7 +12,7 @@ const dispatchGetUserFollowing = (limit) => {
 }
 
 const dispatchGetUserFollower = (limit) => {
-    store.dispatch(fetchUserFollowing({
+    store.dispatch(fetchUserFollower({
         api: getFollowersSV,
         limit: limit
     }))

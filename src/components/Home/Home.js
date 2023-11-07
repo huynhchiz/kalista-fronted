@@ -33,7 +33,7 @@ const Home = () => {
     }
 
     useEffect(() => {
-        if(limit > 0) {
+        if(limit > 5) {
             fetchAllPost()
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,7 +44,8 @@ const Home = () => {
         <div className={`home ${darkTheme ? 'home-dark' : ''}`}>
             {postsHome && postsHome.map(post => (
                 <Post
-                    key={post.id}
+                    key={'home' + post.id}
+                    postId={post.id}
                     src={post.src}
                     type={post.type}
                     alt={post.alt}

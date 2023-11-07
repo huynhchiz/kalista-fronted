@@ -5,16 +5,21 @@ import userAvatarUnset from '../../../assets/images/user-avatar-unset.png'
 import { useSelector } from 'react-redux'
 import { themeSelector, userLoginSelector } from '../../../redux/selector'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faComments, faPlay, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
+import { faPlay, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
+import { faThumbsUp as fTU2, faComments } from '@fortawesome/free-regular-svg-icons'
 import { useRef, useState } from 'react'
 import { followSV, unfollowSV } from '../../../service/followService'
+import { dispatchGetUserFollowing } from '../../../dispatchFunctions/dispatchFollows'
+import { likePostSV, unlikePostSV } from '../../../service/postService'
 
-const Post = ({ src, type, alt, caption, date, username, email, avatar, followType }) => {
+const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, followType }) => {
     const darkTheme = useSelector(themeSelector)
     const userLogin = useSelector(userLoginSelector)
 
     const [playVideo, setPlayVideo] = useState(false)
     const [seeMoreCaption, setSeeMoreCaption] = useState(false)
+
+    const [like, setLike] = useState(false)
 
     const videoRef = useRef()
 
@@ -38,6 +43,7 @@ const Post = ({ src, type, alt, caption, date, username, email, avatar, followTy
         let res = await followSV(email)
         if(res && +res.EC === 0) {
             console.log(res.EM);
+            dispatchGetUserFollowing(userLogin.account.email, 2)
         }
     }
 
@@ -45,6 +51,23 @@ const Post = ({ src, type, alt, caption, date, username, email, avatar, followTy
         let res = await unfollowSV(email)
         if(res && +res.EC === 0) {
             console.log(res.EM);
+            dispatchGetUserFollowing(userLogin.account.email, 2)
+        }
+    }
+
+    const handleLikePost = async (postId) => {
+        let res = await likePostSV(postId)
+        if(res && +res.EC === 0) {
+            console.log(res.EM);
+            setLike(true)
+        }
+    }
+
+    const handleUnlikePost = async (postId) => {
+        let res = await unlikePostSV(postId)
+        if(res && +res.EC === 0) {
+            console.log(res.EM);
+            setLike(false)
         }
     }
 
@@ -109,16 +132,28 @@ const Post = ({ src, type, alt, caption, date, username, email, avatar, followTy
                                 <div className='post-caption-opacity' onClick={handleReadCaption}></div>
                             </div>
                         }
+
                         <div className='post-comments'>
                             <FontAwesomeIcon icon={faComments} />
                         </div>
-                        <div className='post-like'>
-                            <FontAwesomeIcon icon={faThumbsUp} />
-                        </div>
+
+                        {
+                            like ? 
+                            <div className='post-unlike' onClick={() => handleUnlikePost(postId)}>
+                                <FontAwesomeIcon icon={faThumbsUp} />
+                            </div> :
+                            <div className='post-like' onClick={() => handleLikePost(postId)}>
+                                <FontAwesomeIcon icon={fTU2} />
+                            </div>
+                        }
+
                     </div>
 
                     <div className={`post-info ${caption ? '' : 'post-info-top'}`}>
-                        <p>100 comments</p>
+                        <div className='likes-comments'>
+                            <p>100 comments</p>
+                            <p>{like && 'You and'} 100 people likes this</p>
+                        </div>
                         <p>{date}</p>
                     </div>
                 </div>

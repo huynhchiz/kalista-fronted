@@ -138,7 +138,7 @@
             height: auto;
         }
 
-        .post-comments, .post-like {
+        .post-comments, .post-like, .post-unlike {
             padding: 4px 12px 8px 12px;
             margin-left: 8px;
             font-size: 24px;
@@ -151,9 +151,14 @@
         margin-top: 4px;
         padding: 0 4px 0 8px;
 
+        .likes-comments {
+            display: flex;
+        }
+
         p {
-            font-size: 12px;
             margin-top: 4px;
+            margin-right: 20px;
+            font-size: 12px;
         }
     }
 
@@ -177,11 +182,7 @@
             }
         }
 
-        .post-like {
-            color: var(--color-primary);
-        }
-
-        .post-comments {
+        .post-like, .post-unlike, .post-comments {
             color: var(--color-primary);
         }
     }

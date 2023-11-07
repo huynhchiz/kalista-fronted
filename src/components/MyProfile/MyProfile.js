@@ -24,7 +24,7 @@ const MyProfile = () => {
     const [showUpdateAvtBtns, setShowUpdateAvtBtns] = useState(false)
     const [showModalYesno, setShowModalYesno] = useState(false)
     const [listPost, setListPost] = useState(posts.userPosts)
-    const [limit, setLimit] = useState(0)
+    const [limit, setLimit] = useState(15)
 
     const handleAddLimit = () => {
         let condition = (+listPost.length < +limit - 15)
@@ -41,7 +41,7 @@ const MyProfile = () => {
     }, [fileAvatar])
 
     useEffect(() => {
-        if(limit > 0) {
+        if(limit > 15) {
             fetchUserPosts()
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -162,8 +162,8 @@ const MyProfile = () => {
                     <h3>{userLogin && userLogin.account.username ? userLogin.account.username : 'unname'}</h3>
 
                     <div className='info-follow'>
-                        <p>{follow.followers.count} followers</p>
-                        <p>following {follow.followings.count}</p>
+                        <p>{follow.followers.count || '0'} followers</p>
+                        <p>following {follow.followings.count || '0'}</p>
                     </div>
 
                     <p>100 posts</p>

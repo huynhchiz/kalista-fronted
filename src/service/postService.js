@@ -35,6 +35,14 @@ const getUserPosts = (email, limit) => {
     return axios.post('/api/post/read-user', { email, limit })
 }
 
+const likePostSV = (postId) => {
+    return axios.post('/api/post/like', { postId })
+}
+
+const unlikePostSV = (postId) => {
+    return axios.post('/api/post/unlike', { postId })
+}
+
 export {
     uploadImage,
     uploadVideo,
@@ -42,5 +50,7 @@ export {
     getPosts,
     getFollowingPosts,
     getNotFollowingPosts,
-    getUserPosts
+    getUserPosts,
+    likePostSV,
+    unlikePostSV
 }

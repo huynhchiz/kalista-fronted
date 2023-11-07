@@ -34,6 +34,7 @@ const postsSlice = createSlice({
 export const fetchHomePosts = createAsyncThunk('posts/fetchHomePosts', async ({api, limit}) => {
     let res = await api(limit)
     if (res && +res.EC === 0) {
+        console.log(res.DT);
         return res.DT;
     };
     return [];
@@ -42,6 +43,7 @@ export const fetchHomePosts = createAsyncThunk('posts/fetchHomePosts', async ({a
 export const fetchExplorePosts = createAsyncThunk('posts/fetchExplorePosts', async ({api, limit}) => {
     let res = await api(limit)
     if (res && +res.EC === 0) {
+        console.log(res.DT);
         return res.DT;
     };
     return [];
