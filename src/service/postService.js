@@ -43,6 +43,10 @@ const unlikePostSV = (postId) => {
     return axios.post('/api/post/unlike', { postId })
 }
 
+const countOnePostLike = (postId) => {
+    return axios.post('/api/post/count-like', { postId })
+}
+
 export {
     uploadImage,
     uploadVideo,
@@ -52,5 +56,6 @@ export {
     getNotFollowingPosts,
     getUserPosts,
     likePostSV,
-    unlikePostSV
+    unlikePostSV,
+    countOnePostLike
 }

@@ -53,6 +53,10 @@ const Explore = () => {
                 username={post.User.username}
                 email={post.User.email}
                 avatar={post.User.avatar}
+                followType={post.followType}
+                countLike={post.postLikeCount}
+                countComment={post.postCommentCount}
+                liked={post.liked}
             />
         ))}
         <div className='home-footer'>

@@ -10,16 +10,16 @@ import { faThumbsUp as fTU2, faComments } from '@fortawesome/free-regular-svg-ic
 import { useRef, useState } from 'react'
 import { followSV, unfollowSV } from '../../../service/followService'
 import { dispatchGetUserFollowing } from '../../../dispatchFunctions/dispatchFollows'
-import { likePostSV, unlikePostSV } from '../../../service/postService'
+import { countOnePostLike, likePostSV, unlikePostSV } from '../../../service/postService'
 
-const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, followType }) => {
+const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, followType, countLike, countComment, liked }) => {
     const darkTheme = useSelector(themeSelector)
     const userLogin = useSelector(userLoginSelector)
 
     const [playVideo, setPlayVideo] = useState(false)
     const [seeMoreCaption, setSeeMoreCaption] = useState(false)
-
-    const [like, setLike] = useState(false)
+    const [countLiked, setCountLiked] = useState(countLike)
+    const [like, setLike] = useState(liked)
 
     const videoRef = useRef()
 
@@ -59,6 +59,10 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
         let res = await likePostSV(postId)
         if(res && +res.EC === 0) {
             console.log(res.EM);
+            let res2 = await countOnePostLike(postId)
+            if (res2 && +res2.EC === 0) {
+                setCountLiked(res2.DT)
+            }
             setLike(true)
         }
     }
@@ -67,6 +71,10 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
         let res = await unlikePostSV(postId)
         if(res && +res.EC === 0) {
             console.log(res.EM);
+            let res2 = await countOnePostLike(postId)
+            if (res2 && +res2.EC === 0) {
+                setCountLiked(res2.DT)
+            }
             setLike(false)
         }
     }
@@ -138,7 +146,7 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
                         </div>
 
                         {
-                            like ? 
+                            like === true ? 
                             <div className='post-unlike' onClick={() => handleUnlikePost(postId)}>
                                 <FontAwesomeIcon icon={faThumbsUp} />
                             </div> :
@@ -151,8 +159,15 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
 
                     <div className={`post-info ${caption ? '' : 'post-info-top'}`}>
                         <div className='likes-comments'>
-                            <p>100 comments</p>
-                            <p>{like && 'You and'} 100 people likes this</p>
+                            <p>{countComment ? countComment : '0'} comments</p>
+                            {
+                                like && 
+                                <p>You liked this post</p>
+                            }
+                            {
+                                countLiked && 
+                                <p>{countLiked >= 2 ? countLiked + ' likes' : countLiked + ' like'}</p>
+                            }
                         </div>
                         <p>{date}</p>
                     </div>
