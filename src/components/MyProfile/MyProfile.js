@@ -12,18 +12,20 @@ import { deleteUserAvatar, uploadAvatar } from '../../service/userService'
 import { dispatchGetUserAvt, dispatchLoadPage, dispatchNoti } from '../../dispatchFunctions/dispatchFunctions'
 import { Waypoint } from 'react-waypoint'
 import ProfileContent from '../re-use/ProfileContent/ProfileContent'
+import { dispatchGetUserPosts } from '../../dispatchFunctions/dispatchPosts'
 
 const MyProfile = () => {
     const darkTheme = useSelector(themeSelector)
     const userLogin = useSelector(userLoginSelector)
     const userAvatar = useSelector(userLoginAvtSelector)
     const posts = useSelector(postsSelector)
+    const listPost = posts.userPosts.posts
+    const countPost = posts.userPosts.count
     const follow = useSelector(followSelector)
     
     const [fileAvatar, setFileAvatar] = useState()
     const [showUpdateAvtBtns, setShowUpdateAvtBtns] = useState(false)
     const [showModalYesno, setShowModalYesno] = useState(false)
-    const [listPost, setListPost] = useState(posts.userPosts)
     const [limit, setLimit] = useState(15)
 
     const handleAddLimit = () => {
@@ -42,17 +44,9 @@ const MyProfile = () => {
 
     useEffect(() => {
         if(limit > 15) {
-            fetchUserPosts()
+            dispatchGetUserPosts(userLogin.account.email, limit)
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [limit])
-
-    const fetchUserPosts = async () => {
-        let res = await getUserPostsSV(userLogin.account.email, limit)
-        if (res && +res.EC === 0) {
-            setListPost(res.DT)
-        }
-    }
 
     const handleChangeFile = (e) => {
         let inputFile = e.target.files[0]
@@ -166,7 +160,9 @@ const MyProfile = () => {
                         <p>following {follow.followings.count || '0'}</p>
                     </div>
 
-                    <p>100 posts</p>
+                    <p>{countPost ?
+                    countPost >=2 ? countPost + ' posts' : countPost + ' post'
+                    : '0 post'} </p>
 
                 </div>
 

@@ -5,14 +5,14 @@ import { Waypoint } from 'react-waypoint'
 import './Home.scss'
 import Post from '../re-use/Post/Post'
 
-import { getFollowingPosts } from '../../service/postService'
 import { themeSelector,  postsSelector } from '../../redux/selector'
+import { dispatchGetHomePosts } from '../../dispatchFunctions/dispatchPosts'
 
 const Home = () => {
     const darkTheme = useSelector(themeSelector)
     const posts = useSelector(postsSelector)
+    const postsHome = posts.homePosts
 
-    const [postsHome, setPostsHome] = useState(posts.homePosts)
     const [limit, setLimit] = useState(5)
     const [fullPost, setFullPost] = useState(false)
 
@@ -24,17 +24,9 @@ const Home = () => {
             setFullPost(true)
         }
     }
-
-    const fetchAllPost = async () => {
-        let res = await getFollowingPosts(limit)
-        if (res && +res.EC === 0) {
-            setPostsHome(res.DT)
-        }
-    }
-
     useEffect(() => {
         if(limit > 5) {
-            fetchAllPost()
+            dispatchGetHomePosts(limit)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [limit])
@@ -69,11 +61,16 @@ const Home = () => {
                     fullPost ?
                     <p className={darkTheme ? 'dark' : ''}>Nothing new...</p>
                     :
+                    postsHome.length > 0 ?
+
                     <p className={darkTheme ? 'dark' : ''}
-                        onClick={fetchAllPost}
-                    >{
-                        postsHome.length > 0 ? 'Loading more posts...' : 'Click to see more posts'
-                    }</p>
+                    >Loading more posts...</p>
+
+                    :
+                    <p className={darkTheme ? 'dark' : ''}
+                        onClick={() => {dispatchGetHomePosts(limit)}}>
+                        Click to see more posts
+                    </p>
                 }
             </div>
         </div>

@@ -11,6 +11,7 @@ import { themeSelector } from '../../redux/selector'
 import { userLoginSelector } from '../../redux/selector'
 import { uploadImage as uploadImageSV, uploadVideo as uploadVideoSV, uploadPost as uploadPostSV } from '../../service/postService'
 import { dispatchLoadPage, dispatchNoti } from '../../dispatchFunctions/dispatchFunctions'
+import { dispatchGetHomePosts, dispatchGetUserPosts } from '../../dispatchFunctions/dispatchPosts'
 
 const Posting = () => {
     const navigate = useNavigate()
@@ -90,6 +91,8 @@ const Posting = () => {
             if(finalRes && +finalRes.EC === 0) {
                 dispatchNoti(finalRes.EM)
                 dispatchLoadPage()
+                dispatchGetHomePosts(5)
+                dispatchGetUserPosts(userLogin.account.email, 15)
                 navigate('/')
 
             } else {
@@ -116,6 +119,8 @@ const Posting = () => {
             if(finalRes && +finalRes.EC === 0) {
                 dispatchNoti(finalRes.EM)
                 dispatchLoadPage()
+                dispatchGetHomePosts(5)
+                dispatchGetUserPosts(userLogin.account.email, 15)
                 navigate('/')
 
             } else {

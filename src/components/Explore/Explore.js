@@ -5,14 +5,14 @@ import { useSelector } from 'react-redux'
 
 import Post from '../re-use/Post/Post'
 
-import { getNotFollowingPosts } from '../../service/postService'
 import { themeSelector, postsSelector } from '../../redux/selector'
+import { dispatchGetExplorePosts } from '../../dispatchFunctions/dispatchPosts'
 
 const Explore = () => {
     const darkTheme = useSelector(themeSelector)
     const posts = useSelector(postsSelector)
+    const postsExplore = posts.explorePosts
 
-    const [postsExplore, setPostsExplore] = useState(posts.explorePosts)
     const [limit, setLimit] = useState(5)
     const [fullPost, setFullPost] = useState(false)
 
@@ -25,16 +25,9 @@ const Explore = () => {
         }
     }
 
-    const fetchAllPost = async () => {
-        let res = await getNotFollowingPosts(limit)
-        if (res && +res.EC === 0) {
-            setPostsExplore(res.DT)
-        }
-    }
-
     useEffect(() => {
         if(limit > 5) {
-            fetchAllPost()
+            dispatchGetExplorePosts(limit)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [limit])
@@ -67,11 +60,16 @@ const Explore = () => {
                 fullPost ?
                 <p className={darkTheme ? 'dark' : ''}>Nothing new...</p>
                 :
+                postsExplore.length > 0 ?
+
                 <p className={darkTheme ? 'dark' : ''}
-                    // onClick={fetchAllPost}
-                >{
-                    postsExplore.length > 0 ? 'Loading more posts...' : 'Click to see more posts'
-                }</p>
+                >Loading more posts...</p>
+
+                :
+                <p className={darkTheme ? 'dark' : ''}
+                    onClick={() => {dispatchGetExplorePosts(limit)}}>
+                    Click to see more posts
+                </p>
             }
         </div>
     </div>

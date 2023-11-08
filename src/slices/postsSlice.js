@@ -5,7 +5,7 @@ const postsSlice = createSlice({
     initialState: {
         homePosts: [],
         explorePosts: [],
-        userPosts: []
+        userPosts: { count: 0, posts: [] }
     },
     extraReducers: builder =>
     builder
@@ -27,7 +27,7 @@ const postsSlice = createSlice({
             state.userPosts = action.payload;
         })
         .addCase(fetchUserPosts.rejected, (state, action) => {
-            state.userPosts = [];
+            state.userPosts = { count: 0, posts: [] };
         })
 })
 
@@ -52,9 +52,13 @@ export const fetchExplorePosts = createAsyncThunk('posts/fetchExplorePosts', asy
 export const fetchUserPosts = createAsyncThunk('posts/fetchUserPosts', async ({api, email, limit}) => {
     let res = await api( email, limit)
     if (res && +res.EC === 0) {
-        return res.DT;
+        let data = {
+            count: res.DT.count,
+            posts: res.DT.posts
+        }
+        return data;
     };
-    return [];
+    return { count: 0, posts: [] };
 })
 
 export default postsSlice
