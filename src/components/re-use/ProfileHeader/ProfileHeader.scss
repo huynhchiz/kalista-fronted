@@ -1,0 +1,47 @@
+.profile-header {
+    display: flex;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+
+    .profile-avatar {
+        position: relative;
+
+        img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+
+    .profile-info {
+        margin-left: 24px;
+
+        h3 {
+            margin-bottom: 12px;
+        }
+
+        .info-follow {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        p + p {
+            margin-left: 24px; 
+         }
+    }
+}
+
+.profile-header-dark {
+    .profile-info {
+
+        h3 {
+            color: var(--color-primary);
+        }
+
+        p {
+            color: var(--text-white);
+        }
+    }
+}

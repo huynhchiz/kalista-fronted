@@ -20,6 +20,15 @@ const deleteUserAvatar = () => {
     return axios.post('/api/user/avatar/delete')
 }
 
+const getOtherUserInfoSV = (email) => {
+    return axios.post('/api/user/other/read-info', { email: email })
+}
+
 export {
-    getAccountService, refreshNewToken, uploadAvatar, getUserAvatar, deleteUserAvatar
+    getAccountService,
+    refreshNewToken,
+    uploadAvatar,
+    getUserAvatar,
+    deleteUserAvatar,
+    getOtherUserInfoSV
 }

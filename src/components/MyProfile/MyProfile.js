@@ -7,7 +7,7 @@ import './MyProfile.scss'
 import YesNoModal from '../re-use/YesNoModal/YesNoModal'
 
 import { themeSelector, userLoginSelector, userLoginAvtSelector, postsSelector, followSelector } from '../../redux/selector'
-import { getUserPosts as getUserPostsSV, uploadImage } from '../../service/postService'
+import { uploadImage } from '../../service/postService'
 import { deleteUserAvatar, uploadAvatar } from '../../service/userService'
 import { dispatchGetUserAvt, dispatchLoadPage, dispatchNoti } from '../../dispatchFunctions/dispatchFunctions'
 import { Waypoint } from 'react-waypoint'
@@ -46,6 +46,7 @@ const MyProfile = () => {
         if(limit > 15) {
             dispatchGetUserPosts(userLogin.account.email, limit)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [limit])
 
     const handleChangeFile = (e) => {
@@ -103,7 +104,8 @@ const MyProfile = () => {
                     {fileAvatar &&
                         <button className='upload-avatar-btn' onClick={handleUploadAvatar}>
                             Upload
-                        </button>}
+                        </button>
+                    }
                     
                     {fileAvatar || userAvatar ?
                         (<>

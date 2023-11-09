@@ -11,3 +11,5 @@ export const notiModalShowSelector = state => state.notiModal.show
 export const postsSelector = state => state.posts
 
 export const followSelector = state => state.follow
+
+export const otherUserSelector = state => state.otherUser

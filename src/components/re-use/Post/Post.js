@@ -20,6 +20,7 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
     const [seeMoreCaption, setSeeMoreCaption] = useState(false)
     const [countLiked, setCountLiked] = useState(countLike)
     const [like, setLike] = useState(liked)
+    const [follow, setFollow] = useState(followType)
 
     const videoRef = useRef()
 
@@ -43,6 +44,7 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
         let res = await followSV(email)
         if(res && +res.EC === 0) {
             console.log(res.EM);
+            setFollow(true)
             dispatchGetUserFollowing(userLogin.account.email, 2)
         }
     }
@@ -51,6 +53,7 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
         let res = await unfollowSV(email)
         if(res && +res.EC === 0) {
             console.log(res.EM);
+            setFollow(false)
             dispatchGetUserFollowing(userLogin.account.email, 2)
         }
     }
@@ -89,12 +92,16 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
                     </div>
 
                     <div className='post-username'>
-                        <p>{username}</p>
+                        <p
+                            // onClick={() => goToUserProfile(user)}
+                        >
+                            {username}
+                        </p>
                     </div>
 
                     {
                         (userLogin.account.email !== email) && 
-                        (!followType ? 
+                        (!follow ? 
                         <div className='post-follow-btn'>
                             <BigButton
                                 className={'follow-button'}
