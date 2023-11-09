@@ -1,16 +1,44 @@
 import './Profile.scss'
-
-import { useEffect, useState } from 'react'
 import ProfileHeader from '../ProfileHeader/ProfileHeader'
 import ProfileContent from '../ProfileContent/ProfileContent'
 
-const Profile = () => {
+import { Waypoint } from 'react-waypoint'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { otherUserSelector, userLoginSelector } from '../../../redux/selector'
+import { dispatchFetchOtherUserInFo,
+    dispatchFetchOtherUserPosts,
+    dispatchFetchOtherUserFollowers,
+    dispatchFetchOtherUserFollowings } from "../../../dispatchFunctions/dispatchOtherUser"
 
+const Profile = () => {
     const [limit, setLimit] = useState(15)
+    const [searchParam, setSearchParam] = useSearchParams()
+    const emailPr = searchParam.get('user')
+
+    const navigate = useNavigate()
+
+    const userLogin = useSelector(userLoginSelector)
+    const otherUser = useSelector(otherUserSelector)
+    
+    useEffect(() => {
+        dispatchFetchOtherUserInFo(emailPr)
+        dispatchFetchOtherUserPosts(emailPr, limit)
+        dispatchFetchOtherUserFollowers(emailPr)
+        dispatchFetchOtherUserFollowings(emailPr)
+    }, [emailPr])
+
+    // did not work
+    useEffect(() => {
+        if(emailPr === userLogin.account.email) {
+            navigate('/my-profile')
+        }
+    }, [])
 
 
     const handleAddLimit = () => {
-        let condition = (+listPost.length < +limit - 15)
+        let condition = (+(otherUser.posts.posts.length) < +limit - 15)
         if (!condition) {
             setLimit(limit + 15)
         }
@@ -18,16 +46,24 @@ const Profile = () => {
 
     useEffect(() => {
         if(limit > 15) {
-            // dispatchGetUserPosts(userLogin.account.email, limit)
+            dispatchFetchOtherUserPosts(emailPr, limit)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [limit])
 
     return (
         <div className='profile'>
-            <ProfileHeader />
+            <ProfileHeader
+                userAvatar={otherUser.info.avatar}
+                username={otherUser.info.username}
+                countFollowers={otherUser.followers.countFollower}
+                countFollowings={otherUser.followings.countFollowing}
+                countPosts={otherUser.posts.count}
+            />
 
-            <ProfileContent listPost={[]} />
+            <ProfileContent
+                listPost={otherUser.posts.posts}
+            />
 
             <div className='profile-footer'>
                 <Waypoint

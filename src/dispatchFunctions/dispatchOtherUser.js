@@ -10,23 +10,32 @@ import { getUserPosts } from "../service/postService"
 import { getUsersFollowingSV, getFollowersSV } from "../service/followService"
 
 const dispatchFetchOtherUserInFo = (email) => {
-    store.dispatch(fetchOtherUserInfo(getOtherUserInfoSV(email)))
+    store.dispatch(fetchOtherUserInfo({
+        api: getOtherUserInfoSV,
+        email: email
+    }))
 }
 
 const dispatchFetchOtherUserPosts = (email, limit) => {
-    store.dispatch(fetchOtherUserPosts(getUserPosts({
+    store.dispatch(fetchOtherUserPosts({
         api: getUserPosts,
         email: email,
         limit: limit
-    })))
+    }))
 }
 
 const dispatchFetchOtherUserFollowers = (email) => {
-    store.dispatch(fetchOtherUserFollowers(getFollowersSV(email)))
+    store.dispatch(fetchOtherUserFollowers({
+        api: getFollowersSV,
+        email: email
+    }))
 }
 
 const dispatchFetchOtherUserFollowings = (email) => {
-    store.dispatch(fetchOtherUserFollowings(getUsersFollowingSV(email)))
+    store.dispatch(fetchOtherUserFollowings({
+        api: getUsersFollowingSV,
+        email: email
+    }))
 }
 
 export {

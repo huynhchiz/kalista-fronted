@@ -1,18 +1,20 @@
 import './Post.scss'
 import BigButton from '../BigButton/BigButton'
 import userAvatarUnset from '../../../assets/images/user-avatar-unset.png'
-
-import { useSelector } from 'react-redux'
-import { themeSelector, userLoginSelector } from '../../../redux/selector'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 import { faThumbsUp as fTU2, faComments } from '@fortawesome/free-regular-svg-icons'
+import { faPlay, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
+
 import { useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { themeSelector, userLoginSelector } from '../../../redux/selector'
 import { followSV, unfollowSV } from '../../../service/followService'
 import { dispatchGetUserFollowing } from '../../../dispatchFunctions/dispatchFollows'
 import { countOnePostLike, likePostSV, unlikePostSV } from '../../../service/postService'
 
 const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, followType, countLike, countComment, liked }) => {
+    const navigate = useNavigate()
     const darkTheme = useSelector(themeSelector)
     const userLogin = useSelector(userLoginSelector)
 
@@ -81,6 +83,14 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
             setLike(false)
         }
     }
+    
+    const handleNavigateToProfile = (email) => {
+        if(email === userLogin.account.email) {
+            navigate('/my-profile')
+        } else {
+            navigate(`/profile?user=${email}`)
+        }
+    }
 
     return (
         <div className={`post ${darkTheme && 'post-dark'}`}>
@@ -93,7 +103,7 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
 
                     <div className='post-username'>
                         <p
-                            // onClick={() => goToUserProfile(user)}
+                            onClick={() => handleNavigateToProfile(email)}
                         >
                             {username}
                         </p>

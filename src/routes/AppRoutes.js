@@ -11,6 +11,7 @@ import Home from "../components/Home/Home";
 import Explore from "../components/Explore/Explore";
 import Posting from "../components/Posting/Posting";
 import MyProfile from "../components/MyProfile/MyProfile";
+import Profile from "../components/re-use/Profile/Profile";
 
 import { dispatchGetAccount } from "../dispatchFunctions/dispatchFunctions";
 
@@ -36,6 +37,7 @@ const AppRoutes = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/welcome" element={<Welcome />} />
+            <Route path='/profile' element={<Profile />} />
 
             {/* privates */}
             <Route element={<PrivateRoutes />}>

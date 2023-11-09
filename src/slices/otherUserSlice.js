@@ -56,24 +56,24 @@ const otherUserSlice = createSlice({
         })
 })
 
-export const fetchOtherUserInfo = createAsyncThunk('otherUser/fetchOtherUserInfo', async ({ api, data }) => {
-    let res = await api(data)
+export const fetchOtherUserInfo = createAsyncThunk('otherUser/fetchOtherUserInfo', async ({ api, email }) => {
+    let res = await api(email)
     if(res && +res.EC === 0) {
         return res.DT
     }
     return initOtherUser.info
 })
 
-export const fetchOtherUserFollowers = createAsyncThunk('otherUser/fetchOtherUserFollowers', async ({ api, data }) => {
-    let res = await api(data)
+export const fetchOtherUserFollowers = createAsyncThunk('otherUser/fetchOtherUserFollowers', async ({ api, email }) => {
+    let res = await api(email)
     if(res && +res.EC === 0) {
         return res.DT
     }
     return initOtherUser.followings
 })
 
-export const fetchOtherUserFollowings = createAsyncThunk('otherUser/fetchOtherUserFollowings', async ({ api, data }) => {
-    let res = await api(data)
+export const fetchOtherUserFollowings = createAsyncThunk('otherUser/fetchOtherUserFollowings', async ({ api, email }) => {
+    let res = await api(email)
     if(res && +res.EC === 0) {
         return res.DT
     }
