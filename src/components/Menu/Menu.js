@@ -1,11 +1,13 @@
 import { useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { themeSelector, userLoginSelector } from '../../redux/selector'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse, faMagnifyingGlass, faSquarePlus, faUser } from '@fortawesome/free-solid-svg-icons'
-
 import './Menu.scss'
+
+import { themeSelector, userLoginSelector } from '../../redux/selector'
+import { dispatchSetScrollExplore, dispatchSetScrollHome, dispatchSetScrollMyProfile } from "../../dispatchFunctions/dispatchScrollPosition";
 
 const Menu = () => {
     const userLogin = useSelector(userLoginSelector)
@@ -45,9 +47,24 @@ const Menu = () => {
         handleNavigate(path);
     }
 
+    const handleSavePosition = () => {
+        if(location.pathname === '/') {
+            dispatchSetScrollHome(window.scrollY)
+        }
+        if(location.pathname === '/explore') {
+            dispatchSetScrollExplore(window.scrollY)
+        }
+        if(location.pathname === '/my-profile') {
+            dispatchSetScrollMyProfile(window.scrollY)
+        }
+    }
+
     return (
         userLogin && userLogin.isAuthenticated &&
-        <div className={`menu ${darkTheme && 'menu-dark'}`}>
+        <div
+            className={`menu ${darkTheme && 'menu-dark'}`}
+            onClick={handleSavePosition}
+        >
             <div
                 ref={feedRef}
                 className='menu-feed'

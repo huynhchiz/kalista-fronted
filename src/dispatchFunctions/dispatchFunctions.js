@@ -7,13 +7,16 @@ import themeSlice from "../slices/themeSlice"
 
 import { getAccount, refreshNewAccessToken, getUserAvatar } from "../slices/userLoginSlice"
 import { getAccountService, refreshNewToken, getUserAvatar as getAvatarSV } from "../service/userService"
+import { resetScrollPosition } from "./dispatchScrollPosition"
 
 const dispatchLogin = (data) => {
     store.dispatch(userLoginSlice.actions.login(data))
+    resetScrollPosition()
 }
 
 const dispatchLogout = () => {
     store.dispatch(userLoginSlice.actions.logoutUser())
+    resetScrollPosition()
 }
 
 const dispatchLoadPage = () => {

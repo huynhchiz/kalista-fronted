@@ -6,32 +6,39 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import './MyProfile.scss'
 import YesNoModal from '../re-use/YesNoModal/YesNoModal'
 
-import { themeSelector, userLoginSelector, userLoginAvtSelector, postsSelector, followSelector } from '../../redux/selector'
+import { themeSelector, userLoginSelector, userLoginAvtSelector, postsSelector, followSelector, positionScrollSelector } from '../../redux/selector'
 import { uploadImage } from '../../service/postService'
 import { deleteUserAvatar, uploadAvatar } from '../../service/userService'
 import { dispatchGetUserAvt, dispatchLoadPage, dispatchNoti } from '../../dispatchFunctions/dispatchFunctions'
 import { Waypoint } from 'react-waypoint'
 import ProfileContent from '../re-use/ProfileContent/ProfileContent'
-import { dispatchGetUserPosts } from '../../dispatchFunctions/dispatchPosts'
+import { dispatchAddLimitUserPosts, dispatchGetUserPosts } from '../../dispatchFunctions/dispatchPosts'
 
 const MyProfile = () => {
     const darkTheme = useSelector(themeSelector)
     const userLogin = useSelector(userLoginSelector)
     const userAvatar = useSelector(userLoginAvtSelector)
+    const follow = useSelector(followSelector)
+
     const posts = useSelector(postsSelector)
     const listPost = posts.userPosts.posts
     const countPost = posts.userPosts.count
-    const follow = useSelector(followSelector)
+    const limit = posts.userPosts.limit
     
     const [fileAvatar, setFileAvatar] = useState()
     const [showUpdateAvtBtns, setShowUpdateAvtBtns] = useState(false)
     const [showModalYesno, setShowModalYesno] = useState(false)
-    const [limit, setLimit] = useState(15)
+
+    const position = useSelector(positionScrollSelector)
+    useEffect(() => {
+        window.scrollTo(0, position.myProfile)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const handleAddLimit = () => {
         let condition = (+listPost.length < +limit - 15)
         if (!condition) {
-            setLimit(limit + 15)
+            dispatchAddLimitUserPosts(limit + 15)
         }
     }
 

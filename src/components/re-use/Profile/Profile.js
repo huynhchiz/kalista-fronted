@@ -6,7 +6,7 @@ import { Waypoint } from 'react-waypoint'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { otherUserSelector, userLoginSelector } from '../../../redux/selector'
+import { followSelector, otherUserSelector, userLoginSelector } from '../../../redux/selector'
 import { dispatchFetchOtherUserInFo,
     dispatchFetchOtherUserPosts,
     dispatchFetchOtherUserFollowers,
@@ -14,6 +14,8 @@ import { dispatchFetchOtherUserInFo,
 
 const Profile = () => {
     const [limit, setLimit] = useState(15)
+    const [following, setFollowing] = useState(false)
+
     const [searchParam, setSearchParam] = useSearchParams()
     const emailPr = searchParam.get('user')
 
@@ -21,6 +23,7 @@ const Profile = () => {
 
     const userLogin = useSelector(userLoginSelector)
     const otherUser = useSelector(otherUserSelector)
+    const userLoginFollow = useSelector(followSelector)
     
     useEffect(() => {
         dispatchFetchOtherUserInFo(emailPr)
@@ -35,6 +38,26 @@ const Profile = () => {
             navigate('/my-profile')
         }
     }, [])
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])    
+    
+    useEffect(() => {
+        let isFollowing = 
+            userLoginFollow.followings.list.length > 0 &&
+            userLoginFollow.followings.list.some(item => (
+                item.email === emailPr
+            ))
+        if(isFollowing) {
+            setFollowing(true)
+        }
+
+        if(!isFollowing) {
+            setFollowing(false)
+        }
+
+    }, [userLoginFollow])
 
 
     const handleAddLimit = () => {
@@ -54,6 +77,8 @@ const Profile = () => {
     return (
         <div className='profile'>
             <ProfileHeader
+                following={following}
+                email={emailPr}
                 userAvatar={otherUser.info.avatar}
                 username={otherUser.info.username}
                 countFollowers={otherUser.followers.countFollower}

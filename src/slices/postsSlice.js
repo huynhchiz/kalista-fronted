@@ -1,33 +1,56 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+const initPosts = {
+    limit: 5,
+    posts: [],
+    count: 0
+}
+
 const postsSlice = createSlice({
     name: 'posts',
     initialState: {
-        homePosts: [],
-        explorePosts: [],
-        userPosts: { count: 0, posts: [] }
+        homePosts: initPosts,
+        explorePosts: initPosts,
+        userPosts: {
+            limit: 15,
+            posts: [],
+            count: 0
+        }
+    },
+    reducers: {
+        addHomeLimit: (state, action) => {
+            state.homePosts.limit = action.payload
+        },
+        addExploreLimit: (state, action) => {
+            state.explorePosts.limit = action.payload
+        },
+        addUserPostsLimit: (state, action) => {
+            state.userPosts.limit = action.payload
+        },
     },
     extraReducers: builder =>
     builder
         .addCase(fetchHomePosts.fulfilled, (state, action) => {
-            state.homePosts = action.payload;
+            state.homePosts.posts = action.payload;
         })
         .addCase(fetchHomePosts.rejected, (state, action) => {
-            state.homePosts = [];
+            state.homePosts.posts = [];
         })
 
         .addCase(fetchExplorePosts.fulfilled, (state, action) => {
-            state.explorePosts = action.payload;
+            state.explorePosts.posts = action.payload;
         })
         .addCase(fetchExplorePosts.rejected, (state, action) => {
-            state.explorePosts = [];
+            state.explorePosts.posts = [];
         })
 
         .addCase(fetchUserPosts.fulfilled, (state, action) => {
-            state.userPosts = action.payload;
+            state.userPosts.posts = action.payload.posts
+            state.userPosts.count = action.payload.count
         })
         .addCase(fetchUserPosts.rejected, (state, action) => {
-            state.userPosts = { count: 0, posts: [] };
+            state.userPosts.posts = []
+            state.userPosts.count = 0
         })
 })
 

@@ -1,6 +1,6 @@
 import store from "../redux/store"
 
-import { fetchHomePosts, fetchExplorePosts, fetchUserPosts } from "../slices/postsSlice"
+import postsSlice, { fetchHomePosts, fetchExplorePosts, fetchUserPosts } from "../slices/postsSlice"
 
 import { getFollowingPosts, getNotFollowingPosts, getUserPosts } from "../service/postService"
 
@@ -10,12 +10,18 @@ const dispatchGetHomePosts = (limit) => {
         limit: limit
     }))
 }
+const dispatchAddLimitHomePosts = (limit) => {
+    store.dispatch(postsSlice.actions.addHomeLimit(limit))
+}
 
 const dispatchGetExplorePosts = (limit) => {
     store.dispatch(fetchExplorePosts({
         api: getNotFollowingPosts,
         limit: limit
     }))
+}
+const dispatchAddLimitExplorePosts = (limit) => {
+    store.dispatch(postsSlice.actions.addExploreLimit(limit))
 }
 
 const dispatchGetUserPosts = (email, limit) => {
@@ -25,9 +31,16 @@ const dispatchGetUserPosts = (email, limit) => {
         limit: limit
     }))
 }
+const dispatchAddLimitUserPosts = (limit) => {
+    store.dispatch(postsSlice.actions.addUserPostsLimit(limit))
+}
 
 export {
     dispatchGetHomePosts,
     dispatchGetExplorePosts,
-    dispatchGetUserPosts
+    dispatchGetUserPosts,
+    dispatchAddLimitHomePosts,
+    dispatchAddLimitExplorePosts,
+    dispatchAddLimitUserPosts,
+
 }

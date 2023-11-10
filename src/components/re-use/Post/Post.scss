@@ -26,6 +26,14 @@
             margin-left: 4px;
             display: flex;
             align-items: center;
+            &:hover {
+                cursor: pointer;
+            }
+            &:hover ~ .post-username {
+                p {
+                    text-decoration: underline;
+                }
+            }
             img {
                 width: 32px;
                 height: 32px;
@@ -41,6 +49,10 @@
             p {
                 font-size: 16px;
                 font-weight: 600;
+                &:hover {
+                    cursor: pointer;
+                    text-decoration: underline;
+                }
             }
         }
 
@@ -155,6 +167,23 @@
             display: flex;
         }
 
+        .liked-noti {
+            animation: liked ease-in 1s forwards;
+        }
+
+        @keyframes liked {
+            0% {
+                color: auto;
+            }
+            50% {
+                font-size: 14px;
+                color: red;
+            }
+            100% {
+                color: auto;
+            }
+        }
+
         p {
             margin-top: 4px;
             margin-right: 20px;
@@ -187,3 +216,4 @@
         }
     }
 }
+

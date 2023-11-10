@@ -7,14 +7,16 @@ import { faPlay, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 
 import { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { themeSelector, userLoginSelector } from '../../../redux/selector'
-import { followSV, unfollowSV } from '../../../service/followService'
+import { followSV } from '../../../service/followService'
 import { dispatchGetUserFollowing } from '../../../dispatchFunctions/dispatchFollows'
+import { dispatchSetScrollHome, dispatchSetScrollExplore } from '../../../dispatchFunctions/dispatchScrollPosition'
 import { countOnePostLike, likePostSV, unlikePostSV } from '../../../service/postService'
 
 const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, followType, countLike, countComment, liked }) => {
     const navigate = useNavigate()
+    const location = useLocation()
     const darkTheme = useSelector(themeSelector)
     const userLogin = useSelector(userLoginSelector)
 
@@ -51,14 +53,14 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
         }
     }
 
-    const handleUnfollow = async () => {
-        let res = await unfollowSV(email)
-        if(res && +res.EC === 0) {
-            console.log(res.EM);
-            setFollow(false)
-            dispatchGetUserFollowing(userLogin.account.email, 2)
-        }
-    }
+    // const handleUnfollow = async () => {
+    //     let res = await unfollowSV(email)
+    //     if(res && +res.EC === 0) {
+    //         console.log(res.EM);
+    //         setFollow(false)
+    //         dispatchGetUserFollowing(userLogin.account.email, 2)
+    //     }
+    // }
 
     const handleLikePost = async (postId) => {
         let res = await likePostSV(postId)
@@ -67,8 +69,8 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
             let res2 = await countOnePostLike(postId)
             if (res2 && +res2.EC === 0) {
                 setCountLiked(res2.DT)
+                setLike(true)
             }
-            setLike(true)
         }
     }
 
@@ -79,12 +81,19 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
             let res2 = await countOnePostLike(postId)
             if (res2 && +res2.EC === 0) {
                 setCountLiked(res2.DT)
+                setLike(false)
             }
-            setLike(false)
         }
     }
     
     const handleNavigateToProfile = (email) => {
+        if(location.pathname === '/') {
+            dispatchSetScrollHome(window.scrollY)
+        }
+        if(location.pathname === '/explore') {
+            dispatchSetScrollExplore(window.scrollY)
+        }
+
         if(email === userLogin.account.email) {
             navigate('/my-profile')
         } else {
@@ -97,7 +106,7 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
             <div className='post-frame'>
 
                 <div className='post-user'>
-                    <div className='post-avatar'>
+                    <div className='post-avatar' onClick={() => handleNavigateToProfile(email)}>
                         <img className='' src={avatar ? avatar : userAvatarUnset} alt='avatar'/>
                     </div>
 
@@ -118,13 +127,14 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
                                 onClick={handleFollow}
                             >Follow</BigButton>
                         </div>
-                            :
-                        <div className='post-unfollow-btn'>
-                            <BigButton
-                                className={'unfollow-button'}
-                                onClick={handleUnfollow}
-                            >Unfollow</BigButton>
-                        </div>)
+                            : <></>
+                        // <div className='post-unfollow-btn'>
+                        //     <BigButton
+                        //         className={'unfollow-button'}
+                        //         onClick={handleUnfollow}
+                        //     >Unfollow</BigButton>
+                        // </div>
+                        )
                     }
                     
                 </div>
@@ -179,19 +189,19 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
                             <p>{countComment ? countComment : '0'} comments</p>
                             {
                                 like && 
-                                <p>You liked this post</p>
+                                <p className='liked-noti'>You liked this post</p>
                             }
                             {
-                                countLiked && 
+                                countLiked > 0 ?
                                 <p>{countLiked >= 2 ? countLiked + ' likes' : countLiked + ' like'}</p>
+                                :
+                                <p>0 like</p>
                             }
                         </div>
                         <p>{date}</p>
                     </div>
                 </div>
-
                 
-
             </div>
         </div>
     )

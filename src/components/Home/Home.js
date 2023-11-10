@@ -5,25 +5,28 @@ import { Waypoint } from 'react-waypoint'
 import './Home.scss'
 import Post from '../re-use/Post/Post'
 
-import { themeSelector,  postsSelector } from '../../redux/selector'
-import { dispatchGetHomePosts } from '../../dispatchFunctions/dispatchPosts'
+import { themeSelector,  postsSelector, positionScrollSelector } from '../../redux/selector'
+import { dispatchAddLimitHomePosts, dispatchGetHomePosts } from '../../dispatchFunctions/dispatchPosts'
 
 const Home = () => {
     const darkTheme = useSelector(themeSelector)
     const posts = useSelector(postsSelector)
-    const postsHome = posts.homePosts
+    const postsHome = posts.homePosts.posts
+    const limit = posts.homePosts.limit
 
-    const [limit, setLimit] = useState(5)
     const [fullPost, setFullPost] = useState(false)
-
+    
+    const position = useSelector(positionScrollSelector)
+    
     const handleAddLimit = () => {
         let condition = (+postsHome.length < +limit - 5)
         if (!condition) {
-            setLimit(limit => limit + 5)
+            dispatchAddLimitHomePosts(limit + 5)
         } else if (condition) {
             setFullPost(true)
         }
     }
+    
     useEffect(() => {
         if(limit > 5) {
             dispatchGetHomePosts(limit)
@@ -31,7 +34,11 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [limit])
 
-
+    useEffect(() => {
+        window.scrollTo(0, position.home)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+    
     return (
         <div className={`home ${darkTheme ? 'home-dark' : ''}`}>
             {postsHome && postsHome.map(post => (

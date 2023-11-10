@@ -5,21 +5,27 @@ import { useSelector } from 'react-redux'
 
 import Post from '../re-use/Post/Post'
 
-import { themeSelector, postsSelector } from '../../redux/selector'
-import { dispatchGetExplorePosts } from '../../dispatchFunctions/dispatchPosts'
+import { themeSelector, postsSelector, positionScrollSelector } from '../../redux/selector'
+import { dispatchAddLimitExplorePosts, dispatchGetExplorePosts } from '../../dispatchFunctions/dispatchPosts'
 
 const Explore = () => {
     const darkTheme = useSelector(themeSelector)
     const posts = useSelector(postsSelector)
-    const postsExplore = posts.explorePosts
+    const postsExplore = posts.explorePosts.posts
+    const limit = posts.homePosts.limit
 
-    const [limit, setLimit] = useState(5)
     const [fullPost, setFullPost] = useState(false)
+
+    const position = useSelector(positionScrollSelector)
+    useEffect(() => {
+        window.scrollTo(0, position.explore)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const handleAddLimit = () => {
         let condition = (+postsExplore.length < +limit - 5)
         if (!condition) {
-            setLimit(limit => limit + 5)
+            dispatchAddLimitExplorePosts(limit + 5)
         } else if (condition) {
             setFullPost(true)
         }

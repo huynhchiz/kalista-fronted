@@ -1,5 +1,6 @@
 .profile-header {
     display: flex;
+    justify-content: space-between;
     padding: 12px;
     border-bottom: 1px solid #ddd;
 
@@ -16,6 +17,7 @@
 
     .profile-info {
         margin-left: 24px;
+        flex: 1;
 
         h3 {
             margin-bottom: 12px;
@@ -23,13 +25,75 @@
 
         .info-follow {
             display: flex;
-            justify-content: space-between;
             margin-bottom: 4px;
         }
 
+        p {
+            @media (max-width: 500px) {
+                font-size: 12px;
+            }
+        }
+
         p + p {
-            margin-left: 24px; 
-         }
+            margin-left: 18px; 
+        }
+    }
+
+    .profile-followed {
+        display: flex;
+        align-items: center;
+        margin-right: 24px;
+
+        @media (max-width: 500px) {
+            margin-right: 4px;
+        }
+
+        .profile-following-btn {
+            width: 120px;
+            height: 38px;
+            background-color: #ddd;
+            outline: none;
+            border: none;
+            border-radius: 3px;
+            font-size: 16px;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+
+            @media (max-width: 500px) {
+                width: 92px;
+                font-size: 12px;
+            }
+            .check-icon {
+                margin-left: 4px;
+                font-size: 14px;
+            }
+        }        
+    }
+
+    .profile-not-following-yet {
+        display: flex;
+        align-items: center;
+        margin-right: 24px;
+
+        @media (max-width: 500px) {
+            margin-right: 4px;
+        }
+        .profile-follow-btn {
+            width: 120px;
+            height: 38px;
+            background-color: var(--color-primary);
+            outline: none;
+            border: none;
+            border-radius: 3px;
+            font-size: 16px;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+
+            @media (max-width: 500px) {
+                width: 92px;
+                font-size: 12px;
+            }
+        }
     }
 }
 
