@@ -15,3 +15,5 @@ export const followSelector = state => state.follow
 export const otherUserSelector = state => state.otherUser
 
 export const positionScrollSelector = state => state.positionScroll
+
+export const previewPostSelector = state => state.previewPost.post

@@ -13,6 +13,7 @@
                 width: calc(var(--app-width) / 3 - 6px);
                 height: calc(var(--app-width) / 3 - 6px);
                 object-fit: cover;
+                cursor: pointer;
     
                 @media (max-width: 500px) {
                     width: calc(var(--app-width-responsive) / 3 - 6px);
@@ -25,6 +26,7 @@
                 width: calc(var(--app-width) / 3 - 6px);
                 height: calc(var(--app-width) / 3 - 6px);
                 object-fit: cover;
+                cursor: pointer;
     
                 @media (max-width: 500px) {
                     width: calc(var(--app-width-responsive) / 3 - 6px);

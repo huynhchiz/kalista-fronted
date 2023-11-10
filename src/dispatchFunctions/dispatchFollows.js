@@ -1,6 +1,6 @@
 import store from "../redux/store"
 
-import { fetchUserFollowing, fetchUserFollower } from "../slices/followSlices"
+import followSlice, { fetchUserFollowing, fetchUserFollower } from "../slices/followSlices"
 
 import { getUsersFollowingSV, getFollowersSV } from "../service/followService"
 
@@ -18,7 +18,12 @@ const dispatchGetUserFollower = (limit) => {
     }))
 }
 
+const dispatchResetFollow = () => {
+    store.dispatch(followSlice.actions.resetFollows())
+}
+
 export {
     dispatchGetUserFollowing,
-    dispatchGetUserFollower
+    dispatchGetUserFollower,
+    dispatchResetFollow
 }

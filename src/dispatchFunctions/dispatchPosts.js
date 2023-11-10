@@ -2,7 +2,8 @@ import store from "../redux/store"
 
 import postsSlice, { fetchHomePosts, fetchExplorePosts, fetchUserPosts } from "../slices/postsSlice"
 
-import { getFollowingPosts, getNotFollowingPosts, getUserPosts } from "../service/postService"
+import { getFollowingPosts, getNotFollowingPosts, getUserPosts, previewOnePost } from "../service/postService"
+import { fetchOnePreviewPost } from "../slices/previewPostSlice"
 
 const dispatchGetHomePosts = (limit) => {
     store.dispatch(fetchHomePosts({
@@ -35,6 +36,17 @@ const dispatchAddLimitUserPosts = (limit) => {
     store.dispatch(postsSlice.actions.addUserPostsLimit(limit))
 }
 
+const dispatchResetPosts = () => {
+    store.dispatch(postsSlice.actions.resetPosts())
+}
+
+const dispatchPreviewOnePost = (postId) => {
+    store.dispatch(fetchOnePreviewPost({
+        api: previewOnePost,
+        postId: postId
+    }))
+}
+
 export {
     dispatchGetHomePosts,
     dispatchGetExplorePosts,
@@ -42,5 +54,7 @@ export {
     dispatchAddLimitHomePosts,
     dispatchAddLimitExplorePosts,
     dispatchAddLimitUserPosts,
+    dispatchResetPosts,
+    dispatchPreviewOnePost
 
 }

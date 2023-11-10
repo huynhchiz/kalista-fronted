@@ -47,6 +47,10 @@ const countOnePostLike = (postId) => {
     return axios.post('/api/post/count-like', { postId })
 }
 
+const previewOnePost = (postId) => {
+    return axios.get(`/api/post/preview/${postId}`)
+}
+
 export {
     uploadImage,
     uploadVideo,
@@ -57,5 +61,6 @@ export {
     getUserPosts,
     likePostSV,
     unlikePostSV,
-    countOnePostLike
+    countOnePostLike,
+    previewOnePost
 }

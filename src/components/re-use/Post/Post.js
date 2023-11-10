@@ -1,5 +1,4 @@
 import './Post.scss'
-import BigButton from '../BigButton/BigButton'
 import userAvatarUnset from '../../../assets/images/user-avatar-unset.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp as fTU2, faComments } from '@fortawesome/free-regular-svg-icons'
@@ -9,12 +8,10 @@ import { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { themeSelector, userLoginSelector } from '../../../redux/selector'
-import { followSV } from '../../../service/followService'
-import { dispatchGetUserFollowing } from '../../../dispatchFunctions/dispatchFollows'
 import { dispatchSetScrollHome, dispatchSetScrollExplore } from '../../../dispatchFunctions/dispatchScrollPosition'
 import { countOnePostLike, likePostSV, unlikePostSV } from '../../../service/postService'
 
-const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, followType, countLike, countComment, liked }) => {
+const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, countLike, countComment, liked }) => {
     const navigate = useNavigate()
     const location = useLocation()
     const darkTheme = useSelector(themeSelector)
@@ -24,7 +21,6 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
     const [seeMoreCaption, setSeeMoreCaption] = useState(false)
     const [countLiked, setCountLiked] = useState(countLike)
     const [like, setLike] = useState(liked)
-    const [follow, setFollow] = useState(followType)
 
     const videoRef = useRef()
 
@@ -43,24 +39,6 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
             setSeeMoreCaption(!seeMoreCaption)
         }
     }
-
-    const handleFollow = async () => {
-        let res = await followSV(email)
-        if(res && +res.EC === 0) {
-            console.log(res.EM);
-            setFollow(true)
-            dispatchGetUserFollowing(userLogin.account.email, 2)
-        }
-    }
-
-    // const handleUnfollow = async () => {
-    //     let res = await unfollowSV(email)
-    //     if(res && +res.EC === 0) {
-    //         console.log(res.EM);
-    //         setFollow(false)
-    //         dispatchGetUserFollowing(userLogin.account.email, 2)
-    //     }
-    // }
 
     const handleLikePost = async (postId) => {
         let res = await likePostSV(postId)
@@ -117,25 +95,6 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
                             {username}
                         </p>
                     </div>
-
-                    {
-                        (userLogin.account.email !== email) && 
-                        (!follow ? 
-                        <div className='post-follow-btn'>
-                            <BigButton
-                                className={'follow-button'}
-                                onClick={handleFollow}
-                            >Follow</BigButton>
-                        </div>
-                            : <></>
-                        // <div className='post-unfollow-btn'>
-                        //     <BigButton
-                        //         className={'unfollow-button'}
-                        //         onClick={handleUnfollow}
-                        //     >Unfollow</BigButton>
-                        // </div>
-                        )
-                    }
                     
                 </div>
 

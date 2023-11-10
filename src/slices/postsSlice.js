@@ -27,6 +27,17 @@ const postsSlice = createSlice({
         addUserPostsLimit: (state, action) => {
             state.userPosts.limit = action.payload
         },
+        resetPosts: (state, action) => {
+            state = {
+                homePosts: initPosts,
+                explorePosts: initPosts,
+                userPosts: {
+                    limit: 15,
+                    posts: [],
+                    count: 0
+                }
+            }
+        }
     },
     extraReducers: builder =>
     builder

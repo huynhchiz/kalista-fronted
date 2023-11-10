@@ -14,7 +14,7 @@ const dispatchSetScrollMyProfile = (position) => {
     store.dispatch(positionScrollSlice.actions.setMyProfilePosition(position))
 }
 
-const resetScrollPosition = () => {
+const dispatchResetScrollPosition = () => {
     dispatchSetScrollHome(0)
     dispatchSetScrollExplore(0)
     dispatchSetScrollMyProfile(0)
@@ -25,5 +25,5 @@ export {
     dispatchSetScrollHome,
     dispatchSetScrollExplore,
     dispatchSetScrollMyProfile,
-    resetScrollPosition
+    dispatchResetScrollPosition
 }

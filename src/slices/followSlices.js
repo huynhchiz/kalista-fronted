@@ -8,6 +8,14 @@ const followSlice = createSlice({
         followers: initFollow,
         followings: initFollow,
     },
+    reducers: {
+        resetFollows: (state, action) => {
+            state = {
+                followers: initFollow,
+                followings: initFollow,
+            }
+        }
+    },
     extraReducers: builder => {
         builder
             .addCase(fetchUserFollowing.fulfilled, (state, action) => {

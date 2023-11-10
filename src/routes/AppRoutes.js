@@ -13,6 +13,7 @@ import Posting from "../components/Posting/Posting";
 import MyProfile from "../components/MyProfile/MyProfile";
 import Profile from "../components/re-use/Profile/Profile";
 import { dispatchGetAccount } from "../dispatchFunctions/dispatchFunctions";
+import PreviewPost from "../components/re-use/PreviewPost/PreviewPost";
 
 const AppRoutes = () => {
     let checkLogin = JSON.parse(localStorage.getItem('checkLogin'))
@@ -31,6 +32,7 @@ const AppRoutes = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/welcome" element={<Welcome />} />
             <Route path='/profile' element={<Profile />} />
+            <Route path='/preview' element={<PreviewPost />} />
 
             {/* privates */}
             <Route element={<PrivateRoutes />}>
