@@ -12,7 +12,7 @@ import { userLoginSelector } from '../../redux/selector'
 import { uploadImage as uploadImageSV, uploadVideo as uploadVideoSV, uploadPost as uploadPostSV } from '../../service/postService'
 import { dispatchLoadPage, dispatchNoti } from '../../dispatchFunctions/dispatchFunctions'
 import { dispatchGetHomePosts, dispatchGetUserPosts } from '../../dispatchFunctions/dispatchPosts'
-import { dispatchSetScrollHome } from '../../dispatchFunctions/dispatchScrollPosition'
+import { dispatchResetScrollPosition } from '../../dispatchFunctions/dispatchScrollPosition'
 
 const Posting = () => {
     const navigate = useNavigate()
@@ -94,6 +94,7 @@ const Posting = () => {
                 dispatchLoadPage()
                 dispatchGetHomePosts(5)
                 dispatchGetUserPosts(userLogin.account.email, 15)
+                dispatchResetScrollPosition()
                 navigate('/')
 
             } else {
@@ -122,9 +123,8 @@ const Posting = () => {
                 dispatchLoadPage()
                 dispatchGetHomePosts(5)
                 dispatchGetUserPosts(userLogin.account.email, 15)
-                dispatchSetScrollHome(0)
+                dispatchResetScrollPosition()
                 navigate('/')
-
             } else {
                 dispatchLoadPage()
                 console.log(finalRes.EM);

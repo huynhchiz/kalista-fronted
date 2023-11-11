@@ -10,6 +10,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { themeSelector, userLoginSelector } from '../../../redux/selector'
 import { dispatchSetScrollHome, dispatchSetScrollExplore } from '../../../dispatchFunctions/dispatchScrollPosition'
 import { countOnePostLike, likePostSV, unlikePostSV } from '../../../service/postService'
+import PostComment from '../PostComment/PostComment'
 
 const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, countLike, countComment, liked }) => {
     const navigate = useNavigate()
@@ -21,6 +22,7 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
     const [seeMoreCaption, setSeeMoreCaption] = useState(false)
     const [countLiked, setCountLiked] = useState(countLike)
     const [like, setLike] = useState(liked)
+    const [showComments, setShowComments] = useState(false)
 
     const videoRef = useRef()
 
@@ -43,7 +45,6 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
     const handleLikePost = async (postId) => {
         let res = await likePostSV(postId)
         if(res && +res.EC === 0) {
-            console.log(res.EM);
             let res2 = await countOnePostLike(postId)
             if (res2 && +res2.EC === 0) {
                 setCountLiked(res2.DT)
@@ -55,7 +56,6 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
     const handleUnlikePost = async (postId) => {
         let res = await unlikePostSV(postId)
         if(res && +res.EC === 0) {
-            console.log(res.EM);
             let res2 = await countOnePostLike(postId)
             if (res2 && +res2.EC === 0) {
                 setCountLiked(res2.DT)
@@ -77,6 +77,10 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
         } else {
             navigate(`/profile?user=${email}`)
         }
+    }
+
+    const handleShowComments = () => {
+        setShowComments(true)
     }
 
     return (
@@ -112,54 +116,69 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
 
                     }
                 </div>
+                
+                {
+                    showComments ? 
+                    <div className='hide-comment-btn' onClick={() => setShowComments(false)}>
+                        Hide comments ------------------------------------
+                    </div> : <></>
+                }
 
-                <div className='post-footer'>
-                    <div className='post-interactions'>
-                        {
-                            caption && seeMoreCaption ?
-                            <div className='post-caption post-caption-read' >
-                                <p onClick={handleReadCaption}>{caption}</p>
-                            </div>
-                            : caption &&
-                            <div className='post-caption' >
-                                <p>{caption}</p>
-                                <div className='post-caption-opacity' onClick={handleReadCaption}></div>
-                            </div>
-                        }
 
-                        <div className='post-comments'>
-                            <FontAwesomeIcon icon={faComments} />
+                {!showComments ?
+                    (
+                    <div className='post-footer'>
+                        <div className='post-interactions'>
+                            {
+                                caption && seeMoreCaption ?
+                                <div className='post-caption post-caption-read' >
+                                    <p onClick={handleReadCaption}>{caption}</p>
+                                </div>
+                                : caption &&
+                                <div className='post-caption' >
+                                    <p>{caption}</p>
+                                    <div className='post-caption-opacity' onClick={handleReadCaption}></div>
+                                </div>
+                            }
+
+                            <div className='post-comments'
+                                onClick={handleShowComments}
+                            >
+                                <FontAwesomeIcon icon={faComments} />
+                            </div>
+
+                            {
+                                like === true ? 
+                                <div className='post-unlike' onClick={() => handleUnlikePost(postId)}>
+                                    <FontAwesomeIcon icon={faThumbsUp} />
+                                </div> :
+                                <div className='post-like' onClick={() => handleLikePost(postId)}>
+                                    <FontAwesomeIcon icon={fTU2} />
+                                </div>
+                            }
+
                         </div>
 
-                        {
-                            like === true ? 
-                            <div className='post-unlike' onClick={() => handleUnlikePost(postId)}>
-                                <FontAwesomeIcon icon={faThumbsUp} />
-                            </div> :
-                            <div className='post-like' onClick={() => handleLikePost(postId)}>
-                                <FontAwesomeIcon icon={fTU2} />
+                        <div className={`post-info ${caption ? '' : 'post-info-top'}`}>
+                            <div className='likes-comments'>
+                                <p>{countComment ? countComment : '0'} comments</p>
+                                {
+                                    like && 
+                                    <p className='liked-noti'>You liked this post</p>
+                                }
+                                {
+                                    countLiked > 0 ?
+                                    <p>{countLiked >= 2 ? countLiked + ' likes' : countLiked + ' like'}</p>
+                                    :
+                                    <p>0 like</p>
+                                }
                             </div>
-                        }
-
-                    </div>
-
-                    <div className={`post-info ${caption ? '' : 'post-info-top'}`}>
-                        <div className='likes-comments'>
-                            <p>{countComment ? countComment : '0'} comments</p>
-                            {
-                                like && 
-                                <p className='liked-noti'>You liked this post</p>
-                            }
-                            {
-                                countLiked > 0 ?
-                                <p>{countLiked >= 2 ? countLiked + ' likes' : countLiked + ' like'}</p>
-                                :
-                                <p>0 like</p>
-                            }
+                            <p>{date}</p>
                         </div>
-                        <p>{date}</p>
-                    </div>
-                </div>
+                    </div>) :
+
+                    <PostComment postId={postId} />
+                }
                 
             </div>
         </div>

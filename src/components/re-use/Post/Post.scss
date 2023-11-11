@@ -114,9 +114,18 @@
         }
     }
 
+    .hide-comment-btn {
+        margin-left: 4px;
+        margin-top: 4px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
     .post-footer {
         position: relative;
     }
+
     .post-interactions {
         padding: 0 4px 0 8px;
         display: flex;
@@ -160,7 +169,7 @@
     }
 
     .post-info {
-        margin-top: 4px;
+        margin-top: 2px;
         padding: 0 4px 0 8px;
 
         .likes-comments {
@@ -214,6 +223,10 @@
         .post-like, .post-unlike, .post-comments {
             color: var(--color-primary);
         }
+    }
+
+    .hide-comment-btn {
+        color: var(--text-white);
     }
 }
 

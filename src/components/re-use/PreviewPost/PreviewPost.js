@@ -21,7 +21,7 @@ const PreviewPost = () => {
     return (
         <div className='single-post'>
             <Post
-                postId={post.id}
+                postId={post.postId}
                 src={post.src}
                 type={post.type}
                 alt={post.alt}

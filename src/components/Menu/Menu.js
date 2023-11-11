@@ -38,13 +38,14 @@ const Menu = () => {
     }
 
     const navigate = useNavigate()
-    const handleNavigate = (path) => {
-        navigate(path)
-    }
 
-    const handleChangeMenuOption = (ref, path) => {
-        handleActiveMenuOption(ref);
-        handleNavigate(path);
+    const handleClickToPage = (ref, path) => {
+        handleActiveMenuOption(ref)
+        if(location.pathname === path) {
+            window.scrollTo({top: 0, behavior: 'smooth'})
+        } else {
+            navigate(path)
+        }
     }
 
     const handleSavePosition = () => {
@@ -65,30 +66,27 @@ const Menu = () => {
             className={`menu ${darkTheme && 'menu-dark'}`}
             onClick={handleSavePosition}
         >
-            <div
-                ref={feedRef}
+            <div ref={feedRef}
                 className='menu-feed'
-                onClick={() => handleChangeMenuOption(feedRef, '/')}
+                onClick={() => handleClickToPage(feedRef, '/')}
             >
                 <p className='menu-title'>
                     <FontAwesomeIcon icon={faHouse} />
                 </p>
             </div>
 
-            <div
-                ref={exploreRef}
+            <div ref={exploreRef}
                 className='menu-explore'
-                onClick={() => handleChangeMenuOption(exploreRef, '/explore')}
+                onClick={() => handleClickToPage(exploreRef, '/explore')}
             >
                 <p className='menu-title'>
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </p>
             </div>
 
-            <div
-                ref={postingRef}
+            <div ref={postingRef}
                 className='menu-post'
-                onClick={() => handleChangeMenuOption(postingRef, '/posting')}
+                onClick={() => handleClickToPage(postingRef, '/posting')}
             >
                 <p className='menu-title'>
                     <FontAwesomeIcon icon={faSquarePlus} />
@@ -98,7 +96,7 @@ const Menu = () => {
             <div
                 ref={accountRef}
                 className='menu-account'
-                onClick={() => handleChangeMenuOption(accountRef, '/my-profile')}
+                onClick={() => handleClickToPage(accountRef, '/my-profile')}
             >
                 <p className='menu-title'>
                     <FontAwesomeIcon icon={faUser} />

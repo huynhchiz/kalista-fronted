@@ -14,6 +14,8 @@ import { dispatchResetFollow } from "./dispatchFollows"
 const dispatchLogin = (data) => {
     store.dispatch(userLoginSlice.actions.login(data))
     dispatchResetScrollPosition()
+    dispatchResetPosts()
+    dispatchResetFollow()
 }
 
 const dispatchLogout = () => {

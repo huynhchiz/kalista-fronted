@@ -7,6 +7,7 @@ import { dispatchGetAccount, dispatchGetUserAvt, dispatchLoadPage } from '../../
 import { dispatchGetHomePosts, dispatchGetExplorePosts, dispatchGetUserPosts } from '../../dispatchFunctions/dispatchPosts'
 import { userLoginSelector } from '../../redux/selector'
 import { dispatchGetUserFollowing, dispatchGetUserFollower } from '../../dispatchFunctions/dispatchFollows'
+import { dispatchResetScrollPosition } from '../../dispatchFunctions/dispatchScrollPosition'
 
 const Welcome = () => {
     const userLogin = useSelector(userLoginSelector)
@@ -15,11 +16,15 @@ const Welcome = () => {
     useEffect(() => {
         dispatchLoadPage()
         if (userLogin && userLogin.isAuthenticated) {
+            dispatchResetScrollPosition()
+            
             dispatchGetAccount()
             dispatchGetUserAvt()
+
             dispatchGetHomePosts(5)
             dispatchGetExplorePosts(5)
             dispatchGetUserPosts(userLogin.account.email, 15)
+
             dispatchGetUserFollowing(userLogin.account.email, 2)
             dispatchGetUserFollower(userLogin.account.email, 2)
 

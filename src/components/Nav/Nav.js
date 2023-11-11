@@ -13,7 +13,9 @@ import Setting from '../re-use/Setting/Setting'
 const Nav = () => {
     const location = useLocation()
     const navigate = useNavigate()
+
     const darkTheme = useSelector(themeSelector)
+
     const [showToggle, setShowToggle] = useState(false)
 
     useEffect(() => {
