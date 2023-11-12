@@ -20,7 +20,7 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
 
     const [playVideo, setPlayVideo] = useState(false)
     const [seeMoreCaption, setSeeMoreCaption] = useState(false)
-    const [countLiked, setCountLiked] = useState(countLike)
+    // const [countLiked, setCountLiked] = useState(countLike)
     const [like, setLike] = useState(liked)
     const [showComments, setShowComments] = useState(false)
 
@@ -47,7 +47,7 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
         if(res && +res.EC === 0) {
             let res2 = await countOnePostLike(postId)
             if (res2 && +res2.EC === 0) {
-                setCountLiked(res2.DT)
+                // setCountLiked(res2.DT)
                 setLike(true)
             }
         }
@@ -58,7 +58,7 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
         if(res && +res.EC === 0) {
             let res2 = await countOnePostLike(postId)
             if (res2 && +res2.EC === 0) {
-                setCountLiked(res2.DT)
+                // setCountLiked(res2.DT)
                 setLike(false)
             }
         }
@@ -167,8 +167,8 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
                                     <p className='liked-noti'>You liked this post</p>
                                 }
                                 {
-                                    countLiked > 0 ?
-                                    <p>{countLiked >= 2 ? countLiked + ' likes' : countLiked + ' like'}</p>
+                                    countLike > 0 ?
+                                    <p>{countLike >= 2 ? countLike + ' likes' : countLike + ' like'}</p>
                                     :
                                     <p>0 like</p>
                                 }
@@ -177,7 +177,10 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
                         </div>
                     </div>) :
 
-                    <PostComment postId={postId} />
+                    <PostComment
+                        postId={postId}
+                        countComment={countComment}
+                    />
                 }
                 
             </div>

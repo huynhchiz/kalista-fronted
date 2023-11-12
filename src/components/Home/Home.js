@@ -21,7 +21,7 @@ const Home = () => {
     const handleAddLimit = () => {
         let condition = (+postsHome.length < +limit - 5)
         if (!condition) {
-            dispatchAddLimitHomePosts(limit + 5)
+            dispatchAddLimitHomePosts(+limit + 5)
         } else if (condition) {
             setFullPost(true)
         }
@@ -53,8 +53,8 @@ const Home = () => {
                     username={post.User.username}
                     email={post.User.email}
                     avatar={post.User.avatar}
-                    countLike={post.postLikeCount}
-                    countComment={post.postCommentCount}
+                    countLike={post.countLike}
+                    countComment={post.countComment}
                     liked={post.liked}
                 />
             ))}

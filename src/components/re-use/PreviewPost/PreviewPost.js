@@ -14,6 +14,8 @@ const PreviewPost = () => {
     
     const post = useSelector(previewPostSelector)
 
+    console.log(post);
+
     useEffect(() => {
         dispatchPreviewOnePost(paramPostId)
     }, [paramPostId])

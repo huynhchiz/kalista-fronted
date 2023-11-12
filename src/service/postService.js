@@ -47,6 +47,10 @@ const countOnePostLike = (postId) => {
     return axios.post('/api/post/count-like', { postId })
 }
 
+const countOnePostComments = (postId) => {
+    return axios.post('/api/post/count-comment', { postId })
+}
+
 const previewOnePost = (postId) => {
     return axios.get(`/api/post/preview/${postId}`)
 }
@@ -62,5 +66,6 @@ export {
     likePostSV,
     unlikePostSV,
     countOnePostLike,
+    countOnePostComments,
     previewOnePost
 }

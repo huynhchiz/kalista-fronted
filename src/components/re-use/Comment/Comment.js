@@ -8,35 +8,62 @@ import { useSelector } from 'react-redux'
 import { useState, useRef, useEffect } from 'react'
 
 import { themeSelector } from '../../../redux/selector'
+import { countCommentLikesSV, likeCommentSV, unlikeCommentSV } from '../../../service/commentService'
 
-const Comment = () => {
+const Comment = ({ data }) => {
     const darkTheme = useSelector(themeSelector)
     const commnentRef = useRef()
 
-    const [like, setLike] = useState(false)
-    const [seeMore, setSeeMore] = useState(false)
+    const [like, setLike] = useState(data.liked)
+    const [seeMoreBtn, setSeeMoreBtn] = useState(false)
+    const [hideBtn, setHideBtn] = useState(false)
     const [showAllCmt, setShowAllCmt] = useState(false)
-
-    const comment = 'kahsdhasdkjahsdjhaskjdh akjsdhkjasdhkjasdhkjashdkj ashdkjhasdkjashdkjahsdkj haskjdhaskjdhaskjdhakjsdhkj xin chao jashdkjahsdkjashdk'
+    const [countLike, setCountLike] = useState(0)
 
     useEffect(() => {
-        if (comment.length > 80) {
-            setSeeMore(true)
+        if (data.comment.length >= 80) {
+            setSeeMoreBtn(true)
+            setHideBtn(true)
         }
     }, [])
 
-    const handleLike = () => {
-        setLike(!like)
+    const fetchLikeCount = async () => {
+        let res = await countCommentLikesSV(data.id)
+        if(res && +res.EC === 0) {
+            setCountLike(+res.DT)
+        }
+    }
+
+    useEffect(() => {
+        fetchLikeCount()
+    }, [])
+
+    const handleLike = async () => {
+        let res = await likeCommentSV(data.id)
+        if(res && +res.EC === 0) {
+            console.log(res.EM);
+            fetchLikeCount()
+            setLike(true)
+        }
+    }
+
+    const handleUnLike = async () => {
+        let res = await unlikeCommentSV(data.id)
+        if(res && +res.EC === 0) {
+            console.log(res.EM);
+            fetchLikeCount()
+            setLike(false)
+        }
     }
 
     const handleShowAllCmt = () => {
         setShowAllCmt(true)
-        setSeeMore(false)
+        setSeeMoreBtn(false)
     }
 
     const handleHideCmt = () => {
         setShowAllCmt(false)
-        setSeeMore(true)
+        setSeeMoreBtn(true)
     }
 
     return (
@@ -44,33 +71,30 @@ const Comment = () => {
 
             <div className='post-comment-left'>
                 <div className='post-comment-user'>
-                    {/*  */}
-                    <img src={avatarUnset} alt='' />
+                    <img src={data.User.avatar ? data.User.avatar : avatarUnset} alt='_avatar_cmt' />
                     <p className='post-comment-username'>
-                    {/*  */}
-                        huynh chi
+                        {data.User.username ? data.User.username : 'unname'}
                     </p>
                 </div>
 
                 <p className={`post-comment-content ${!showAllCmt ? 'post-comment-content-hide' : ''}`} ref={commnentRef}>
-                    {/*  */}
-                    {comment}
+                    {data.comment}
                 </p>
 
-                {seeMore ?
+                {seeMoreBtn ?
                     <p className='show-comment-btn' onClick={handleShowAllCmt}>See more...</p>
-                    :
+                    : hideBtn &&
                     <p className='show-comment-btn' onClick={handleHideCmt}>Hide...</p>
                 }
 
                 <div className='post-comment-info'>
                     <p className='post-comment-like-count'>
-                        {/*  */}
-                        10 liked
+                        {countLike ? countLike : 0} like
                     </p>
                     <p className='post-comment-time'>
-                        {/*  */}
-                        10/10/2023
+                        {
+                            data.time + ' ' + data.date
+                        }
                     </p>
                 </div>
             </div>
@@ -78,7 +102,7 @@ const Comment = () => {
             <div className='post-comment-right'>
                 {/*  */}
             {like ?
-                <FontAwesomeIcon className='comment-unlike' icon={faUnHeart} onClick={handleLike}/>
+                <FontAwesomeIcon className='comment-unlike' icon={faUnHeart} onClick={handleUnLike}/>
             :   
                 <FontAwesomeIcon className='comment-like' icon={faHeart} onClick={handleLike} />
             }

@@ -42,8 +42,8 @@ export const fetchOnePreviewPost = createAsyncThunk('previewPost/fetchOnePreview
             username: res.DT.User.username, 
             email: res.DT.User.email,
             avatar: res.DT.User.avatar,
-            countLike: res.DT.postLikeCount,
-            countComment: res.DT.postCommentCount,
+            countLike: res.DT.countLike,
+            countComment: res.DT.countComment,
             liked: res.DT.liked  
         }
         return data

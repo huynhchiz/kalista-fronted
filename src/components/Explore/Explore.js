@@ -12,7 +12,7 @@ const Explore = () => {
     const darkTheme = useSelector(themeSelector)
     const posts = useSelector(postsSelector)
     const postsExplore = posts.explorePosts.posts
-    const limit = posts.homePosts.limit
+    const limit = posts.explorePosts.limit
 
     const [fullPost, setFullPost] = useState(false)
 
@@ -23,9 +23,9 @@ const Explore = () => {
     }, [])
 
     const handleAddLimit = () => {
-        let condition = (+postsExplore.length < +limit - 5)
+        let condition = (+postsExplore.length < (+limit - 5))
         if (!condition) {
-            dispatchAddLimitExplorePosts(limit + 5)
+            dispatchAddLimitExplorePosts(+limit + 5)
         } else if (condition) {
             setFullPost(true)
         }
@@ -52,8 +52,8 @@ const Explore = () => {
                 username={post.User.username}
                 email={post.User.email}
                 avatar={post.User.avatar}
-                countLike={post.postLikeCount}
-                countComment={post.postCommentCount}
+                countLike={post.countLike}
+                countComment={post.countComment}
                 liked={post.liked}
             />
         ))}

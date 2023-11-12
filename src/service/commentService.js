@@ -9,6 +9,26 @@ const createCommentSV = (data) => {
     })
 }
 
+const getOnePostCommentsSV = (postId, limit) => {
+    return axios.post('/api/post/comment/get', { postId: postId, limit: limit })
+}
+
+const likeCommentSV = (commentId) => {
+    return axios.post('/api/post/comment/like', { cmtId: commentId })
+}
+
+const unlikeCommentSV = (commentId) => {
+    return axios.post('/api/post/comment/unlike', { cmtId: commentId })
+}
+
+const countCommentLikesSV = (commentId) => {
+    return axios.post('/api/post/comment/count-like', { cmtId: commentId })
+}
+
 export {
-    createCommentSV
+    createCommentSV,
+    getOnePostCommentsSV,
+    likeCommentSV,
+    unlikeCommentSV,
+    countCommentLikesSV
 }
