@@ -84,9 +84,12 @@
 
     .post-content {
         position: relative;
+        display: flex;
+        justify-content: center;
+
         img {
-            width: var(--app-width);
-            height: var(--app-width);
+            width: var(--frame-image-width);
+            height: var(--frame-image-width);
 
             @media (max-width: 500px) {
                 width: var(--app-width-responsive);
@@ -95,8 +98,8 @@
         }
 
         video {
-            width: var(--app-width);
-            height: var(--app-width);
+            width: var(--frame-image-width);
+            height: var(--frame-image-width);
             @media (max-width: 500px) {
                 width: var(--app-width-responsive);
                 height: var(--app-width-responsive);
@@ -124,6 +127,34 @@
 
     .post-footer {
         position: relative;
+    }
+
+    .comment-edit {
+        position: relative;
+        padding: 4px;
+
+        textarea {
+            padding: 4px 50px 4px 8px;
+            width: 100%;
+            height: 50px;
+            background-color: var(--background-color-light);
+            border: 1px solid var(--background-color-dark);
+            border-radius: 3px;
+        }
+
+        .create-comment-btn {
+            width: 40px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            border-radius: 3px;
+            background-color: var(--background-color-dark);
+            color: var(--text-white);
+            cursor: pointer;
+        }
     }
 
     .post-interactions {
@@ -209,6 +240,16 @@
 .post-dark {
     p {
         color: var(--text-white)
+    }
+
+    textarea {        
+        background-color: var(--background-color-dark) !important;
+        border-color: var(--background-color-light) !important;
+        color: var(--text-white)
+    }     
+    .create-comment-btn {
+        background-color: var(--color-primary) !important;
+        color: var(--text-black) !important;
     }
 
     .post-interactions {

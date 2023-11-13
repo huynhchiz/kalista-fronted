@@ -63,6 +63,7 @@ const postsSlice = createSlice({
             state.userPosts.posts = []
             state.userPosts.count = 0
         })
+
 })
 
 export const fetchHomePosts = createAsyncThunk('posts/fetchHomePosts', async ({api, limit}) => {
@@ -92,5 +93,6 @@ export const fetchUserPosts = createAsyncThunk('posts/fetchUserPosts', async ({a
     };
     return { count: 0, posts: [] };
 })
+
 
 export default postsSlice

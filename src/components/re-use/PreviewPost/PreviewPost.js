@@ -13,9 +13,7 @@ const PreviewPost = () => {
     const paramPostId = searchParam.get('post')
     
     const post = useSelector(previewPostSelector)
-
-    console.log(post);
-
+    
     useEffect(() => {
         dispatchPreviewOnePost(paramPostId)
     }, [paramPostId])
@@ -23,7 +21,7 @@ const PreviewPost = () => {
     return (
         <div className='single-post'>
             <Post
-                postId={post.postId}
+                postId={paramPostId}
                 src={post.src}
                 type={post.type}
                 alt={post.alt}

@@ -14,14 +14,18 @@
         }
 
         .posting-preview {
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             position: relative;
-            width: var(--app-width);
-            height: var(--app-width);
+            width: var(--frame-image-width);
+            height: var(--frame-image-width);
             background-color: #f0f0f0;
 
             img {
-                width: var(--app-width);
-                height: var(--app-width);
+                width: var(--frame-image-width);
+                height: var(--frame-image-width);
 
                 @media (max-width: 500px) {
                     width: var(--app-width-responsive);
@@ -30,8 +34,8 @@
             }
 
             video {
-                width: var(--app-width);
-                height: var(--app-width);
+                width: var(--frame-image-width);
+                height: var(--frame-image-width);
 
                 @media (max-width: 500px) {
                     width: var(--app-width-responsive);

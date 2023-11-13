@@ -1,6 +1,6 @@
 import store from "../redux/store"
 
-import postsSlice, { fetchHomePosts, fetchExplorePosts, fetchUserPosts } from "../slices/postsSlice"
+import postsSlice, { fetchHomePosts, fetchExplorePosts, fetchUserPosts, fetchCountLikePostHome } from "../slices/postsSlice"
 
 import { getFollowingPosts, getNotFollowingPosts, getUserPosts, previewOnePost } from "../service/postService"
 import { fetchOnePreviewPost } from "../slices/previewPostSlice"
@@ -55,6 +55,5 @@ export {
     dispatchAddLimitExplorePosts,
     dispatchAddLimitUserPosts,
     dispatchResetPosts,
-    dispatchPreviewOnePost
-
+    dispatchPreviewOnePost,
 }
