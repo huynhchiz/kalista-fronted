@@ -25,8 +25,11 @@
     }
 
     .form-title {
-        width: 80%;
+        width: var(--frame-image-width);
         margin-bottom: 8px;
+        @media (max-width: 500px) {
+            width: 80%;
+        }
 
         h1 {
             font-size: 24px;
@@ -41,11 +44,15 @@
     }
 
     .register-form {
-        width: 80%;
+        width: var(--frame-image-width);
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        
+        @media (max-width: 500px) {
+            width: 80%;
+        }
     }
 
     .register-enter-btn {

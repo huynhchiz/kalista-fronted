@@ -38,7 +38,7 @@ const Introduce = () => {
                         <img className='introduce-logo-img' src={!darkTheme ? logoLight : logoDark} />
                     </div>
                     
-                    <BigButton onClick={redirectToLogin}>LOGIN</BigButton>
+                    <BigButton className={'go-to-login-btn'} onClick={redirectToLogin}>LOGIN</BigButton>
                     <BigButton onClick={redirectToRegister}>REGISTER</BigButton>
                     
                 </div>

@@ -41,7 +41,6 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
 
     useEffect(() => {
         if(location.pathname === '/preview') {
-            console.log(123);
             fetchInfoPost()
         }
     }, [])

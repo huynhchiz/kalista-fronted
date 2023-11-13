@@ -1,21 +1,26 @@
 .setting {
-    position: relative;
+    width: var(--app-width);
+    z-index: 1;
 
     .setting-toggle {
-        margin-right: 8px;
-        margin-top: 4px;
+        position: absolute;
+        top: calc(var(--nav-height) / 2);
+        transform: translateY(-50%);
+        right: 12px;
         font-size: 24px;
         color: var(--text-black);
+        cursor: pointer;
     }
 
     .setting-content {
-        position: absolute;
-        top: -4px;
-        right: -4px;
-        transform: translateY(-100%);
-        padding-bottom: 20px;
+        position: fixed;
+        z-index: 1;
+        top: -100%;
+        right: 0;
         width: var(--app-width);
+        height: 100vh;
         background-color: var(--background-color-light);
+        transition: .5s;
         
         @media (max-width: 500px) {
             width: var(--app-width-responsive)
@@ -27,12 +32,6 @@
             padding: 12px;
             display: flex;
             align-items: center;
-
-            .back-setting {
-                margin-left: 12px;
-                font-size: 24px;
-                color: var(--text-black);
-            }
         }
 
         .setting-content-main {
@@ -77,43 +76,10 @@
         background-color: var(--background-color-dark);
     }
 
-    .setting-content-header {
-        .back-setting {
-            color: var(--color-primary) !important;
-        }
-    }
-
     .setting-content-main {
 
         .setting-main-item {
             color: var(--color-primary) !important;
         }
-    }
-
-}
-
-@keyframes slides {
-    from {
-        display: none;
-        opacity: 0;
-        transform: translateY(-100%);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes hides {
-    from {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    to {
-        display: block;
-        opacity: 0;
-        transform: translateY(-100%);
     }
 }

@@ -4,32 +4,32 @@
         width: 100%;
         height: 100%;
         background-color: var(--background-color-light);
+        
+        @media (max-width: 500px) {
+            width: var(--app-width-responsive);
+        }
+
         .profile-post-frame {
+            width: var(--frame-image-width);
+            margin: auto;
             background-color: var(--background-color-light);
-
-            @media (max-width: 1000px), (min-width: 800px) {
-                padding: 0 100px 0 100px;
+            
+            @media (max-width: 500px) {
+                width: var(--app-width-responsive);
             }
 
-            @media (max-width: 800px) {
-                padding: 0px;
-            }
-
-            img {
+            img, video{
                 display: inline-block;
                 margin-left: 4.5px;
                 width: calc(var(--app-width) / 3 - 6px);
                 aspect-ratio: 1 / 1;
                 object-fit: cover;
                 cursor: pointer;
-            }
-            video {
-                display: inline-block;
-                margin-left: 4.5px;
-                width: calc(var(--app-width) / 3 - 6px);
-                aspect-ratio: 1 / 1;
-                object-fit: cover;
-                cursor: pointer;
+
+                @media (max-width: 500px) {
+                    width: calc(var(--app-width-responsive) / 3 - 6px);
+                    aspect-ratio: 1 / 1;
+                }
             }
         }
     }

@@ -1,7 +1,12 @@
 .posting {
     margin-top: var(--nav-height);
-    width: 100%;
+    width: var(--frame-image-width);
+    margin: auto;
     height: calc(100vh - var(--nav-height));
+
+    @media (max-width: 500px) {
+        width: var(--app-width-responsive);
+    }
 
     .posting-content {
         .posting-title {
@@ -14,38 +19,34 @@
         }
 
         .posting-preview {
-            margin: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             position: relative;
             width: var(--frame-image-width);
-            height: var(--frame-image-width);
+            aspect-ratio: 1 / 1;
             background-color: #f0f0f0;
 
             img {
                 width: var(--frame-image-width);
-                height: var(--frame-image-width);
+                aspect-ratio: 1 / 1;
 
                 @media (max-width: 500px) {
                     width: var(--app-width-responsive);
-                    height: var(--app-width-responsive);
+                    aspect-ratio: 1 / 1;
                 }
             }
 
             video {
                 width: var(--frame-image-width);
-                height: var(--frame-image-width);
+                aspect-ratio: 1 / 1;
 
                 @media (max-width: 500px) {
                     width: var(--app-width-responsive);
-                    height: var(--app-width-responsive);
+                    aspect-ratio: 1 / 1;
                 }
             }
 
             @media (max-width: 500px) {
                 width: var(--app-width-responsive);
-                height: var(--app-width-responsive);
+                aspect-ratio: 1 / 1;
             }
             
             .posting-upload {

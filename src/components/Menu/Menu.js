@@ -61,7 +61,7 @@ const Menu = () => {
     }
 
     return (
-        userLogin && userLogin.isAuthenticated &&
+        userLogin && userLogin.isAuthenticated && location.pathname !== '/welcome' &&
         <div
             className={`menu ${darkTheme && 'menu-dark'}`}
             onClick={handleSavePosition}

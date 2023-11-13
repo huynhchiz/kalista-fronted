@@ -1,5 +1,5 @@
 .big-button {
-    width: 80%;
+    width: var(--frame-image-width);
     height: 40px;
     font-size: 18px;
     font-weight: 500;
@@ -10,8 +10,8 @@
     border-radius: 5px;
     border: 1px solid var(--color-primary);
 
-    +.big-button {
-        margin-top: 16px;
+    @media (max-width: 500px) {
+        width: 80%;
     }
 
     &:hover {                

@@ -27,21 +27,23 @@ const Nav = () => {
     }, [location.pathname])
 
     return (
-        <div className={`nav ${darkTheme && 'nav-dark'}`}>
+        <div className={`nav ${darkTheme ? 'nav-dark' : ''}`}>
             <div className='nav-logo' onClick={() => navigate('/welcome')}>
                 <img className='nav-logo-img' src={darkTheme ? navDarkLogo : navWhiteLogo} alt='nav logo'/>
             </div>
 
-            {showToggle ? <div className='nav-toggle'>
-                <div className='toggle-wrapper'>
-                    <ThemeToggle />
-                </div>
-            </div>
-             :
-            <div className='nav-setting'>
-                <Setting />
-            </div>}
+            {showToggle ? 
 
+                <div className='nav-toggle'>
+                    <div className='toggle-wrapper'>
+                        <ThemeToggle />
+                    </div>
+                </div>
+             :
+             <Setting />
+            }
+            
+            
             
         </div>
     )

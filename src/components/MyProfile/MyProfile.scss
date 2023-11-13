@@ -5,8 +5,14 @@
 
     .my-profile-header {
         display: flex;
-        padding: 12px;
+        width: var(--frame-image-width);
+        margin: auto;
+        padding: 12px 0;
         border-bottom: 1px solid #ddd;
+
+        @media (max-width: 500px) {
+            width: var(--app-width-responsive);
+        }
 
         .my-profile-avatar {
             position: relative;
