@@ -114,11 +114,11 @@ const Register = () => {
     }
 
     return (
-        <div className={`register ${darkTheme && 'register-dark'}`}>
+        <div className={`register ${darkTheme ? 'register-dark' : ''}`}>
             <div className={`register-theme ${darkTheme ? 'dark-theme' : 'light-theme'}`}>
                 <div className='register-content'>
                     <div className='form-title'>
-                        <h1 className={`${darkTheme && 'form-title-dark'}`}>
+                        <h1 className={`${darkTheme ? 'form-title-dark' : ''}`}>
                             REGISTER
                         </h1>
                     </div>

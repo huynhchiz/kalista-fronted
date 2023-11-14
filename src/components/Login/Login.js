@@ -89,12 +89,12 @@ const Login = () => {
     }
 
     return (
-        <div className={`login ${darkTheme && 'login-dark'}`}>
+        <div className={`login ${darkTheme ? 'login-dark': ''}`}>
             <div className={`login-theme ${darkTheme ? 'dark-theme' : 'light-theme'}`}>
                 <div className='login-content'>
 
                     <div className='form-title'>
-                        <h1 className={`${darkTheme && 'form-title-dark'}`}>
+                        <h1 className={`${darkTheme ? 'form-title-dark' : ''}`}>
                             LOGIN
                         </h1>
                         <p className='warning-login'>

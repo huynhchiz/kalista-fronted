@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -15,13 +13,6 @@ import { dispatchFetchOtherUserFollowers } from '../../../dispatchFunctions/disp
 const ProfileHeader = ({ following = false, email, userAvatar, username, countFollowers, countFollowings, countPosts }) => {
     const darkTheme = useSelector(themeSelector)
     const userLogin = useSelector(userLoginSelector)
-
-    const navigate = useNavigate()
-    useEffect(() => {
-        if (email === userLogin.account.email) {
-            navigate('/my-profile')
-        }
-    })
 
     const handleFollow = async () => {
         let res = await followSV(email)

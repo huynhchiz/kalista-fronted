@@ -1,0 +1,26 @@
+.nav-back {
+    padding: 0 10%;
+    width: 100%;
+    height: 42px;
+    line-height: 56px;
+
+    @media (max-width: 500px) {
+        height: 20px;
+        line-height: 30px;
+        padding: 0 8px;
+    }
+
+    .nav-back-icon {
+        font-size: 32px;
+        cursor: pointer;
+        @media (max-width: 500px) {
+            height: 18px;
+        }
+    }
+}
+
+.nav-back-dark {
+    .nav-back-icon {
+        color: var(--text-white);
+    }
+}

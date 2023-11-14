@@ -1,31 +1,66 @@
-.post-comment {
-    margin-top: 4px;
-    width: 100%;
-    height: 100%;
-
-    .no-comment, .max-comment {
+.post-comment-wrapper {
+    position: relative;
+    .post-comment {
         margin-top: 4px;
-        font-size: 12px;
-    }
-
-    .load-more-cmts-btn {
-        display: flex;
-        align-items: center;
-        margin-top: 4px;
-        padding: 4px;
-        cursor: pointer;
-
-        p {
+        width: 100%;
+        height: 100%;
+        padding: 0 4px;
+    
+        @media (min-width: 1050px) {
+            height: calc(var(--frame-image-width) - 80px);
+            overflow-y: scroll;
+    
+            &::-webkit-scrollbar {
+                width: 6px;
+                background-color: transparent;
+            }
+    
+            &::-webkit-scrollbar-thumb {
+                background-color: #000000;
+                border-radius: 2px;
+            }
+        }
+    
+        .no-comment, .max-comment {
+            margin-top: 4px;
             margin-left: 4px;
             font-size: 12px;
+        }
+    
+        .load-more-cmts-btn {
+            display: flex;
+            align-items: center;
+            margin-top: 4px;
+            padding: 4px;
+            cursor: pointer;
+    
+            p {
+                margin-left: 4px;
+                font-size: 12px;
+            }
+        }
+    
+        .small-load-wrapper {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -12px;
+        }
+    }
+    
+    .post-comment-dark {
+        background-color: var(--background-color-dark);
+    
+        @media (min-width: 1050px) {
+            &::-webkit-scrollbar-thumb {
+                background-color: var(--color-primary);
+            }
+        }
+    
+    
+        .load-more-cmts-btn {
+            color: var(--text-white)
         }
     }
 }
 
-.post-comment-dark {
-    background-color: var(--background-color-dark);
-
-    .load-more-cmts-btn {
-        color: var(--text-white)
-    }
-}

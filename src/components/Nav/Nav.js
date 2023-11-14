@@ -28,9 +28,12 @@ const Nav = () => {
 
     return (
         <div className={`nav ${darkTheme ? 'nav-dark' : ''}`}>
-            <div className='nav-logo' onClick={() => navigate('/welcome')}>
-                <img className='nav-logo-img' src={darkTheme ? navDarkLogo : navWhiteLogo} alt='nav logo'/>
-            </div>
+            {
+                location.pathname === '/welcome' ? <></> :
+                <div className='nav-logo' onClick={() => navigate('/welcome')}>
+                    <img className='nav-logo-img' src={darkTheme ? navDarkLogo : navWhiteLogo} alt='nav logo'/>
+                </div>
+            }
 
             {showToggle ? 
 

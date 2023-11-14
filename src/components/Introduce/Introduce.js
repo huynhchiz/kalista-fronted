@@ -20,6 +20,8 @@ const Introduce = () => {
         if(userLogin && userLogin.isAuthenticated) {
             navigate('/welcome')
         }
+        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userLogin])
 
     const redirectToLogin = () => {
@@ -35,7 +37,7 @@ const Introduce = () => {
             <div className={`introduce-theme ${darkTheme ? 'dark-theme' : 'light-theme'}`}>
                 <div className='introduce-content'>
                     <div className='introduce-logo'>
-                        <img className='introduce-logo-img' src={!darkTheme ? logoLight : logoDark} />
+                        <img className='introduce-logo-img' src={!darkTheme ? logoLight : logoDark} alt='_logo'/>
                     </div>
                     
                     <BigButton className={'go-to-login-btn'} onClick={redirectToLogin}>LOGIN</BigButton>

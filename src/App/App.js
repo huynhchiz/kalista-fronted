@@ -26,7 +26,7 @@ function App() {
 
           <LoadPage />
 
-          <div className={`app-content ${darkTheme && 'app-content-dark'}`} >
+          <div className={`app-content ${darkTheme ? 'app-content-dark' : ''}`} >
             <AppRoutes />
           </div>
 

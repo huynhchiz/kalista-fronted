@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import './PreviewPost.scss'
 
@@ -7,12 +7,15 @@ import { useEffect } from 'react'
 import { dispatchPreviewOnePost } from '../../../dispatchFunctions/dispatchPosts'
 import { useSelector } from 'react-redux'
 import { previewPostSelector } from '../../../redux/selector'
+import NavBack from '../NavBack/NavBack'
 
 const PreviewPost = () => {
-    const [searchParam, setSearchParam] = useSearchParams()
+    const [searchParam] = useSearchParams()
     const paramPostId = searchParam.get('post')
     
     const post = useSelector(previewPostSelector)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         dispatchPreviewOnePost(paramPostId)
@@ -20,8 +23,9 @@ const PreviewPost = () => {
 
     return (
         <div className='single-post'>
+            <NavBack onGoBack={() => navigate(-1)} />
             <Post
-                postId={post.postId || paramPostId}
+                postId={paramPostId}
                 src={post.src}
                 type={post.type}
                 alt={post.alt}

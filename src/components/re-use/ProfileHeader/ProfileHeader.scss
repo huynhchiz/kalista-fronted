@@ -3,6 +3,12 @@
     justify-content: space-between;
     padding: 12px;
     border-bottom: 1px solid #ddd;
+    width: var(--frame-image-width);
+    margin: auto;
+    
+    @media (max-width: 500px) {
+        width: var(--app-width-responsive);
+    }
 
     .profile-avatar {
         position: relative;

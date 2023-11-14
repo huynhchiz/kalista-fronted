@@ -28,6 +28,8 @@ const Menu = () => {
             }
             feedRef.current.classList.add('menu-active')
         }
+        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname])
     
     const handleActiveMenuOption = (ref) => {
@@ -63,7 +65,7 @@ const Menu = () => {
     return (
         userLogin && userLogin.isAuthenticated && location.pathname !== '/welcome' &&
         <div
-            className={`menu ${darkTheme && 'menu-dark'}`}
+            className={`menu ${darkTheme ? 'menu-dark' : ''}`}
             onClick={handleSavePosition}
         >
             <div ref={feedRef}

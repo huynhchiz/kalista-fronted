@@ -2,57 +2,20 @@
     z-index: 10000;
     width: 100%;
     height: 100vh;
-    transform: translateY(-20%);
     text-align: center;
-    
-    .welcome-animation {
-        h4{
-            margin-left: 8px;
-            display: inline-block;
-            color: var(--color-primary);
-            font-size: 24px;
-        }
-    
-        .welcome_0 {
-            animation: loadingsh4 ease-in 1.5s forwards;
-        }
-        .welcome_1 {
-            animation: loadingsh4 ease-in 1.5s 0.1s forwards;
-        }
-        .welcome_2 {
-            animation: loadingsh4 ease-in 1.5s 0.2s forwards;
-        }
-        .welcome_3 {
-            animation: loadingsh4 ease-in 1.5s 0.3s forwards;
-        }
-        .welcome_4 {
-            animation: loadingsh4 ease-in 1.5s 0.4s forwards;
-        }
-        .welcome_5 {
-            animation: loadingsh4 ease-in 1.5s .5s forwards;
-        }
-        .welcome_6 {
-            animation: loadingsh4 ease-in 1.5s .6s forwards;
-        }
-        .welcome_7 {
-            animation: loadingsh4 ease-in 1.5s .7s forwards;
-        }
-        .welcome_8 {
-            animation: loadingsh4 ease-in 1.5s .8s forwards;
-        }
-        .welcome_9 {
-            animation: loadingsh4 ease-in 1.5s .9s forwards;
-        }
+    line-height: 100vh;
+
+    .welcome-logo-img {
+        animation: welcome 1s ease-in;
     }
 }
 
-@keyframes loadingsh4 {
+@keyframes welcome {
     from {
         opacity: 0;
-        transform: translateY(0);
     }
+
     to {
         opacity: 1;
-        transform: translateY(1500%);
     }
 }

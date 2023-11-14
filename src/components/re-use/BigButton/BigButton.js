@@ -7,7 +7,7 @@ const BigButton = ({ disabled, className, children, onClick }) => {
     const darkTheme = useSelector(themeSelector)
 
     return (
-        <button disabled={disabled} className={`big-button ${className} ${darkTheme && 'dark-button'}`} onClick={onClick}>
+        <button disabled={disabled} className={`big-button ${className} ${darkTheme ? 'dark-button' : ''}`} onClick={onClick}>
             {children}
         </button>
     )

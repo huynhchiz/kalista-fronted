@@ -137,7 +137,7 @@ const Posting = () => {
     }
 
     return (
-        <div className={`posting ${darkTheme && 'posting-dark'}`}>
+        <div className={`posting ${darkTheme ? 'posting-dark' : ''}`}>
             <div className='posting-content'>
                 <div className='posting-title'>
                     <h3>Upload your photo or video</h3>

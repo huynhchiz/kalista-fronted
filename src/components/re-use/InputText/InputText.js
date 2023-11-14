@@ -14,9 +14,9 @@ const InputText = ({ name, type = 'text', placeholder, className, value, onChang
                 className={
                     `${className}
                     input-text
-                    ${darkTheme && 'input-text-dark'}
-                    ${showWarn && !darkTheme && 'input-text-warn'}
-                    ${showWarn && darkTheme && 'input-text-warn-dark'}`
+                    ${darkTheme ? 'input-text-dark' : ''}
+                    ${showWarn && !darkTheme ? 'input-text-warn' : ''}
+                    ${showWarn && darkTheme ? 'input-text-warn-dark' : ''}`
                 }
                 type={type} placeholder={placeholder}
                 value={value}

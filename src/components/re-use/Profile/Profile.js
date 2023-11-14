@@ -6,41 +6,38 @@ import { Waypoint } from 'react-waypoint'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { followSelector, otherUserSelector, userLoginSelector } from '../../../redux/selector'
+import { followSelector, otherUserSelector } from '../../../redux/selector'
 import { dispatchFetchOtherUserInFo,
     dispatchFetchOtherUserPosts,
     dispatchFetchOtherUserFollowers,
     dispatchFetchOtherUserFollowings } from "../../../dispatchFunctions/dispatchOtherUser"
+import NavBack from '../NavBack/NavBack'
 
 const Profile = () => {
     const [limit, setLimit] = useState(15)
     const [following, setFollowing] = useState(false)
 
-    const [searchParam, setSearchParam] = useSearchParams()
+    const [searchParam] = useSearchParams()
     const emailPr = searchParam.get('user')
 
-    const navigate = useNavigate()
-
-    const userLogin = useSelector(userLoginSelector)
     const otherUser = useSelector(otherUserSelector)
     const userLoginFollow = useSelector(followSelector)
+
+    const navigate = useNavigate()
     
     useEffect(() => {
         dispatchFetchOtherUserInFo(emailPr)
         dispatchFetchOtherUserPosts(emailPr, limit)
         dispatchFetchOtherUserFollowers(emailPr)
         dispatchFetchOtherUserFollowings(emailPr)
+        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [emailPr])
 
-    // did not work
-    useEffect(() => {
-        if(emailPr === userLogin.account.email) {
-            navigate('/my-profile')
-        }
-    }, [])
 
     useEffect(() => {
         window.scrollTo(0, 0)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])    
     
     useEffect(() => {
@@ -57,6 +54,7 @@ const Profile = () => {
             setFollowing(false)
         }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userLoginFollow])
 
 
@@ -76,6 +74,7 @@ const Profile = () => {
 
     return (
         <div className='profile'>
+            <NavBack onGoBack={() => navigate(-1)} />
             <ProfileHeader
                 following={following}
                 email={emailPr}

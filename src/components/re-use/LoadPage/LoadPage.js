@@ -10,7 +10,7 @@ const LoadPage = () => {
 
     return (
         isLoading &&
-        <div className={`load-page ${darkTheme && 'load-page-dark'}`}>
+        <div className={`load-page ${darkTheme ? 'load-page-dark' : ''}`}>
             <div className='dna-load-page'>
             <ThreeCircles
                 height="150"

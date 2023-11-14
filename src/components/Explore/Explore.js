@@ -39,7 +39,7 @@ const Explore = () => {
     }, [limit])
 
     return (
-        <div className={`home ${darkTheme ? 'home-dark' : ''}`}>
+        <div className={`explore ${darkTheme ? 'explore-dark' : ''}`}>
         {postsExplore && postsExplore.map(post => (
             <Post
                 key={'ex' + post.id}
@@ -57,7 +57,7 @@ const Explore = () => {
                 liked={post.liked}
             />
         ))}
-        <div className='home-footer'>
+        <div className='explore-footer'>
             <Waypoint
                 onEnter={handleAddLimit}
             />

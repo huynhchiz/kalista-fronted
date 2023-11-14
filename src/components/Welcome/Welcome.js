@@ -2,14 +2,18 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
+import logoLight from '../../assets/images/navlogo-white.png'
+import logoDark from '../../assets/images/navlogo-black.png'
 import './Welcome.scss'
+
 import { dispatchGetAccount, dispatchGetUserAvt, dispatchLoadPage } from '../../dispatchFunctions/dispatchFunctions'
 import { dispatchGetHomePosts, dispatchGetExplorePosts, dispatchGetUserPosts } from '../../dispatchFunctions/dispatchPosts'
-import { userLoginSelector } from '../../redux/selector'
+import { themeSelector, userLoginSelector } from '../../redux/selector'
 import { dispatchGetUserFollowing, dispatchGetUserFollower } from '../../dispatchFunctions/dispatchFollows'
 import { dispatchResetScrollPosition } from '../../dispatchFunctions/dispatchScrollPosition'
 
 const Welcome = () => {
+    const darkTheme = useSelector(themeSelector)
     const userLogin = useSelector(userLoginSelector)
     const navigate = useNavigate()
 
@@ -30,24 +34,20 @@ const Welcome = () => {
 
             setTimeout(() => {
                 navigate('/')
-            }, 3000)
+            }, 1500)
         } else {
             navigate('/introduce')
         }
         dispatchLoadPage()
+        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const animations = ['H','E','L','L','O','W','O','R','L','D']
+    // const animations = ['H','E','L','L','O','W','O','R','L','D']
 
     return (
         <div className="welcome">
-            <div className='welcome-animation'>
-                {animations.length > 0 && animations.map((item, idx) => (
-                    <h4 className={`welcome_${idx}`} key={idx}>
-                        {item}
-                    </h4>
-                ))}
-            </div>
+            <img className='welcome-logo-img' src={darkTheme ? logoDark : logoLight} alt='_logo'/>
         </div>
     )
 }
