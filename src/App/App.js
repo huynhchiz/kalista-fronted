@@ -10,13 +10,15 @@ import LoadPage from '../components/re-use/LoadPage/LoadPage';
 import { themeSelector } from '../redux/selector';
 import NotiModal from '../components/re-use/NotiModal/NotiModal';
 import { useEffect } from 'react';
-import { dispatchGetAccount } from '../dispatchFunctions/dispatchFunctions';
+import { dispatchGetAccount, dispatchGetAccountFollowers, dispatchGetAccountFollowings } from '../dispatchs/dispatchAccount';
 
 function App() {
   const darkTheme = useSelector(themeSelector)
 
   useEffect(() => {
     dispatchGetAccount()
+    dispatchGetAccountFollowers()
+    dispatchGetAccountFollowings()
   }, [])
 
   return (

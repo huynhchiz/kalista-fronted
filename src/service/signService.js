@@ -1,4 +1,4 @@
-import axios from '../../src/setup/axios.js'
+import axios from '../setup/axios'
 
 const registerUserService = (data) => {
     let email = data.email
@@ -6,7 +6,7 @@ const registerUserService = (data) => {
     let username = data.username
     let password = data.password
 
-    return axios.post('/api/register', {
+    return axios.post('/account/register', {
        email, phone, username, password
     });
 };
@@ -15,13 +15,13 @@ const loginUserService = (data) => {
     let loginValue = data.loginValue
     let password = data.password
 
-    return axios.post('/api/login', {
+    return axios.post('/account/login', {
         loginValue, password
     })
 }
 
 const logoutUserService = () => {
-    return axios.post('/api/logout')
+    return axios.post('/account/logout')
 }
 
 export {
