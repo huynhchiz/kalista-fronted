@@ -19,12 +19,20 @@ const initOtherUser = {
     posts: {
         posts: [],
         count: 0,
-    }
+    },
+    followingByMainUser: false,
 }
 
 const otherUserSlice = createSlice({
     name: 'otherUser',
     initialState: initOtherUser,
+    reducers: {
+        checkFollowingByMainUser: (state, action) => {
+            state.followers = state.followers.some(follower => (
+                follower.email === action.payload // === main email
+            ))
+        }
+    },
     extraReducers: builder =>
     builder
         .addCase(fetchOtherUserInfo.fulfilled, (state, action) => {

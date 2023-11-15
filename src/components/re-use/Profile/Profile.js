@@ -6,12 +6,14 @@ import { Waypoint } from 'react-waypoint'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { followSelector, otherUserSelector } from '../../../redux/selector'
+import { followSelector, otherUserSelector, userLoginSelector } from '../../../redux/selector'
 import { dispatchFetchOtherUserInFo,
     dispatchFetchOtherUserPosts,
     dispatchFetchOtherUserFollowers,
     dispatchFetchOtherUserFollowings } from "../../../dispatchFunctions/dispatchOtherUser"
 import NavBack from '../NavBack/NavBack'
+import ModalList from '../ModalList/ModalList'
+import { dispatchGetAccount } from '../../../dispatchFunctions/dispatchFunctions'
 
 const Profile = () => {
     const [limit, setLimit] = useState(15)
@@ -22,10 +24,14 @@ const Profile = () => {
 
     const otherUser = useSelector(otherUserSelector)
     const userLoginFollow = useSelector(followSelector)
+    const userLogin = useSelector(userLoginSelector)
 
     const navigate = useNavigate()
+
+    console.log(userLogin);
     
     useEffect(() => {
+        dispatchGetAccount()
         dispatchFetchOtherUserInFo(emailPr)
         dispatchFetchOtherUserPosts(emailPr, limit)
         dispatchFetchOtherUserFollowers(emailPr)
@@ -38,24 +44,24 @@ const Profile = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])    
+    }, [])
     
     useEffect(() => {
-        let isFollowing = 
-            userLoginFollow.followings.list.length > 0 &&
-            userLoginFollow.followings.list.some(item => (
+        const isFollowing = 
+            userLogin.followings.length > 0 &&
+            userLogin.followings.some(item => (
                 item.email === emailPr
             ))
         if(isFollowing) {
             setFollowing(true)
         }
 
-        if(!isFollowing) {
+        if(isFollowing === false) {
             setFollowing(false)
         }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userLoginFollow])
+    }, [])
 
 
     const handleAddLimit = () => {
@@ -75,8 +81,14 @@ const Profile = () => {
     return (
         <div className='profile'>
             <NavBack onGoBack={() => navigate(-1)} />
+
+            {/* <ModalList /> */}
+
             <ProfileHeader
-                following={following}
+                following={ userLogin.followings.length > 0 &&
+                            userLogin.followings.some(item => (
+                            item.email === emailPr
+                        ))}
                 email={emailPr}
                 userAvatar={otherUser.info.avatar}
                 username={otherUser.info.username}

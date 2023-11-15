@@ -22,15 +22,15 @@ const Welcome = () => {
         if (userLogin && userLogin.isAuthenticated) {
             dispatchResetScrollPosition()
             
-            dispatchGetAccount()
-            dispatchGetUserAvt()
+            // dispatchGetAccount()
+            // dispatchGetUserAvt()
 
             dispatchGetHomePosts(5)
             dispatchGetExplorePosts(5)
             dispatchGetUserPosts(userLogin.account.email, 15)
 
-            dispatchGetUserFollowing(userLogin.account.email, 2)
-            dispatchGetUserFollower(userLogin.account.email, 2)
+            // dispatchGetUserFollowing(userLogin.account.email)
+            // dispatchGetUserFollower(userLogin.account.email)
 
             setTimeout(() => {
                 navigate('/')

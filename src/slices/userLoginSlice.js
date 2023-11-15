@@ -8,7 +8,10 @@ const initUserLogin = {
         userGroupWithRoles: '',
         email: '',
         username: '',
+        avatar: ''
     },
+    followings: [],
+    followers: []
 }
 
 const userLoginSlice = createSlice({
@@ -60,9 +63,12 @@ export const getAccount = createAsyncThunk('userLogin/getAccount', async (getAcc
             refreshToken: res.DT.refreshToken,
             account: {
                 userGroupWithRoles: res.DT.userGroupWithRoles,
-                email: res.DT.email,
-                username: res.DT.username,
+                email: res.DT.user.email,
+                username: res.DT.user.username,
+                avatar: res.DT.user.avatar
             },
+            followings: res.DT.listFollowing,
+            followers: res.DT.listFollower
         }; 
         return data;
     }; 
@@ -79,10 +85,13 @@ export const refreshNewAccessToken = createAsyncThunk('userLogin/refreshNewAcces
             refreshToken: res.DT.refreshToken,
             account: {
                 userGroupWithRoles: res.DT.userGroupWithRoles,
-                email: res.DT.email,
-                username: res.DT.username,
+                email: res.DT.user.email,
+                username: res.DT.user.username,
+                avatar: res.DT.user.avatar
             },
-        }
+            followings: res.DT.listFollowing,
+            followers: res.DT.listFollower
+        }; 
         return data;
     }
     return initUserLogin;

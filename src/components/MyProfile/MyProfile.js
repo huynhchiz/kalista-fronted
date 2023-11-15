@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import './MyProfile.scss'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { Waypoint } from 'react-waypoint'
 import YesNoModal from '../re-use/YesNoModal/YesNoModal'
+import ProfileContent from '../re-use/ProfileContent/ProfileContent'
 
-import { themeSelector, userLoginSelector, userLoginAvtSelector, postsSelector, followSelector, positionScrollSelector } from '../../redux/selector'
+import { themeSelector, userLoginSelector, userLoginAvtSelector, postsSelector/*, followSelector*/, positionScrollSelector } from '../../redux/selector'
 import { uploadImage } from '../../service/postService'
 import { deleteUserAvatar, uploadAvatar } from '../../service/userService'
 import { dispatchGetUserAvt, dispatchLoadPage, dispatchNoti } from '../../dispatchFunctions/dispatchFunctions'
-import { Waypoint } from 'react-waypoint'
-import ProfileContent from '../re-use/ProfileContent/ProfileContent'
 import { dispatchAddLimitUserPosts, dispatchGetUserPosts } from '../../dispatchFunctions/dispatchPosts'
 
 const MyProfile = () => {
     const darkTheme = useSelector(themeSelector)
     const userLogin = useSelector(userLoginSelector)
     const userAvatar = useSelector(userLoginAvtSelector)
-    const follow = useSelector(followSelector)
+    // const follow = useSelector(followSelector)
 
     const posts = useSelector(postsSelector)
     const listPost = posts.userPosts.posts
@@ -165,13 +165,31 @@ const MyProfile = () => {
                     <h3>{userLogin && userLogin.account.username ? userLogin.account.username : 'unname'}</h3>
 
                     <div className='info-follow'>
-                        <p>{follow.followers.count || '0'} followers</p>
-                        <p>following {follow.followings.count || '0'}</p>
+                        <div className='count-follower'>
+                            <p><span>{userLogin.followers.length || '0'}</span> followers</p>
+                        </div>
+                        <div className='count-following'>
+                            <p>following <span>{userLogin.followings.length || '0'}</span></p>
+                        </div>
                     </div>
 
-                    <p>{countPost ?
-                    countPost >=2 ? countPost + ' posts' : countPost + ' post'
-                    : '0 post'} </p>
+                    <div className='count-post'>
+                    { countPost >= 2 && (<>
+                            <span>{countPost}</span>
+                            <p>posts</p>
+                        </>)
+                    }
+                    { countPost === 1 && (<>
+                            <span>{countPost}</span>
+                            <p>post</p>
+                        </>)
+                    }
+                    { (!countPost || countPost === 0) && (<>
+                            <span>0</span>
+                            <p>post</p>
+                        </>)
+                    }
+                </div>
 
                 </div>
 

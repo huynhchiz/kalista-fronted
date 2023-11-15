@@ -10,7 +10,7 @@ import { followSV, unfollowSV } from '../../../service/followService'
 import { dispatchGetUserFollowing } from '../../../dispatchFunctions/dispatchFollows'
 import { dispatchFetchOtherUserFollowers } from '../../../dispatchFunctions/dispatchOtherUser'
 
-const ProfileHeader = ({ following = false, email, userAvatar, username, countFollowers, countFollowings, countPosts }) => {
+const ProfileHeader = ({ following, email, userAvatar, username, countFollowers, countFollowings, countPosts }) => {
     const darkTheme = useSelector(themeSelector)
     const userLogin = useSelector(userLoginSelector)
 
@@ -45,17 +45,32 @@ const ProfileHeader = ({ following = false, email, userAvatar, username, countFo
                 <h3>{username ? username : 'unname'}</h3>
 
                 <div className='info-follow'>
-                    <p>{countFollowers || '0'} followers</p>
-                    <p>following {countFollowings || '0'}</p>
+                    <div className='count-follower'>
+                        <p>followers</p><span>{countFollowers || '0'}</span>
+                    </div>
+                    <div className='count-following'>
+                        <p>following</p><span>{countFollowings || '0'}</span>
+                    </div>
+                </div>
+                
+                <div className='count-post'>
+                    { countPosts >= 2 && (<>
+                            <span>{countPosts}</span>
+                            <p>posts</p>
+                        </>)
+                    }
+                    { countPosts === 1 && (<>
+                            <span>{countPosts}</span>
+                            <p>post</p>
+                        </>)
+                    }
+                    { (!countPosts || countPosts === 0) && (<>
+                            <span>0</span>
+                            <p>post</p>
+                        </>)
+                    }
                 </div>
 
-                <p>
-                    {countPosts
-                        ?
-                    (countPosts >=2) ? (countPosts + ' posts') : (countPosts + ' post')
-                        :
-                    '0 post'}
-                </p>
             </div>
 
             {

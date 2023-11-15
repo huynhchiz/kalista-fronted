@@ -105,11 +105,33 @@
 
             .info-follow {
                 display: flex;
-                justify-content: space-between;
-                margin-bottom: 4px;
-
-                p + p {
-                   margin-left: 24px; 
+                margin-bottom: 8px;
+    
+                .count-follower {
+                    display: flex;
+                    margin-right: 12px;
+                }
+    
+                .count-following {
+                    display: flex;
+                }
+    
+                span {
+                    margin-left: 4px;
+                    font-weight: 600;
+                }
+    
+            }
+    
+            .count-post {
+                display: flex;
+    
+                p {
+                    margin: 0 4px;
+                }
+    
+                span {
+                    font-weight: 600;
                 }
             }
         }

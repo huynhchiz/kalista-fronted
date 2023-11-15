@@ -31,17 +31,34 @@
 
         .info-follow {
             display: flex;
-            margin-bottom: 4px;
-        }
+            margin-bottom: 8px;
 
-        p {
-            @media (max-width: 500px) {
-                font-size: 12px;
+            .count-follower {
+                display: flex;
+                margin-right: 12px;
             }
+
+            .count-following {
+                display: flex;
+            }
+
+            span {
+                margin-left: 4px;
+                font-weight: 600;
+            }
+
         }
 
-        p + p {
-            margin-left: 18px; 
+        .count-post {
+            display: flex;
+
+            p {
+                margin: 0 4px;
+            }
+
+            span {
+                font-weight: 600;
+            }
         }
     }
 

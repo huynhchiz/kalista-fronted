@@ -9,9 +9,15 @@ import LoadPage from '../components/re-use/LoadPage/LoadPage';
 
 import { themeSelector } from '../redux/selector';
 import NotiModal from '../components/re-use/NotiModal/NotiModal';
+import { useEffect } from 'react';
+import { dispatchGetAccount } from '../dispatchFunctions/dispatchFunctions';
 
 function App() {
   const darkTheme = useSelector(themeSelector)
+
+  useEffect(() => {
+    dispatchGetAccount()
+  }, [])
 
   return (
     <BrowserRouter>

@@ -4,17 +4,15 @@ import followSlice, { fetchUserFollowing, fetchUserFollower } from "../slices/fo
 
 import { getUsersFollowingSV, getFollowersSV } from "../service/followService"
 
-const dispatchGetUserFollowing = (limit) => {
+const dispatchGetUserFollowing = () => {
     store.dispatch(fetchUserFollowing({
-        api: getUsersFollowingSV,
-        limit: limit
+        api: getUsersFollowingSV
     }))
 }
 
-const dispatchGetUserFollower = (limit) => {
+const dispatchGetUserFollower = () => {
     store.dispatch(fetchUserFollower({
-        api: getFollowersSV,
-        limit: limit
+        api: getFollowersSV
     }))
 }
 
