@@ -2,7 +2,7 @@ import './ProfileContent.scss'
 
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { themeSelector } from '../../../redux/selector'
+import { themeSelector } from '../../../redux/selectors/themeSelector'
 
 const ProfileContent = ({ listPost }) => {
     const darkTheme = useSelector(themeSelector)

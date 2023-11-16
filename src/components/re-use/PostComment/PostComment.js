@@ -1,5 +1,5 @@
 import './PostComment.scss'
-import { themeSelector } from '../../../redux/selector'
+import { themeSelector } from '../../../redux/selectors/themeSelector'
 import { useSelector } from 'react-redux'
 
 import Comment from '../Comment/Comment'

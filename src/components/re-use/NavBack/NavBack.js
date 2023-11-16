@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 
 import { useSelector } from 'react-redux'
-import { themeSelector } from '../../../redux/selector'
+import { themeSelector } from '../../../redux/selectors/themeSelector'
 
 const NavBack = ({ onGoBack }) => {
     const darkTheme = useSelector(themeSelector)

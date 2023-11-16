@@ -1,19 +1,14 @@
-export const userLoginSelector = state => state.userLogin.userLogin
-export const userLoginAvtSelector = state => state.userLogin.userAvatar
+// export const userLoginSelector = state => state.userLogin.userLogin
+// export const userLoginAvtSelector = state => state.userLogin.userAvatar
 
-export const themeSelector = state => state.darkTheme.darkTheme
 
-export const loadPageSelector = state => state.loadPage.loadPage
 
-export const notiModalMessageSelector = state => state.notiModal.text
-export const notiModalShowSelector = state => state.notiModal.show
+// export const postsSelector = state => state.posts
 
-export const postsSelector = state => state.posts
+// export const followSelector = state => state.follow
 
-export const followSelector = state => state.follow
+// export const otherUserSelector = state => state.otherUser
 
-export const otherUserSelector = state => state.otherUser
-
-export const positionScrollSelector = state => state.positionScroll
+// export const positionScrollSelector = state => state.positionScroll
 
 export const previewPostSelector = state => state.previewPost.post

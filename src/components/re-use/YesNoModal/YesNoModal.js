@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 
 import './YesNoModal.scss'
 import BigButton from '../BigButton/BigButton'
-import { themeSelector } from '../../../redux/selector'
+import { themeSelector } from '../../../redux/selectors/themeSelector'
 
 const YesNoModal = ({ title, show, onClickYes, onClickCancel }) => {
     const darkTheme = useSelector(themeSelector)

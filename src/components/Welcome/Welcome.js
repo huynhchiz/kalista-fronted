@@ -6,7 +6,7 @@ import logoLight from '../../assets/images/navlogo-white.png'
 import logoDark from '../../assets/images/navlogo-black.png'
 import './Welcome.scss'
 
-import { themeSelector } from '../../redux/selector'
+import { themeSelector } from '../../redux/selectors/themeSelector'
 import { accAuthSelector } from '../../redux/selectors/accountSelector'
 
 const Welcome = () => {

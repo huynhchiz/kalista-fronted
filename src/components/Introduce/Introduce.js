@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { themeSelector } from '../../redux/selector'
+import { themeSelector } from '../../redux/selectors/themeSelector'
 import { useNavigate } from 'react-router-dom'
 import { accAuthSelector } from '../../redux/selectors/accountSelector'
 

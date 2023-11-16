@@ -5,8 +5,9 @@ import { useSelector } from 'react-redux'
 
 import Post from '../re-use/Post/Post'
 
-import { themeSelector, postsSelector, positionScrollSelector } from '../../redux/selector'
+import { themeSelector } from '../../redux/selectors/themeSelector'
 import { dispatchAddLimitExplorePosts, dispatchGetExplorePosts } from '../../dispatchFunctions/dispatchPosts'
+import { positionScrollSelector } from '../../redux/selectors/postSelector'
 
 const Explore = () => {
     const darkTheme = useSelector(themeSelector)

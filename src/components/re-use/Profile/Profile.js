@@ -1,13 +1,14 @@
 import './Profile.scss'
 import ProfileHeader from '../ProfileHeader/ProfileHeader'
 import ProfileContent from '../ProfileContent/ProfileContent'
+import NavBack from '../NavBack/NavBack'
+// import ModalList from '../ModalList/ModalList'
 
 import { Waypoint } from 'react-waypoint'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import NavBack from '../NavBack/NavBack'
-// import ModalList from '../ModalList/ModalList'
+
 import { dispatchGetUser, dispatchGetUserPosts } from '../../../dispatchs/dispatchUser'
 import { isFollowingUserSelector, userFollowersSelector, userFollowingsSelector, userInfoSelector, userPostsSelector } from '../../../redux/selectors/userSelector'
 
@@ -57,6 +58,7 @@ const Profile = () => {
                 email={userInfo && userInfo.email}
                 userAvatar={userInfo && userInfo.avatar}
                 username={userInfo && userInfo.username}
+                userId={userInfo && userInfo.userId}
                 countFollowers={userFollower && userFollower.count}
                 countFollowings={userFollowing && userFollowing.count}
                 countPosts={userPost && userPost.count}

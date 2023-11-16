@@ -1,7 +1,7 @@
 import './InputText.scss'
 
 import { useSelector } from 'react-redux'
-import { themeSelector } from '../../../redux/selector'
+import { themeSelector } from '../../../redux/selectors/themeSelector'
 
 const InputText = ({ name, type = 'text', placeholder, className, value, onChange, onBlur,
                         showWarn = false, message }) => {

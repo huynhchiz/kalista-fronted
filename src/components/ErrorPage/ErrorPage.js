@@ -1,8 +1,9 @@
 import { dispatchLoadPage } from '../../dispatchFunctions/dispatchFunctions'
-import { themeSelector } from '../../redux/selector'
+import { themeSelector } from '../../redux/selectors/themeSelector'
 import { errorSelector } from '../../redux/selectors/errorSelector'
-import './ErrorPage.scss'
 import { useSelector } from 'react-redux'
+
+import './ErrorPage.scss'
 
 const ErrorPage = () => {
     const darkTheme = useSelector(themeSelector)

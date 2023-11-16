@@ -5,7 +5,9 @@ import { Waypoint } from 'react-waypoint'
 import './Home.scss'
 import Post from '../re-use/Post/Post'
 
-import { themeSelector, positionScrollSelector } from '../../redux/selector'
+import { themeSelector } from '../../redux/selectors/themeSelector'
+
+import { positionScrollSelector } from '../../redux/selectors/postSelector'
 import { homePostsSelector } from '../../redux/selectors/postSelector'
 import { dispatchAddLimitHomePosts, dispatchGetHomePosts } from '../../dispatchs/dispatchPosts'
 

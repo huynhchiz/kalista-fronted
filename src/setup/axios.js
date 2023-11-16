@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { dispatchRefreshToken } from '../dispatchs/dispatchAccount';
-import { dispatchSetError } from '../dispatchs/dispatchError';
+import { dispatchSetError } from '../dispatchs/dispatchPageAction';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3333';
 

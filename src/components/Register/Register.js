@@ -7,7 +7,7 @@ import './Register.scss'
 import BigButton from '../re-use/BigButton/BigButton'
 import InputText from '../re-use/InputText/InputText'
 
-import { themeSelector } from '../../redux/selector'
+import { themeSelector } from '../../redux/selectors/themeSelector'
 import loadPageSlice from '../../slices/loadPageSlice'
 import { registerUserService } from '../../service/signService'
 import { checkValidEmail, checkValidPassword } from '../../checkValidFunctions/index.js'

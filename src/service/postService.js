@@ -16,15 +16,12 @@ const uploadPost = (data) => {
     let time = data.time
     let date = data.date
 
-    return axios.post('/post/upload', {src, type, alt, caption, time, date})
+    return axios.post('/post/upload-post', {src, type, alt, caption, time, date})
 }
 
-// const getPosts = (data) => {
-//     return axios.post('/api/post/read', { limit: data })
-// }
 
 const getHomePosts = (limit) => {
-    return axios.get(`/post/get-home/${limit}`)
+    return axios.get(`/post/get-home-posts/${limit}`)
 }
 
 const getNotFollowingPosts = (data) => {

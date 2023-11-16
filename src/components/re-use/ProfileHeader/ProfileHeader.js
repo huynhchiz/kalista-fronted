@@ -2,32 +2,30 @@ import { useSelector } from 'react-redux'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import './ProfileHeader.scss'
 import userAvatarUnset from '../../../assets/images/user-avatar-unset.png'
+import './ProfileHeader.scss'
 
-import { themeSelector, userLoginSelector } from '../../../redux/selector'
-import { followSV, unfollowSV } from '../../../service/followService'
-import { dispatchGetUserFollowing } from '../../../dispatchFunctions/dispatchFollows'
-import { dispatchFetchOtherUserFollowers } from '../../../dispatchFunctions/dispatchOtherUser'
+import { followSV, unfollowSV } from '../../../service/accountService'
+import { themeSelector } from '../../../redux/selectors/themeSelector'
+import { accInfoSelector } from '../../../redux/selectors/accountSelector'
+import { dispatchGetUser } from '../../../dispatchs/dispatchUser'
 
-const ProfileHeader = ({ following, email, userAvatar, username, countFollowers, countFollowings, countPosts }) => {
+const ProfileHeader = ({ following, email, userAvatar, username, userId, countFollowers, countFollowings, countPosts }) => {
     const darkTheme = useSelector(themeSelector)
-    const userLogin = useSelector(userLoginSelector)
+    const accountInfo = useSelector(accInfoSelector)
 
     const handleFollow = async () => {
-        let res = await followSV(email)
+        let res = await followSV(userId)
         if(res && +res.EC === 0) {
             console.log(res.EM);
-            dispatchGetUserFollowing(userLogin.account.email, 2)
-            dispatchFetchOtherUserFollowers(email)
+            dispatchGetUser(userId)
         }
     }
     const handleUnfollow = async () => {
-        let res = await unfollowSV(email)
+        let res = await unfollowSV(userId)
         if(res && +res.EC === 0) {
             console.log(res.EM);
-            dispatchGetUserFollowing(userLogin.account.email, 2)
-            dispatchFetchOtherUserFollowers(email)
+            dispatchGetUser(userId)
         }
     }
 
@@ -74,7 +72,7 @@ const ProfileHeader = ({ following, email, userAvatar, username, countFollowers,
             </div>
 
             {
-                email === userLogin.account.email ? <></> : 
+                userId === accountInfo.userId ? <></> : 
                 <>
                     {following ?
                         <div className='profile-followed'>

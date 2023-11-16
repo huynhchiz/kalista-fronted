@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import './Nav.scss'
 import ThemeToggle from '../re-use/ThemeToggle/ThemeToggle'
+import Setting from '../re-use/Setting/Setting'
 import navWhiteLogo from '../../assets/images/navlogo-white.png'
 import navDarkLogo from '../../assets/images/navlogo-black.png'
 
-import { useSelector } from 'react-redux'
-import { themeSelector } from '../../redux/selector'
-import Setting from '../re-use/Setting/Setting'
-import { dispatchSetError } from '../../dispatchs/dispatchError'
+import { themeSelector } from '../../redux/selectors/themeSelector'
+import { dispatchSetError } from '../../dispatchs/dispatchPageAction'
 
 const Nav = () => {
     const location = useLocation()

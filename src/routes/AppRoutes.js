@@ -12,8 +12,9 @@ import Explore from "../components/Explore/Explore";
 import Posting from "../components/Posting/Posting";
 import MyProfile from "../components/MyProfile/MyProfile";
 import Profile from "../components/re-use/Profile/Profile";
-import { dispatchGetAccount } from "../dispatchFunctions/dispatchFunctions";
+// import { dispatchGetAccount } from "../dispatchFunctions/dispatchFunctions";
 import PreviewPost from "../components/re-use/PreviewPost/PreviewPost";
+import { dispatchGetAccount } from "../dispatchs/dispatchAccount";
 
 const AppRoutes = () => {
     let checkLogin = JSON.parse(localStorage.getItem('checkLogin'))

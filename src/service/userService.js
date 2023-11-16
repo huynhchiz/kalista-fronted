@@ -1,7 +1,7 @@
 import axios from "../setup/axios.js";
 
 const getUserInfo = (userId) => {
-    return axios.get(`/user/get-info/${userId}`)
+    return axios.get(`/user/get-user-info/${userId}`)
 }
 
 const getUserPosts = (userId, limit) => {

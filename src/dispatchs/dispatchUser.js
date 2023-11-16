@@ -20,32 +20,8 @@ const dispatchGetUserPosts = (userId, limit) => {
     }))
 }
 
-// const dispatchGetAccountFollowers = (limit) => {
-//     store.dispatch(fetchAccountFollowers({
-//         api: getAccountFollowersSV,
-//         limit: limit
-//     }))
-// }
-
-// const dispatchGetAccountFollowings = (limit) => {
-//     store.dispatch(fetchAccountFollowings({
-//         api: getAccountFollowingsSV,
-//         limit: limit
-//     }))
-// }
-
-// const dispatchGetAccountPosts = (limit) => {
-//     store.dispatch(fetchAccountPosts({
-//         api: getAccountPosts,
-//         limit: limit,
-//     }))
-// }
 
 export {
     dispatchGetUser,
     dispatchGetUserPosts,
-    // dispatchGetAccount,
-    // dispatchGetAccountFollowers,
-    // dispatchGetAccountFollowings,
-    // dispatchGetAccountPosts,
 }

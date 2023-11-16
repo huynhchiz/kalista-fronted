@@ -1,7 +1,7 @@
 import './BigButton.scss'
 
 import { useSelector } from 'react-redux'
-import { themeSelector } from '../../../redux/selector'
+import { themeSelector } from '../../../redux/selectors/themeSelector'
 
 const BigButton = ({ disabled, className, children, onClick }) => {
     const darkTheme = useSelector(themeSelector)

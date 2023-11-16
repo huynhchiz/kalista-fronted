@@ -7,7 +7,7 @@ import { faHeart as faUnHeart } from '@fortawesome/free-solid-svg-icons'
 import { useSelector } from 'react-redux'
 import { useState, useRef, useEffect } from 'react'
 
-import { themeSelector } from '../../../redux/selector'
+import { themeSelector } from '../../../redux/selectors/themeSelector'
 import { countCommentLikesSV, likeCommentSV, unlikeCommentSV } from '../../../service/commentService'
 
 const Comment = ({ data }) => {

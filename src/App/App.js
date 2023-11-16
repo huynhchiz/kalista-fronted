@@ -1,26 +1,24 @@
 import { useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+// import { useEffect } from 'react';
 
 import './App.scss'
 import Nav from '../components/Nav/Nav';
 import Menu from '../components/Menu/Menu';
 import AppRoutes from '../routes/AppRoutes';
 import LoadPage from '../components/re-use/LoadPage/LoadPage';
-
-import { themeSelector } from '../redux/selector';
 import NotiModal from '../components/re-use/NotiModal/NotiModal';
-import { useEffect } from 'react';
-import { dispatchGetAccount/*, dispatchGetAccountFollowers, dispatchGetAccountFollowings*/ } from '../dispatchs/dispatchAccount';
 import ErrorPage from '../components/ErrorPage/ErrorPage';
+
+import { themeSelector } from '../redux/selectors/themeSelector';
+// import { dispatchGetAccount } from '../dispatchs/dispatchAccount';
 
 function App() {
   const darkTheme = useSelector(themeSelector)
 
-  useEffect(() => {
-    dispatchGetAccount()
-    // dispatchGetAccountFollowers(10)
-    // dispatchGetAccountFollowings(10)
-  }, [])
+  // useEffect(() => {
+  //   dispatchGetAccount()
+  // }, [])
 
   return (
     <BrowserRouter>

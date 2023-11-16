@@ -110,10 +110,19 @@
                 .count-follower {
                     display: flex;
                     margin-right: 12px;
+                    cursor: pointer;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
                 }
     
                 .count-following {
                     display: flex;
+                    cursor: pointer;
+                    &:hover {
+                        text-decoration: underline;
+                    }
                 }
     
                 span {
@@ -125,6 +134,10 @@
     
             .count-post {
                 display: flex;
+                cursor: pointer;
+                &:hover {
+                    text-decoration: underline;
+                }
     
                 p {
                     margin: 0 4px;
@@ -162,6 +175,10 @@
         .avatar-upload {
             background-color: #3b3b3b !important;
         }
+    }
+
+    span {
+        color: var(--text-white);
     }
 }
 

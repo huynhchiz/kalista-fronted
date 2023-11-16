@@ -1,7 +1,8 @@
 import './NotiModal.scss'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { themeSelector, notiModalMessageSelector, notiModalShowSelector } from '../../../redux/selector'
+import { themeSelector} from '../../../redux/selectors/themeSelector'
+import { notiModalMessageSelector, notiModalShowSelector } from '../../../redux/selectors/notiModalSelector'
 import notiModalSlice from '../../../slices/notiModalSlice'
 
 const NotiModal = ({ top = false }) => {

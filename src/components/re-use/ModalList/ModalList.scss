@@ -1,24 +1,59 @@
 .modal-list-wrapper {
     position: fixed;
     top: 0;
-    margin-top: var(--nav-height);
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #ddd;
-    opacity: 0.9;
+    background-color: rgba($color: #000000, $alpha: 0.8);
     z-index: 1;
 
+    @media (max-width: 500px) {
+        padding: 6px;
+    }
+
     .modal-list {
-        position: fixed;
-        z-index: 2;
         background-color: white;
         width: var(--frame-image-width);
+        height: 50vh;
+        border-radius: 3px;
 
         @media (max-width: 500px) {
             width: var(--app-width-responsive);
+            height: 80vh;
+        }
+
+        .modal-list-header {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .modal-list-content {
+
+            .item {
+                padding: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-bottom: 1px solid #ddd;
+
+                img {
+                    margin-right: 8px;
+                    width: 32px;
+                    aspect-ratio: 1 / 1;
+                    border-radius: 50%;
+                }
+                .username {
+                    flex: 1;
+                    font-size: 12px;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .modal-list-footer {
+
         }
     }
 }

@@ -12,6 +12,14 @@ const refreshTokenSV = () =>  {
     return axios.post('/account/refresh-token')
 }
 
+const followSV = (userId) =>  {
+    return axios.post('/account/follow', { userId })
+}
+
+const unfollowSV = (userId) =>  {
+    return axios.post('/account/unfollow', { userId })
+}
+
 const getAccountFollowersSV = (limit) =>  {
     return axios.get(`/account/get-followers/${limit}`)
 }
@@ -36,6 +44,8 @@ export {
     getAccountInfoSV,
     getAccountAvatarSV,
     refreshTokenSV,
+    followSV,
+    unfollowSV,
     getAccountFollowersSV,
     getAccountFollowingsSV,
     deleteAvatar,

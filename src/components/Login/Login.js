@@ -7,10 +7,10 @@ import './Login.scss'
 import BigButton from '../re-use/BigButton/BigButton'
 import InputText from '../re-use/InputText/InputText'
 
-import { themeSelector } from '../../redux/selector'
+import { themeSelector } from '../../redux/selectors/themeSelector'
 import { accAuthSelector } from '../../redux/selectors/accountSelector'
 import { loginUserService } from '../../service/signService'
-import { dispatchLoadPage} from '../../dispatchFunctions/dispatchFunctions'
+import { dispatchLoadPage} from '../../dispatchs/dispatchPageAction'
 import { dispatchGetAccount, dispatchLogin } from '../../dispatchs/dispatchAccount'
 
 const Login = () => {

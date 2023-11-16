@@ -13,7 +13,8 @@ const homePostsSlice = createSlice({
             state.limit = action.payload
         },
         resetPosts: (state, action) => {
-            state = initPosts
+            state.limit = initPosts.limit
+            state.list = initPosts.list
         } 
     },
     extraReducers: builder => {

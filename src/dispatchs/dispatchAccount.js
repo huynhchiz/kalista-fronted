@@ -3,14 +3,17 @@ import accountSlice, { fetchAccountAvatar, fetchAccountFollowers, fetchAccountFo
 
 import { getAccountAvatarSV, getAccountFollowersSV, getAccountFollowingsSV, getAccountInfoSV, getAccountPosts, refreshTokenSV } from "../service/accountService";
 import { dispatchResetHomePosts } from "./dispatchPosts";
+import { dispatchResetScrollPosition } from "./dispatchScrollPosition";
 
 const dispatchLogin = (dataLogin) => {
     store.dispatch(accountSlice.actions.login(dataLogin))
+    dispatchResetScrollPosition()
 }
 
 const dispatchLogout = () => {
     store.dispatch(accountSlice.actions.logout())
     dispatchResetHomePosts()
+    dispatchResetScrollPosition()
 }
 
 const dispatchGetAccount = () => {

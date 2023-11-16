@@ -5,7 +5,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 import './Setting.scss'
 import BigButton from '../BigButton/BigButton'
-import { themeSelector } from '../../../redux/selector'
+import { themeSelector } from '../../../redux/selectors/themeSelector'
 import { logoutUserService } from '../../../service/signService'
 import { dispatchLogout } from '../../../dispatchs/dispatchAccount'
 

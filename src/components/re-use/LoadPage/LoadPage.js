@@ -2,7 +2,8 @@ import './LoadPage.scss'
 import { ThreeCircles } from 'react-loader-spinner'
 
 import { useSelector } from 'react-redux'
-import { themeSelector, loadPageSelector } from '../../../redux/selector'
+import { themeSelector } from '../../../redux/selectors/themeSelector'
+import { loadPageSelector } from '../../../redux/selectors/loadPageSelector'
 
 const LoadPage = () => {
     const darkTheme = useSelector(themeSelector)

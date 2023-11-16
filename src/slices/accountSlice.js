@@ -40,6 +40,7 @@ const accountSlice = createSlice({
             state.info = initAccount.info
             state.followers = initAccount.followers
             state.followings = initAccount.followings
+            state.posts = initAccount.posts
             localStorage.setItem('checkLogin', JSON.stringify(false))
         },
     },

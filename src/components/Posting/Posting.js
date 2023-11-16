@@ -7,18 +7,20 @@ import { useNavigate } from 'react-router-dom'
 import './Posting.scss'
 import BigButton from '../re-use/BigButton/BigButton'
 
-import { themeSelector } from '../../redux/selector'
-import { userLoginSelector } from '../../redux/selector'
+import { themeSelector } from '../../redux/selectors/themeSelector'
+// import { userLoginSelector } from '../../redux/selector'
+import { accInfoSelector } from '../../redux/selectors/accountSelector'
 import { uploadImage as uploadImageSV, uploadVideo as uploadVideoSV, uploadPost as uploadPostSV } from '../../service/postService'
-import { dispatchLoadPage, dispatchNoti } from '../../dispatchFunctions/dispatchFunctions'
+import { dispatchLoadPage, dispatchNoti } from '../../dispatchs/dispatchPageAction'
 import { dispatchGetHomePosts, dispatchGetUserPosts } from '../../dispatchFunctions/dispatchPosts'
-import { dispatchResetScrollPosition } from '../../dispatchFunctions/dispatchScrollPosition'
+import { dispatchResetScrollPosition } from '../../dispatchs/dispatchScrollPosition'
 
 const Posting = () => {
     const navigate = useNavigate()
 
     const darkTheme = useSelector(themeSelector)
-    const userLogin = useSelector(userLoginSelector)
+    // const userLogin = useSelector(userLoginSelector)
+    const accountInfo = useSelector(accInfoSelector) 
 
     const [filePreview, setFilePreview] = useState({
         src: '',
@@ -49,7 +51,7 @@ const Posting = () => {
             }
 
             setFileUpload(inputFile)
-            setAlt(`${userLogin.account.username}_${Date.now().toString()}`)
+            setAlt(`${accountInfo.username}_${Date.now().toString()}`)
             setTimeUpload((new Date().toLocaleTimeString()).toString())
             setDateUpload((new Date().toLocaleDateString().toString()))
 
@@ -92,8 +94,8 @@ const Posting = () => {
             if(finalRes && +finalRes.EC === 0) {
                 dispatchNoti(finalRes.EM)
                 dispatchLoadPage()
-                dispatchGetHomePosts(5)
-                dispatchGetUserPosts(userLogin.account.email, 15)
+                // dispatchGetHomePosts(5)
+                // dispatchGetUserPosts(accountInfo.userId, 15)
                 dispatchResetScrollPosition()
                 navigate('/')
 
@@ -121,8 +123,8 @@ const Posting = () => {
             if(finalRes && +finalRes.EC === 0) {
                 dispatchNoti(finalRes.EM)
                 dispatchLoadPage()
-                dispatchGetHomePosts(5)
-                dispatchGetUserPosts(userLogin.account.email, 15)
+                // dispatchGetHomePosts(5)
+                // dispatchGetUserPosts(userLogin.account.email, 15)
                 dispatchResetScrollPosition()
                 navigate('/')
             } else {

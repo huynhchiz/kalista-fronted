@@ -1,20 +1,18 @@
+import './Menu.scss'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHouse, faMagnifyingGlass, faSquarePlus, faUser } from '@fortawesome/free-solid-svg-icons'
+
 import { useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHouse, faMagnifyingGlass, faSquarePlus, faUser } from '@fortawesome/free-solid-svg-icons'
-import './Menu.scss'
-
-import { themeSelector, userLoginSelector } from '../../redux/selector'
-import { dispatchSetScrollExplore, dispatchSetScrollHome, dispatchSetScrollMyProfile } from "../../dispatchFunctions/dispatchScrollPosition";
+import { themeSelector } from '../../redux/selectors/themeSelector'
+import { dispatchSetScrollExplore, dispatchSetScrollHome, dispatchSetScrollMyProfile } from "../../dispatchs/dispatchScrollPosition";
 import { accAuthSelector } from '../../redux/selectors/accountSelector'
 
 const Menu = () => {
-    // const userLogin = useSelector(userLoginSelector)
     const accountAuth = useSelector(accAuthSelector)
     const darkTheme = useSelector(themeSelector)
-
 
     const location = useLocation()
 

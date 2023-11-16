@@ -1,8 +1,8 @@
 import {  useSelector } from 'react-redux'
 import './ThemeToggle.scss'
 
-import { themeSelector } from '../../../redux/selector'
-import { dispatchToggleTheme } from '../../../dispatchFunctions/dispatchFunctions'
+import { themeSelector } from '../../../redux/selectors/themeSelector'
+import { dispatchToggleTheme } from '../../../dispatchs/dispatchPageAction'
 
 const ThemeToggle = () => {
     const darkTheme = useSelector(themeSelector)
