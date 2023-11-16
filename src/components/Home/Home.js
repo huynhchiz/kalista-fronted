@@ -5,19 +5,20 @@ import { Waypoint } from 'react-waypoint'
 import './Home.scss'
 import Post from '../re-use/Post/Post'
 
-import { themeSelector,  postsSelector, positionScrollSelector } from '../../redux/selector'
-import { dispatchAddLimitHomePosts, dispatchGetHomePosts } from '../../dispatchFunctions/dispatchPosts'
+import { themeSelector, positionScrollSelector } from '../../redux/selector'
+import { homePostsSelector } from '../../redux/selectors/postSelector'
+import { dispatchAddLimitHomePosts, dispatchGetHomePosts } from '../../dispatchs/dispatchPosts'
 
 const Home = () => {
     const darkTheme = useSelector(themeSelector)
-    const posts = useSelector(postsSelector)
-    const postsHome = posts.homePosts.posts
-    const limit = posts.homePosts.limit
-
-    const [fullPost, setFullPost] = useState(false)
     
+    const homePost = useSelector(homePostsSelector)
+    const postsHome = homePost.list
+    const limit = homePost.limit
     const position = useSelector(positionScrollSelector)
-    
+
+    const [fullPost, setFullPost] = useState(false) 
+
     const handleAddLimit = () => {
         let condition = (+postsHome.length < +limit - 5)
         if (!condition) {
@@ -28,8 +29,8 @@ const Home = () => {
     }
     
     useEffect(() => {
-        if(limit > 5) {
-            dispatchGetHomePosts(limit)
+        if(+limit > 5) {
+            dispatchGetHomePosts(+limit)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [limit])
@@ -51,6 +52,7 @@ const Home = () => {
                     caption={post.caption}
                     date={post.date}
                     username={post.User.username}
+                    userId={post.User.id}
                     email={post.User.email}
                     avatar={post.User.avatar}
                     countLike={post.countLike}

@@ -8,10 +8,13 @@ import './Menu.scss'
 
 import { themeSelector, userLoginSelector } from '../../redux/selector'
 import { dispatchSetScrollExplore, dispatchSetScrollHome, dispatchSetScrollMyProfile } from "../../dispatchFunctions/dispatchScrollPosition";
+import { accAuthSelector } from '../../redux/selectors/accountSelector'
 
 const Menu = () => {
-    const userLogin = useSelector(userLoginSelector)
+    // const userLogin = useSelector(userLoginSelector)
+    const accountAuth = useSelector(accAuthSelector)
     const darkTheme = useSelector(themeSelector)
+
 
     const location = useLocation()
 
@@ -21,7 +24,7 @@ const Menu = () => {
     const accountRef = useRef()
 
     useEffect(() => {
-        if (userLogin.isAuthenticated && location.pathname === '/') {
+        if (accountAuth && accountAuth.isAuth && location.pathname === '/') {
             let menuActive = document.querySelector('.menu-active')
             if (menuActive) { 
                 menuActive.classList.remove('menu-active')
@@ -63,7 +66,7 @@ const Menu = () => {
     }
 
     return (
-        userLogin && userLogin.isAuthenticated && location.pathname !== '/welcome' &&
+        accountAuth && accountAuth.isAuth && location.pathname !== '/welcome' &&
         <div
             className={`menu ${darkTheme ? 'menu-dark' : ''}`}
             onClick={handleSavePosition}

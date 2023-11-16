@@ -6,66 +6,34 @@ import { Waypoint } from 'react-waypoint'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { followSelector, otherUserSelector, userLoginSelector } from '../../../redux/selector'
-import { dispatchFetchOtherUserInFo,
-    dispatchFetchOtherUserPosts,
-    dispatchFetchOtherUserFollowers,
-    dispatchFetchOtherUserFollowings } from "../../../dispatchFunctions/dispatchOtherUser"
 import NavBack from '../NavBack/NavBack'
-import ModalList from '../ModalList/ModalList'
-import { dispatchGetAccount } from '../../../dispatchFunctions/dispatchFunctions'
+// import ModalList from '../ModalList/ModalList'
+import { dispatchGetUser, dispatchGetUserPosts } from '../../../dispatchs/dispatchUser'
+import { isFollowingUserSelector, userFollowersSelector, userFollowingsSelector, userInfoSelector, userPostsSelector } from '../../../redux/selectors/userSelector'
 
 const Profile = () => {
     const [limit, setLimit] = useState(15)
-    const [following, setFollowing] = useState(false)
 
     const [searchParam] = useSearchParams()
-    const emailPr = searchParam.get('user')
+    const idParam = searchParam.get('user')
 
-    const otherUser = useSelector(otherUserSelector)
-    const userLoginFollow = useSelector(followSelector)
-    const userLogin = useSelector(userLoginSelector)
+    const userInfo = useSelector(userInfoSelector)
+    const userFollower = useSelector(userFollowersSelector)
+    const userFollowing = useSelector(userFollowingsSelector)
+    const userPost = useSelector(userPostsSelector)
+    const isFollowingUser = useSelector(isFollowingUserSelector)
+    const userPosts = useSelector(userPostsSelector)
 
     const navigate = useNavigate()
 
-    console.log(userLogin);
-    
-    useEffect(() => {
-        dispatchGetAccount()
-        dispatchFetchOtherUserInFo(emailPr)
-        dispatchFetchOtherUserPosts(emailPr, limit)
-        dispatchFetchOtherUserFollowers(emailPr)
-        dispatchFetchOtherUserFollowings(emailPr)
-        
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [emailPr])
-
-
     useEffect(() => {
         window.scrollTo(0, 0)
+        dispatchGetUser(idParam)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    
-    useEffect(() => {
-        const isFollowing = 
-            userLogin.followings.length > 0 &&
-            userLogin.followings.some(item => (
-                item.email === emailPr
-            ))
-        if(isFollowing) {
-            setFollowing(true)
-        }
-
-        if(isFollowing === false) {
-            setFollowing(false)
-        }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
 
     const handleAddLimit = () => {
-        let condition = (+(otherUser.posts.posts.length) < +limit - 15)
+        let condition = (+(userPost.count) < +limit - 15)
         if (!condition) {
             setLimit(limit + 15)
         }
@@ -73,7 +41,7 @@ const Profile = () => {
 
     useEffect(() => {
         if(limit > 15) {
-            dispatchFetchOtherUserPosts(emailPr, limit)
+            dispatchGetUserPosts(idParam, 15)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [limit])
@@ -85,20 +53,17 @@ const Profile = () => {
             {/* <ModalList /> */}
 
             <ProfileHeader
-                following={ userLogin.followings.length > 0 &&
-                            userLogin.followings.some(item => (
-                            item.email === emailPr
-                        ))}
-                email={emailPr}
-                userAvatar={otherUser.info.avatar}
-                username={otherUser.info.username}
-                countFollowers={otherUser.followers.countFollower}
-                countFollowings={otherUser.followings.countFollowing}
-                countPosts={otherUser.posts.count}
+                following={isFollowingUser}
+                email={userInfo && userInfo.email}
+                userAvatar={userInfo && userInfo.avatar}
+                username={userInfo && userInfo.username}
+                countFollowers={userFollower && userFollower.count}
+                countFollowings={userFollowing && userFollowing.count}
+                countPosts={userPost && userPost.count}
             />
 
             <ProfileContent
-                listPost={otherUser.posts.posts}
+                listPost={userPosts && userPosts.list}
             />
 
             <div className='profile-footer'>

@@ -2,27 +2,26 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { themeSelector } from '../../redux/selector'
 import { useNavigate } from 'react-router-dom'
+import { accAuthSelector } from '../../redux/selectors/accountSelector'
 
 import './Introduce.scss'
 import logoLight from '../../assets/images/navlogo-white.png'
 import logoDark from '../../assets/images/navlogo-black.png'
 import BigButton from '../re-use/BigButton/BigButton'
 
-import { userLoginSelector } from '../../redux/selector'
-
 const Introduce = () => {
     const navigate = useNavigate()
 
     const darkTheme = useSelector(themeSelector)
-    const userLogin = useSelector(userLoginSelector)
+    const accountAuth = useSelector(accAuthSelector)
 
     useEffect(() => {
-        if(userLogin && userLogin.isAuthenticated) {
+        if(accountAuth && accountAuth.isAuth) {
             navigate('/welcome')
         }
         
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userLogin])
+    }, [accountAuth])
 
     const redirectToLogin = () => {
         navigate('/login')

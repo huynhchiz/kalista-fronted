@@ -7,8 +7,9 @@ import './Setting.scss'
 import BigButton from '../BigButton/BigButton'
 import { themeSelector } from '../../../redux/selector'
 import { logoutUserService } from '../../../service/signService'
+import { dispatchLogout } from '../../../dispatchs/dispatchAccount'
 
-import { dispatchLogout } from '../../../dispatchFunctions/dispatchFunctions'
+// import { dispatchLogout } from '../../../dispatchFunctions/dispatchFunctions'
 
 const Setting = () => {
     const darkTheme = useSelector(themeSelector)

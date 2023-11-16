@@ -9,6 +9,7 @@ import navDarkLogo from '../../assets/images/navlogo-black.png'
 import { useSelector } from 'react-redux'
 import { themeSelector } from '../../redux/selector'
 import Setting from '../re-use/Setting/Setting'
+import { dispatchSetError } from '../../dispatchs/dispatchError'
 
 const Nav = () => {
     const location = useLocation()
@@ -26,11 +27,16 @@ const Nav = () => {
         }
     }, [location.pathname])
 
+    const handleCLickLogo = () => {
+        dispatchSetError(false)
+        navigate('/welcome')
+    }
+
     return (
         <div className={`nav ${darkTheme ? 'nav-dark' : ''}`}>
             {
                 location.pathname === '/welcome' ? <></> :
-                <div className='nav-logo' onClick={() => navigate('/welcome')}>
+                <div className='nav-logo' onClick={handleCLickLogo}>
                     <img className='nav-logo-img' src={darkTheme ? navDarkLogo : navWhiteLogo} alt='nav logo'/>
                 </div>
             }

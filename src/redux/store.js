@@ -10,6 +10,9 @@ import otherUserSlice from "../slices/otherUserSlice.js";
 import positionScrollSlice from "../slices/positionScrollSlice.js";
 import previewPostSlice from "../slices/previewPostSlice.js";
 import accountSlice from "../slices/accountSlice.js";
+import homePostsSlice from "../slices/homePostsSlice.js";
+import errorSlice from "../slices/errorSlice.js";
+import userSlice from "../slices/userSlice.js";
 
 const store = configureStore({
     reducer: {
@@ -23,7 +26,10 @@ const store = configureStore({
         positionScroll: positionScrollSlice.reducer,
         previewPost: previewPostSlice.reducer,
 
-        account: accountSlice.reducer
+        account: accountSlice.reducer,
+        error: errorSlice.reducer,
+        homePosts: homePostsSlice.reducer,
+        user: userSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

@@ -17,7 +17,7 @@ const ProfileContent = ({ listPost }) => {
         <div className={`profile-content ${darkTheme ? 'profile-content-dark' : ''}`}>
             <div className='profile-post'>
                 <div className='profile-post-frame'>
-                    {listPost.length > 0 && 
+                    {listPost && listPost.length > 0 && 
                         listPost.map(post => (
                             post.type === 'image' ?
                             <img

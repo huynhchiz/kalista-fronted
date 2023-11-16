@@ -7,7 +7,7 @@
         display: flex;
         width: var(--frame-image-width);
         margin: auto;
-        padding: 12px 0;
+        padding: 12px 4px;
         border-bottom: 1px solid #ddd;
 
         @media (max-width: 500px) {

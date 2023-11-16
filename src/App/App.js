@@ -10,15 +10,16 @@ import LoadPage from '../components/re-use/LoadPage/LoadPage';
 import { themeSelector } from '../redux/selector';
 import NotiModal from '../components/re-use/NotiModal/NotiModal';
 import { useEffect } from 'react';
-import { dispatchGetAccount, dispatchGetAccountFollowers, dispatchGetAccountFollowings } from '../dispatchs/dispatchAccount';
+import { dispatchGetAccount/*, dispatchGetAccountFollowers, dispatchGetAccountFollowings*/ } from '../dispatchs/dispatchAccount';
+import ErrorPage from '../components/ErrorPage/ErrorPage';
 
 function App() {
   const darkTheme = useSelector(themeSelector)
 
   useEffect(() => {
     dispatchGetAccount()
-    dispatchGetAccountFollowers()
-    dispatchGetAccountFollowings()
+    // dispatchGetAccountFollowers(10)
+    // dispatchGetAccountFollowings(10)
   }, [])
 
   return (
@@ -33,6 +34,8 @@ function App() {
           <NotiModal top />
 
           <LoadPage />
+
+          <ErrorPage />
 
           <div className={`app-content ${darkTheme ? 'app-content-dark' : ''}`} >
             <AppRoutes />

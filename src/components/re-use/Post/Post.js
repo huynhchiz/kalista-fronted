@@ -14,7 +14,7 @@ import { dispatchSetScrollHome, dispatchSetScrollExplore } from '../../../dispat
 import { countOnePostLike, likePostSV, previewOnePost, unlikePostSV } from '../../../service/postService'
 import { createCommentSV } from '../../../service/commentService'
 
-const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, countLike, countComment, liked }) => {
+const Post = ({ postId, src, type, alt, caption, date, username, userId, email, avatar, countLike, countComment, liked }) => {
     const navigate = useNavigate()
     const location = useLocation()
     const darkTheme = useSelector(themeSelector)
@@ -88,7 +88,7 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
         }
     }
     
-    const handleNavigateToProfile = (email) => {
+    const handleNavigateToProfile = (userId) => {
         if(location.pathname === '/') {
             dispatchSetScrollHome(window.scrollY)
         }
@@ -96,7 +96,7 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
             dispatchSetScrollExplore(window.scrollY)
         }
 
-        navigate(`/profile?user=${email}`)
+        navigate(`/profile?user=${userId}`)
     }
 
     const handleShowComments = () => {
@@ -146,7 +146,7 @@ const Post = ({ postId, src, type, alt, caption, date, username, email, avatar, 
                     </div>
 
                     <div className='post-username'>
-                        <p onClick={() => handleNavigateToProfile(email)} >
+                        <p onClick={() => handleNavigateToProfile(userId)} >
                             {username}
                         </p>
                     </div>

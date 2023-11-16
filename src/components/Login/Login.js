@@ -7,13 +7,16 @@ import './Login.scss'
 import BigButton from '../re-use/BigButton/BigButton'
 import InputText from '../re-use/InputText/InputText'
 
-import { themeSelector, userLoginSelector } from '../../redux/selector'
+import { themeSelector } from '../../redux/selector'
+import { accAuthSelector } from '../../redux/selectors/accountSelector'
 import { loginUserService } from '../../service/signService'
-import { dispatchLogin, dispatchLoadPage, dispatchNoti } from '../../dispatchFunctions/dispatchFunctions'
+import { dispatchLoadPage} from '../../dispatchFunctions/dispatchFunctions'
+import { dispatchGetAccount, dispatchLogin } from '../../dispatchs/dispatchAccount'
 
 const Login = () => {
     const darkTheme = useSelector(themeSelector)
-    const userLogin = useSelector(userLoginSelector)
+    const accountAuth = useSelector(accAuthSelector)
+    
     const navigate = useNavigate()
 
     const [loginValue, setLoginValue] = useState('')
@@ -28,10 +31,10 @@ const Login = () => {
     const [loginWarningMessage, setLoginWarningMessage] = useState('') // warnning message when incorrect login
 
     useEffect(() => {
-        if (userLogin && userLogin.isAuthenticated) {
+        if (accountAuth && accountAuth.isAuth) {
             navigate('/welcome')
         }
-    }, [userLogin])
+    }, [accountAuth])
 
     const redirectToIntroduce = () => {
         navigate('/introduce')
@@ -66,20 +69,17 @@ const Login = () => {
             if(res && +res.EC === 0) {
                 console.log(res.EM);
                 let dataLoginRedux = {
-                    isAuthenticated: true,
-                    accessToken: res.DT.accessToken,
-                    refreshToken: res.DT.refreshToken,
-                    account: {
-                        userGroupWithRoles: res.DT.userGroupWithRoles,
-                        email: res.DT.email,
-                        username: res.DT.username,
+                    auth: {
+                        isAuth: true,
+                        accessToken: res.DT.accessToken,
+                        refreshToken: res.DT.refreshToken,
                     },
                 }
                 dispatchLogin(dataLoginRedux)
+                dispatchGetAccount()
+
                 dispatchLoadPage()
-                dispatchNoti('Login success!')
                 navigate('/welcome')
-                // navigate('/')
 
             } else {
                 dispatchLoadPage()

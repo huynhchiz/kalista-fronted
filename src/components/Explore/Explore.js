@@ -10,9 +10,9 @@ import { dispatchAddLimitExplorePosts, dispatchGetExplorePosts } from '../../dis
 
 const Explore = () => {
     const darkTheme = useSelector(themeSelector)
-    const posts = useSelector(postsSelector)
-    const postsExplore = posts.explorePosts.posts
-    const limit = posts.explorePosts.limit
+    // const posts = useSelector(postsSelector)
+    // const postsExplore = posts.explorePosts.posts
+    // const limit = posts.explorePosts.limit
 
     const [fullPost, setFullPost] = useState(false)
 
@@ -22,25 +22,25 @@ const Explore = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const handleAddLimit = () => {
-        let condition = (+postsExplore.length < (+limit - 5))
-        if (!condition) {
-            dispatchAddLimitExplorePosts(+limit + 5)
-        } else if (condition) {
-            setFullPost(true)
-        }
-    }
+    // const handleAddLimit = () => {
+    //     let condition = (+postsExplore.length < (+limit - 5))
+    //     if (!condition) {
+    //         dispatchAddLimitExplorePosts(+limit + 5)
+    //     } else if (condition) {
+    //         setFullPost(true)
+    //     }
+    // }
 
-    useEffect(() => {
-        if(limit > 5) {
-            dispatchGetExplorePosts(limit)
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [limit])
+    // useEffect(() => {
+    //     if(limit > 5) {
+    //         dispatchGetExplorePosts(limit)
+    //     }
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [limit])
 
     return (
         <div className={`explore ${darkTheme ? 'explore-dark' : ''}`}>
-        {postsExplore && postsExplore.map(post => (
+        {/* {postsExplore && postsExplore.map(post => (
             <Post
                 key={'ex' + post.id}
                 postId={post.id}
@@ -56,12 +56,12 @@ const Explore = () => {
                 countComment={post.countComment}
                 liked={post.liked}
             />
-        ))}
+        ))} */}
         <div className='explore-footer'>
             <Waypoint
-                onEnter={handleAddLimit}
+                // onEnter={handleAddLimit}
             />
-            {
+            {/* {
                 fullPost ?
                 <p className={darkTheme ? 'dark' : ''}>Nothing new...</p>
                 :
@@ -75,7 +75,7 @@ const Explore = () => {
                     onClick={() => {dispatchGetExplorePosts(limit)}}>
                     Click to see more posts
                 </p>
-            }
+            } */}
         </div>
     </div>
     )

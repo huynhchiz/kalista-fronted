@@ -1,11 +1,11 @@
 import axios from '../setup/axios'
 
 const uploadImage = (data) => {
-    return axios.post('/api/post/upload-cloudinary-image', data)
+    return axios.post('/post/upload-cloudinary-image', data)
 }
 
 const uploadVideo = (data) => {
-    return axios.post('/api/post/upload-cloudinary-video', data)
+    return axios.post('/post/upload-cloudinary-video', data)
 }
 
 const uploadPost = (data) => {
@@ -16,15 +16,15 @@ const uploadPost = (data) => {
     let time = data.time
     let date = data.date
 
-    return axios.post('api/post/upload', {src, type, alt, caption, time, date})
+    return axios.post('/post/upload', {src, type, alt, caption, time, date})
 }
 
-const getPosts = (data) => {
-    return axios.post('/api/post/read', { limit: data })
-}
+// const getPosts = (data) => {
+//     return axios.post('/api/post/read', { limit: data })
+// }
 
-const getFollowingPosts = (data) => {
-    return axios.post('/api/post/read-following', { limit: data })
+const getHomePosts = (limit) => {
+    return axios.get(`/post/get-home/${limit}`)
 }
 
 const getNotFollowingPosts = (data) => {
@@ -32,7 +32,7 @@ const getNotFollowingPosts = (data) => {
 }
 
 const getUserPosts = (email, limit) => {
-    return axios.post('/api/post/read-user', { email, limit })
+    return axios.get('/api/post/read-user', { email, limit })
 }
 
 const likePostSV = (postId) => {
@@ -59,8 +59,9 @@ export {
     uploadImage,
     uploadVideo,
     uploadPost,
-    getPosts,
-    getFollowingPosts,
+    // getPosts,
+    getHomePosts,
+
     getNotFollowingPosts,
     getUserPosts,
     likePostSV,

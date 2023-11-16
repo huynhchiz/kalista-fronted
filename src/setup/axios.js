@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { dispatchRefreshToken } from '../dispatchs/dispatchAccount';
-// import { dispatchGetUserAvt, dispatchRefreshToken } from '../dispatchFunctions/dispatchFunctions';
+import { dispatchSetError } from '../dispatchs/dispatchError';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3333';
 
@@ -52,7 +52,7 @@ instance.interceptors.response.use(
 
             // token expired => refresh token user
             if (+error.response.data.EC === -100) {
-               // dispatchRefreshToken()
+               dispatchSetError(true)
                dispatchRefreshToken()
                return error.response.data;
             }

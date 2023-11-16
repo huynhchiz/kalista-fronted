@@ -8,53 +8,49 @@ import { Waypoint } from 'react-waypoint'
 import YesNoModal from '../re-use/YesNoModal/YesNoModal'
 import ProfileContent from '../re-use/ProfileContent/ProfileContent'
 
-import { themeSelector, userLoginSelector, userLoginAvtSelector, postsSelector/*, followSelector*/, positionScrollSelector } from '../../redux/selector'
+import { themeSelector, positionScrollSelector } from '../../redux/selector'
 import { uploadImage } from '../../service/postService'
-import { deleteUserAvatar, uploadAvatar } from '../../service/userService'
 import { dispatchGetUserAvt, dispatchLoadPage, dispatchNoti } from '../../dispatchFunctions/dispatchFunctions'
-import { dispatchAddLimitUserPosts, dispatchGetUserPosts } from '../../dispatchFunctions/dispatchPosts'
+import { accFollowersSelector, accFollowingsSelector, accInfoSelector, accPostsSelector } from '../../redux/selectors/accountSelector'
+import { dispatchGetAccountAvatar, dispatchGetAccountPosts } from '../../dispatchs/dispatchAccount'
+import { deleteAvatar, uploadAvatar } from '../../service/accountService'
 
 const MyProfile = () => {
     const darkTheme = useSelector(themeSelector)
-    const userLogin = useSelector(userLoginSelector)
-    const userAvatar = useSelector(userLoginAvtSelector)
-    // const follow = useSelector(followSelector)
-
-    const posts = useSelector(postsSelector)
-    const listPost = posts.userPosts.posts
-    const countPost = posts.userPosts.count
-    const limit = posts.userPosts.limit
+    const accountInfo = useSelector(accInfoSelector)
+    const accountFollowers = useSelector(accFollowersSelector)
+    const accountFollowings = useSelector(accFollowingsSelector)
+    const accountPost = useSelector(accPostsSelector)
     
+    const [limit, setLimit] = useState(15)
     const [fileAvatar, setFileAvatar] = useState()
     const [showUpdateAvtBtns, setShowUpdateAvtBtns] = useState(false)
     const [showModalYesno, setShowModalYesno] = useState(false)
 
     const position = useSelector(positionScrollSelector)
+    
+    useEffect(() => {
+        if(limit > 15) dispatchGetAccountPosts(limit)
+    }, [limit])
+
     useEffect(() => {
         window.scrollTo(0, position.myProfile)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleAddLimit = () => {
-        let condition = (+listPost.length < +limit - 15)
+        let condition = (+accountPost.count < +limit - 15)
         if (!condition) {
-            dispatchAddLimitUserPosts(limit + 15)
+            setLimit(limit + 15)
         }
     }
 
     useEffect(() => {
-        if(userAvatar === '' || !userAvatar) {
-            dispatchGetUserAvt()
+        if(accountInfo.avatar === '' || !accountInfo.avatar) {
+            dispatchGetAccountAvatar()
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fileAvatar])
-
-    useEffect(() => {
-        if(limit > 15) {
-            dispatchGetUserPosts(userLogin.account.email, limit)
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [limit])
 
     const handleChangeFile = (e) => {
         let inputFile = e.target.files[0]
@@ -87,11 +83,11 @@ const MyProfile = () => {
 
     const handleSaveDeleteAvt = async () => {
         dispatchLoadPage()
-        let res = await deleteUserAvatar()
+        let res = await deleteAvatar()
         if(res && +res.EC === 0) {
             dispatchLoadPage()
             dispatchNoti(res.EM)
-            dispatchGetUserAvt()
+            dispatchGetAccountAvatar()
             setShowModalYesno(false)
         } else {
             dispatchLoadPage()
@@ -114,11 +110,11 @@ const MyProfile = () => {
                         </button>
                     }
                     
-                    {fileAvatar || userAvatar ?
+                    {fileAvatar || accountInfo.avatar ?
                         (<>
                             <img
-                                src={fileAvatar ? URL.createObjectURL(fileAvatar) : userAvatar}
-                                alt={userLogin.account.username + '_' + userLogin.account.email + '_avatar'}
+                                src={fileAvatar ? URL.createObjectURL(fileAvatar) : accountInfo.avatar}
+                                alt={accountInfo.username + '_' + accountInfo.email + '_avatar'}
                                 onClick={() => {setShowUpdateAvtBtns(true)}}
                             />
                             {showUpdateAvtBtns &&
@@ -162,40 +158,40 @@ const MyProfile = () => {
                 </div>
 
                 <div className='my-profile-info'>
-                    <h3>{userLogin && userLogin.account.username ? userLogin.account.username : 'unname'}</h3>
+                    <h3>{accountInfo && accountInfo.username ? accountInfo.username : 'unname'}</h3>
 
                     <div className='info-follow'>
                         <div className='count-follower'>
-                            <p><span>{userLogin.followers.length || '0'}</span> followers</p>
+                            <p><span>{accountFollowers.count || '0'}</span> followers</p>
                         </div>
                         <div className='count-following'>
-                            <p>following <span>{userLogin.followings.length || '0'}</span></p>
+                            <p>following <span>{accountFollowings.count || '0'}</span></p>
                         </div>
                     </div>
 
                     <div className='count-post'>
-                    { countPost >= 2 && (<>
-                            <span>{countPost}</span>
-                            <p>posts</p>
-                        </>)
-                    }
-                    { countPost === 1 && (<>
-                            <span>{countPost}</span>
-                            <p>post</p>
-                        </>)
-                    }
-                    { (!countPost || countPost === 0) && (<>
-                            <span>0</span>
-                            <p>post</p>
-                        </>)
-                    }
-                </div>
+                        { accountPost.count >= 2 && (<>
+                                <span>{accountPost.count}</span>
+                                <p>posts</p>
+                            </>)
+                        }
+                        { accountPost.count === 1 && (<>
+                                <span>{accountPost.count}</span>
+                                <p>post</p>
+                            </>)
+                        }
+                        { (!accountPost.count || accountPost.count === 0) && (<>
+                                <span>0</span>
+                                <p>post</p>
+                            </>)
+                        }
+                    </div>
 
                 </div>
 
             </div>
 
-            <ProfileContent listPost={listPost} />
+            <ProfileContent listPost={accountPost.list} />
 
             <div className='my-profile-footer'>
                 <Waypoint
