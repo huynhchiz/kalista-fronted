@@ -3,15 +3,16 @@ import userAvatarUnset from '../../../assets/images/user-avatar-unset.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp as fTU2, faComments } from '@fortawesome/free-regular-svg-icons'
 import { faCircleXmark, faPlay, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
-import PostComment from '../PostComment/PostComment'
 import { Waypoint } from 'react-waypoint'
+import PostComment from '../PostComment/PostComment'
 
 import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
+
 import { themeSelector } from '../../../redux/selectors/themeSelector'
 import { dispatchSetScrollHome, dispatchSetScrollExplore } from '../../../dispatchs/dispatchScrollPosition'
-import { countOnePostLike, likePostSV, previewOnePost, unlikePostSV } from '../../../service/postService'
+import { countOnePostLike, getInfoPostSV, likePostSV, unlikePostSV } from '../../../service/postService'
 import { createCommentSV } from '../../../service/commentService'
 
 const Post = ({ postId, src, type, alt, caption, date, username, userId, email, avatar, countLike, countComment, liked }) => {
@@ -32,20 +33,19 @@ const Post = ({ postId, src, type, alt, caption, date, username, userId, email, 
     const postCommentRef =useRef()
 
     const fetchInfoPost = async () => {
-        let res = await previewOnePost(postId)
+        let res = await getInfoPostSV(postId)
         if (res && +res.EC === 0) {
             setCountLiked(res.DT.countLike)
             setCountComments(res.DT.countComment)
         }
     }
 
-    useEffect(() => {
-        if(location.pathname === '/preview') {
-            fetchInfoPost()
-        }
-        
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.pathname])
+    // useEffect(() => {
+    //     if(location.pathname === '/preview') {
+    //         fetchInfoPost()
+    //     }        
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [location.pathname])
 
     const handlePlayVideo = () => {
         const videos = document.querySelectorAll('video')
@@ -80,11 +80,8 @@ const Post = ({ postId, src, type, alt, caption, date, username, userId, email, 
     const handleUnlikePost = async (postId) => {
         let res = await unlikePostSV(postId)
         if(res && +res.EC === 0) {
-            let res2 = await countOnePostLike(postId)
-            if (res2 && +res2.EC === 0) {
-                fetchInfoPost()
-                setLike(false)
-            }
+            fetchInfoPost()
+            setLike(false)
         }
     }
     

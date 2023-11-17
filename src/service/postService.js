@@ -19,26 +19,35 @@ const uploadPost = (data) => {
     return axios.post('/post/upload-post', {src, type, alt, caption, time, date})
 }
 
-
 const getHomePosts = (limit) => {
     return axios.get(`/post/get-home-posts/${limit}`)
 }
 
-const getNotFollowingPosts = (data) => {
-    return axios.post('/api/post/read-not-following', { limit: data })
-}
-
-const getUserPosts = (email, limit) => {
-    return axios.get('/api/post/read-user', { email, limit })
-}
-
 const likePostSV = (postId) => {
-    return axios.post('/api/post/like', { postId })
+    return axios.post('/post/like-post', { postId })
 }
 
 const unlikePostSV = (postId) => {
-    return axios.post('/api/post/unlike', { postId })
+    return axios.post('/post/unlike-post', { postId })
 }
+
+const getInfoPostSV = (postId) => {
+    return axios.get(`/post/get-post-info/${postId}`)
+}
+
+/////
+// const getNotFollowingPosts = (data) => {
+//     return axios.post('/api/post/read-not-following', { limit: data })
+// }
+
+// const getUserPosts = (email, limit) => {
+//     return axios.get('/api/post/read-user', { email, limit })
+// }
+
+// const likePostSV = (postId) => {
+//     return axios.post('/api/post/like', { postId })
+// }
+
 
 const countOnePostLike = (postId) => {
     return axios.post('/api/post/count-like', { postId })
@@ -56,12 +65,12 @@ export {
     uploadImage,
     uploadVideo,
     uploadPost,
-    // getPosts,
     getHomePosts,
-
-    getNotFollowingPosts,
-    getUserPosts,
     likePostSV,
+    getInfoPostSV,
+
+    // getNotFollowingPosts,
+    // getUserPosts,
     unlikePostSV,
     countOnePostLike,
     countOnePostComments,
