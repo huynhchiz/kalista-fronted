@@ -1,17 +1,21 @@
 import './PostComment.scss'
 import { themeSelector } from '../../../redux/selectors/themeSelector'
-import { useSelector } from 'react-redux'
-
 import Comment from '../Comment/Comment'
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
-import { getOnePostCommentsSV } from '../../../service/commentService'
+import SmallLoad from '../SmallLoad/SmallLoad'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
-import SmallLoad from '../SmallLoad/SmallLoad'
+
+import { useSelector } from 'react-redux'
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
+
+import { dispatchPostComments } from '../../../dispatchs/dispatchComment'
+import { commentsSelector } from '../../../redux/selectors/commentSelector'
 
 const PostComment = forwardRef(({ postId, countComment }, ref) => {
     const darkTheme = useSelector(themeSelector)
-    const [listComment, setListComment] = useState([])
+    const comments = useSelector(commentsSelector)
+    const listComment = comments.list
+    
     const [limit, setLimit] = useState(5)
     const [maxComment, setMaxComment] = useState(false)
     const [smallLoad, setSmallLoad] = useState(false)
@@ -22,14 +26,9 @@ const PostComment = forwardRef(({ postId, countComment }, ref) => {
 
     const fetchComments = async () => {
         setSmallLoad(true)
-        let res = await getOnePostCommentsSV(postId, limit)
         setTimeout(() => {
-            if(res && +res.EC === 0) {
-                setListComment(res.DT)
-                setSmallLoad(false)
-            } else {
-                setSmallLoad(false)
-            }
+            dispatchPostComments(postId, limit)
+            setSmallLoad(false)
         }, 1000)
     }
 

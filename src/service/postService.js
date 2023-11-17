@@ -35,6 +35,10 @@ const getInfoPostSV = (postId) => {
     return axios.get(`/post/get-post-info/${postId}`)
 }
 
+const getPostCommentsSV = (postId, limit) => {
+    return axios.get(`/post/get-post-comments/${postId}/${limit}`)
+}
+
 /////
 // const getNotFollowingPosts = (data) => {
 //     return axios.post('/api/post/read-not-following', { limit: data })
@@ -68,6 +72,7 @@ export {
     getHomePosts,
     likePostSV,
     getInfoPostSV,
+    getPostCommentsSV,
 
     // getNotFollowingPosts,
     // getUserPosts,

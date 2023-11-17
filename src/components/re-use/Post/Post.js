@@ -6,14 +6,15 @@ import { faCircleXmark, faPlay, faThumbsUp } from '@fortawesome/free-solid-svg-i
 import { Waypoint } from 'react-waypoint'
 import PostComment from '../PostComment/PostComment'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 import { themeSelector } from '../../../redux/selectors/themeSelector'
 import { dispatchSetScrollHome, dispatchSetScrollExplore } from '../../../dispatchs/dispatchScrollPosition'
-import { countOnePostLike, getInfoPostSV, likePostSV, unlikePostSV } from '../../../service/postService'
+import { likePostSV, unlikePostSV } from '../../../service/postService'
 import { createCommentSV } from '../../../service/commentService'
+import { dispatchGetInfoPostHome } from '../../../dispatchs/dispatchPosts'
 
 const Post = ({ postId, src, type, alt, caption, date, username, userId, email, avatar, countLike, countComment, liked }) => {
     const navigate = useNavigate()
@@ -22,30 +23,12 @@ const Post = ({ postId, src, type, alt, caption, date, username, userId, email, 
 
     const [playVideo, setPlayVideo] = useState(false)
     const [seeMoreCaption, setSeeMoreCaption] = useState(false)
-    const [countLiked, setCountLiked] = useState(countLike)
-    const [countComments, setCountComments] = useState(countComment)
-    const [like, setLike] = useState(liked)
     const [showComments, setShowComments] = useState(false)
     const [comment, setComment] = useState('')
     const [commentLeft, setCommentLeft] = useState(false)
 
     const videoRef = useRef()
     const postCommentRef =useRef()
-
-    const fetchInfoPost = async () => {
-        let res = await getInfoPostSV(postId)
-        if (res && +res.EC === 0) {
-            setCountLiked(res.DT.countLike)
-            setCountComments(res.DT.countComment)
-        }
-    }
-
-    // useEffect(() => {
-    //     if(location.pathname === '/preview') {
-    //         fetchInfoPost()
-    //     }        
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [location.pathname])
 
     const handlePlayVideo = () => {
         const videos = document.querySelectorAll('video')
@@ -72,16 +55,14 @@ const Post = ({ postId, src, type, alt, caption, date, username, userId, email, 
     const handleLikePost = async (postId) => {
         let res = await likePostSV(postId)
         if(res && +res.EC === 0) {
-            fetchInfoPost()
-            setLike(true)
+            dispatchGetInfoPostHome(postId)
         }
     }
 
     const handleUnlikePost = async (postId) => {
         let res = await unlikePostSV(postId)
         if(res && +res.EC === 0) {
-            fetchInfoPost()
-            setLike(false)
+            dispatchGetInfoPostHome(postId)
         }
     }
     
@@ -127,7 +108,7 @@ const Post = ({ postId, src, type, alt, caption, date, username, userId, email, 
             let res = await createCommentSV(data)
             if(res && +res.EC === 0) {
                 postCommentRef.current.fetchComments();
-                fetchInfoPost()
+                dispatchGetInfoPostHome(postId)
                 setComment('')
             }
         }
@@ -202,7 +183,7 @@ const Post = ({ postId, src, type, alt, caption, date, username, userId, email, 
                                 </div>
 
                                 {
-                                    like === true ? 
+                                    liked === true ? 
                                     <div className='post-unlike' onClick={() => handleUnlikePost(postId)}>
                                         <FontAwesomeIcon icon={faThumbsUp} />
                                     </div> :
@@ -216,15 +197,15 @@ const Post = ({ postId, src, type, alt, caption, date, username, userId, email, 
                             <div className={`post-info ${caption ? '' : 'post-info-top'}`}>
                                 <div className='likes-comments'>
                                     {
-                                        <p>{countComments ? countComments : '0'} comments</p>
+                                        <p>{countComment ? countComment : '0'} comments</p>
                                     }
                                     {
-                                        like && 
+                                        liked && 
                                         <p className='liked-noti'>You liked this post</p>
                                     }
                                     {
-                                        countLiked > 0 ?
-                                        <p>{countLiked >= 2 ? countLiked + ' likes' : countLiked + ' like'}</p>
+                                        countLike > 0 ?
+                                        <p>{countLike >= 2 ? countLike + ' likes' : countLike + ' like'}</p>
                                         :
                                         <p>0 like</p>
                                     }
@@ -251,7 +232,7 @@ const Post = ({ postId, src, type, alt, caption, date, username, userId, email, 
                             <PostComment
                                 ref={postCommentRef}
                                 postId={postId}
-                                countComment={countComments}
+                                countComment={countComment}
                             />
                         </>
                 }

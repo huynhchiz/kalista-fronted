@@ -14,11 +14,11 @@ const Comment = ({ data }) => {
     const darkTheme = useSelector(themeSelector)
     const commnentRef = useRef()
 
-    const [like, setLike] = useState(data.liked)
+    // const [like, setLike] = useState(data.liked)
     const [seeMoreBtn, setSeeMoreBtn] = useState(false)
     const [hideBtn, setHideBtn] = useState(false)
     const [showAllCmt, setShowAllCmt] = useState(false)
-    const [countLike, setCountLike] = useState(0)
+    // const [countLike, setCountLike] = useState(0)
 
     useEffect(() => {
         if (data.comment.length >= 80) {
@@ -27,23 +27,23 @@ const Comment = ({ data }) => {
         }
     }, [])
 
-    const fetchLikeCount = async () => {
-        let res = await countCommentLikesSV(data.id)
-        if(res && +res.EC === 0) {
-            setCountLike(+res.DT)
-        }
-    }
+    // const fetchLikeCount = async () => {
+    //     let res = await countCommentLikesSV(data.id)
+    //     if(res && +res.EC === 0) {
+    //         setCountLike(+res.DT)
+    //     }
+    // }
 
-    useEffect(() => {
-        fetchLikeCount()
-    }, [])
+    // useEffect(() => {
+    //     fetchLikeCount()
+    // }, [])
 
     const handleLike = async () => {
         let res = await likeCommentSV(data.id)
         if(res && +res.EC === 0) {
             console.log(res.EM);
-            fetchLikeCount()
-            setLike(true)
+            // fetchLikeCount()
+            // setLike(true)
         }
     }
 
@@ -51,8 +51,8 @@ const Comment = ({ data }) => {
         let res = await unlikeCommentSV(data.id)
         if(res && +res.EC === 0) {
             console.log(res.EM);
-            fetchLikeCount()
-            setLike(false)
+            // fetchLikeCount()
+            // setLike(false)
         }
     }
 
@@ -89,7 +89,7 @@ const Comment = ({ data }) => {
 
                 <div className='post-comment-info'>
                     <p className='post-comment-like-count'>
-                        {countLike ? countLike : 0} like
+                        {data && data.countLike ? data.countLike : 0} like
                     </p>
                     <p className='post-comment-time'>
                         {
@@ -101,7 +101,7 @@ const Comment = ({ data }) => {
 
             <div className='post-comment-right'>
                 {/*  */}
-            {like ?
+            {data && data.liked ?
                 <FontAwesomeIcon className='comment-unlike' icon={faUnHeart} onClick={handleUnLike}/>
             :   
                 <FontAwesomeIcon className='comment-like' icon={faHeart} onClick={handleLike} />

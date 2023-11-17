@@ -25,6 +25,16 @@ const homePostsSlice = createSlice({
         .addCase(fetchHomePosts.rejected, (state, action) => {
             state.list = initPosts.list
         })
+
+        .addCase(fetchInfoPostHome.fulfilled, (state, action) => {
+            state.list = state.list.map(post => {
+                if(post.id === action.payload.id) {return action.payload}
+                return post
+            })
+        })
+        .addCase(fetchInfoPostHome.rejected, (state, action) => {
+            state.list = initPosts.list
+        })
     }
 })
 
@@ -34,6 +44,14 @@ export const fetchHomePosts = createAsyncThunk('homePosts/fetchHomePosts', async
         return res.DT
     };
     return [];
+})
+
+export const fetchInfoPostHome = createAsyncThunk('post/fetchInfoPost', async ({ api, postId }) => {
+    let res = await api(postId)
+    if (res && +res.EC === 0) {
+        return res.DT
+    }
+    return
 })
 
 export default homePostsSlice

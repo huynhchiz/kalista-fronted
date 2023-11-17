@@ -4,7 +4,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import themeSlice from "../slices/themeSlice.js";
 import loadPageSlice from "../slices/loadPageSlice.js";
 import notiModalSlice from "../slices/notiModalSlice.js";
-import postsSlice from "../slices/postsSlice.js";
+// import postsSlice from "../slices/postsSlice.js";
 import followSlice from "../slices/followSlices.js";
 import otherUserSlice from "../slices/otherUserSlice.js";
 import positionScrollSlice from "../slices/positionScrollSlice.js";
@@ -13,6 +13,7 @@ import accountSlice from "../slices/accountSlice.js";
 import homePostsSlice from "../slices/homePostsSlice.js";
 import errorSlice from "../slices/errorSlice.js";
 import userSlice from "../slices/userSlice.js";
+import commentSlice from "../slices/commentSlice.js";
 
 const store = configureStore({
     reducer: {
@@ -30,6 +31,7 @@ const store = configureStore({
         error: errorSlice.reducer,
         homePosts: homePostsSlice.reducer,
         user: userSlice.reducer,
+        comments: commentSlice.reducer
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

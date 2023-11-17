@@ -1,7 +1,7 @@
 import store from "../redux/store";
 
-import homePostsSlice, { fetchHomePosts } from "../slices/homePostsSlice";
-import { getHomePosts } from "../service/postService";
+import homePostsSlice, { fetchHomePosts, fetchInfoPostHome } from "../slices/homePostsSlice";
+import { getHomePosts, getInfoPostSV } from "../service/postService";
 
 const dispatchGetHomePosts = (limit) => {
     store.dispatch(fetchHomePosts({
@@ -18,8 +18,16 @@ const dispatchResetHomePosts = () => {
     store.dispatch(homePostsSlice.actions.resetPosts())
 }
 
+const dispatchGetInfoPostHome = (postId) =>  {
+    store.dispatch(fetchInfoPostHome({
+        api: getInfoPostSV,
+        postId: postId
+    }))
+}
+
 export {
     dispatchGetHomePosts,
     dispatchAddLimitHomePosts,
-    dispatchResetHomePosts
+    dispatchResetHomePosts,
+    dispatchGetInfoPostHome
 }
