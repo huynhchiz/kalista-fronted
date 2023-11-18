@@ -8,7 +8,8 @@ import { useSelector } from 'react-redux'
 import { useState, useRef, useEffect } from 'react'
 
 import { themeSelector } from '../../../redux/selectors/themeSelector'
-import { countCommentLikesSV, likeCommentSV, unlikeCommentSV } from '../../../service/commentService'
+import { likeCommentSV, unlikeCommentSV } from '../../../service/postService'
+import { dispatchGetInfoComment } from '../../../dispatchs/dispatchComment'
 
 const Comment = ({ data }) => {
     const darkTheme = useSelector(themeSelector)
@@ -27,32 +28,17 @@ const Comment = ({ data }) => {
         }
     }, [])
 
-    // const fetchLikeCount = async () => {
-    //     let res = await countCommentLikesSV(data.id)
-    //     if(res && +res.EC === 0) {
-    //         setCountLike(+res.DT)
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     fetchLikeCount()
-    // }, [])
-
     const handleLike = async () => {
         let res = await likeCommentSV(data.id)
-        if(res && +res.EC === 0) {
-            console.log(res.EM);
-            // fetchLikeCount()
-            // setLike(true)
+        if (res && +res.EC === 0) {
+            dispatchGetInfoComment(data.id)
         }
     }
 
     const handleUnLike = async () => {
         let res = await unlikeCommentSV(data.id)
-        if(res && +res.EC === 0) {
-            console.log(res.EM);
-            // fetchLikeCount()
-            // setLike(false)
+        if (res && +res.EC === 0) {
+            dispatchGetInfoComment(data.id)
         }
     }
 

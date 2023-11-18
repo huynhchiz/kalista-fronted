@@ -51,7 +51,7 @@ export const fetchInfoPostHome = createAsyncThunk('post/fetchInfoPost', async ({
     if (res && +res.EC === 0) {
         return res.DT
     }
-    return
+    return {}
 })
 
 export default homePostsSlice

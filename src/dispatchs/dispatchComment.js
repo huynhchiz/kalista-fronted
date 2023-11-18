@@ -1,8 +1,8 @@
 import store from "../redux/store";
-import { getPostCommentsSV } from "../service/postService";
-import { fetchPostComments } from "../slices/commentSlice";
+import { getInfoOneCommentSV, getPostCommentsSV } from "../service/postService";
+import commentSlice, { fetchInfoComment, fetchPostComments } from "../slices/commentSlice";
 
-const dispatchPostComments = (postId, limit) => {
+const dispatchGetPostComments = (postId, limit) => {
     store.dispatch(fetchPostComments({
         api: getPostCommentsSV,
         postId: postId,
@@ -10,6 +10,19 @@ const dispatchPostComments = (postId, limit) => {
     }))
 }
 
+const dispatchGetInfoComment = (commentId) => {
+    store.dispatch(fetchInfoComment({
+        api: getInfoOneCommentSV,
+        commentId: commentId
+    }))
+}
+
+const dispatchResetComments = () => {
+    store.dispatch(commentSlice.actions.resetComments())
+}
+
 export {
-    dispatchPostComments
+    dispatchGetPostComments,
+    dispatchResetComments,
+    dispatchGetInfoComment
 }

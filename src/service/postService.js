@@ -39,6 +39,27 @@ const getPostCommentsSV = (postId, limit) => {
     return axios.get(`/post/get-post-comments/${postId}/${limit}`)
 }
 
+const createCommentSV = (data) => {
+    return axios.post('/post/create-comment', { 
+        postId: data.postId,
+        comment: data.comment,
+        date: data.date,
+        time: data.time
+    })
+}
+
+const likeCommentSV = (commentId) => {
+    return axios.post('/post/like-comment', { commentId })
+}
+
+const unlikeCommentSV = (commentId) => {
+    return axios.post('/post/unlike-comment', { commentId })
+}
+
+const getInfoOneCommentSV = (commentId) => {
+    return axios.get(`/post/get-comment-info/${commentId}`)
+}
+
 /////
 // const getNotFollowingPosts = (data) => {
 //     return axios.post('/api/post/read-not-following', { limit: data })
@@ -73,6 +94,10 @@ export {
     likePostSV,
     getInfoPostSV,
     getPostCommentsSV,
+    createCommentSV,
+    likeCommentSV,
+    unlikeCommentSV,
+    getInfoOneCommentSV,
 
     // getNotFollowingPosts,
     // getUserPosts,

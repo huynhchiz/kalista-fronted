@@ -1,4 +1,3 @@
-import { dispatchLoadPage } from '../../dispatchFunctions/dispatchFunctions'
 import { themeSelector } from '../../redux/selectors/themeSelector'
 import { errorSelector } from '../../redux/selectors/errorSelector'
 import { useSelector } from 'react-redux'
