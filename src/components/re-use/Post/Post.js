@@ -15,7 +15,7 @@ import { dispatchSetScrollHome, dispatchSetScrollExplore } from '../../../dispat
 import { likePostSV, unlikePostSV } from '../../../service/postService'
 import { dispatchGetInfoPostHome } from '../../../dispatchs/dispatchPosts'
 
-const Post = ({ postId, src, type, alt, caption, date, username, userId, email, avatar, countLike, countComment, liked }) => {
+const Post = ({ className = '', postId, src, type, alt, caption, date, username, userId, email, avatar, countLike, countComment, liked, showUserInfo = true }) => {
     const navigate = useNavigate()
     const location = useLocation()
     const darkTheme = useSelector(themeSelector)
@@ -79,24 +79,30 @@ const Post = ({ postId, src, type, alt, caption, date, username, userId, email, 
     }
 
     return (
-        <div className={`post ${darkTheme ? 'post-dark' : ''}`}>
+        <div className={`post${darkTheme ? ' post-dark' : ''}`}>
             <div className='post-frame'>
 
-                <div className='post-user'>
-                    <div className='post-avatar' onClick={() => handleNavigateToProfile(email)}>
-                        <img className='' src={avatar ? avatar : userAvatarUnset} alt='avatar'/>
-                    </div>
+                {
+                    showUserInfo ? 
+                    <div className='post-user'>
+                        <div className='post-avatar' onClick={() => handleNavigateToProfile(email)}>
+                            <img className='' src={avatar ? avatar : userAvatarUnset} alt='avatar'/>
+                        </div>
 
-                    <div className='post-username'>
-                        <p onClick={() => handleNavigateToProfile(userId)} >
-                            {username}
-                        </p>
+                        <div className='post-username'>
+                            <p onClick={() => handleNavigateToProfile(userId)} >
+                                {username}
+                            </p>
+                        </div>
+                        
                     </div>
-                    
-                </div>
+                    : 
+                    <div className={`no-user-info ${className}`}></div>
+                }
+                
 
                 <div className='post-content'>
-                    {type === 'image' &&  <img src={src} alt={alt} />}
+                    {type === 'image' &&  <img src={src} alt={alt} onClick={handleShowComments}/>}
                     {type ==='video' && 
                     <>
                         <Waypoint

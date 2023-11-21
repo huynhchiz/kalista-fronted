@@ -48,7 +48,20 @@ const userSlice = createSlice({
         .addCase(fetchUserPosts.rejected, (state, action) => {
             state.posts = initUser.posts
         })
+        
+        .addCase(fetchUserFollowers.fulfilled, (state, action) => {
+            state.followers = action.payload;
+        })
+        .addCase(fetchUserFollowers.rejected, (state, action) => {
+            state.followers = initUser.followers;
+        })
 
+        .addCase(fetchUserFollowings.fulfilled, (state, action) => {
+            state.followings = action.payload;
+        })
+        .addCase(fetchUserFollowings.rejected, (state, action) => {
+            state.followings = initUser.followings;
+        })
 
     }
 })
@@ -80,6 +93,30 @@ export const fetchUserPosts = createAsyncThunk('user/fetchUserPosts', async ({ a
         return res.DT
     } 
 
+    return {}
+})
+
+export const fetchUserFollowers = createAsyncThunk('user/fetchUserFollowers', async ({ api, userId, limit }) => {
+    let res = await api(userId, limit)
+    if(res && +res.EC === 0) {
+        let followers = {
+            count: res.DT.countFollower,
+            list: res.DT.listFollower,
+        }
+        return followers
+    }
+    return {}
+})
+
+export const fetchUserFollowings = createAsyncThunk('user/fetchUserFollowings', async ({ api, userId, limit }) => {
+    let res = await api(userId, limit)
+    if(res && +res.EC === 0) {
+        let followings = {
+            count: res.DT.countFollowing,
+            list: res.DT.listFollowing,
+        }
+        return followings
+    }
     return {}
 })
 

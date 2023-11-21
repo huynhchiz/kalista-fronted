@@ -109,6 +109,7 @@ const MyProfile = () => {
     }
 
     return (
+        <>
         <div className={`my-profile ${darkTheme ? 'my-profile-dark' : ''}`}>
             <div className='my-profile-header'>
                 <YesNoModal
@@ -213,6 +214,9 @@ const MyProfile = () => {
                 />
             </div>
 
+            
+        </div>
+
             {
                 showFollower &&
                 <ModalList
@@ -225,12 +229,13 @@ const MyProfile = () => {
             {
                 showFollowing &&
                 <ModalList
-                    title='Followers'
+                    title='Followings'
                     list={accountFollowings.list}
                     onClose={() => setShowFollowing(false)}
                 />
             }
-        </div>
+
+        </>
     )
 }
 

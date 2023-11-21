@@ -1,9 +1,7 @@
 import store from "../redux/store";
-// import { fetchAccountFollowers, fetchAccountFollowings, fetchAccountInfo, fetchAccountPosts } from "../slices/accountSlice";
 
-// import { getAccountFollowersSV, getAccountFollowingsSV, getAccountInfoSV, getAccountPosts } from "../service/accountService";
-import { fetchUserInfo, fetchUserPosts } from "../slices/userSlice";
-import { getUserInfo, getUserPosts } from "../service/userService";
+import { fetchUserFollowers, fetchUserFollowings, fetchUserInfo, fetchUserPosts } from "../slices/userSlice";
+import { getUserFollowersSV, getUserFollowingsSV, getUserInfo, getUserPosts } from "../service/userService";
 
 const dispatchGetUser = (userId) => {
     store.dispatch(fetchUserInfo({
@@ -20,8 +18,27 @@ const dispatchGetUserPosts = (userId, limit) => {
     }))
 }
 
+const dispatchGetUserFollowers = (userId, limit) => {
+    store.dispatch(fetchUserFollowers({
+        api: getUserFollowersSV,
+        userId: userId,
+        limit: limit
+    }))
+}
+
+const dispatchGetUserFollowings = (userId, limit) => {
+    store.dispatch(fetchUserFollowings({
+        api: getUserFollowingsSV,
+        userId: userId,
+        limit: limit
+    }))
+}
 
 export {
     dispatchGetUser,
     dispatchGetUserPosts,
+    dispatchGetUserFollowers,
+    dispatchGetUserFollowings,
+
+
 }

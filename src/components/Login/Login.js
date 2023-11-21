@@ -19,8 +19,11 @@ const Login = () => {
     
     const navigate = useNavigate()
 
-    const [loginValue, setLoginValue] = useState('')
+    const initLoginValue = JSON.parse(localStorage.getItem('loginValue')) || ''
+    const isRegisterSuccess = JSON.parse(localStorage.getItem('registerSuccess')) || false
+    const [loginValue, setLoginValue] = useState(isRegisterSuccess ? initLoginValue : '')
     const [password, setPassword] = useState('')
+    const [loginWarningMessage, setLoginWarningMessage] = useState('') // warnning message when incorrect login
 
     const unwarn = { isShow: false, message: '' }
     const warnUnfilled = { isShow: true, message: 'Unfilled' }
@@ -28,7 +31,6 @@ const Login = () => {
     const [loginValueWarn, setLoginValueWarn] = useImmer(unwarn)
     const [passwordWarn, setPasswordWarn] = useImmer(unwarn)
 
-    const [loginWarningMessage, setLoginWarningMessage] = useState('') // warnning message when incorrect login
 
     useEffect(() => {
         if (accountAuth && accountAuth.isAuth) {
@@ -78,6 +80,8 @@ const Login = () => {
                 dispatchLogin(dataLoginRedux)
                 dispatchGetAccount()
 
+                localStorage.setItem('registerSuccess', JSON.stringify(null))
+                localStorage.setItem('loginValue', JSON.stringify(null))
                 dispatchLoadPage()
                 navigate('/welcome')
 

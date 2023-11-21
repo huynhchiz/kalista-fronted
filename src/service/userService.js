@@ -8,6 +8,15 @@ const getUserPosts = (userId, limit) => {
     return axios.get(`/user/get-user-posts/${userId}/${limit}`)
 }
 
+const getUserFollowersSV = (userId, limit) =>  {
+    return axios.get(`/user/get-user-followers/${userId}/${limit}`)
+}
+
+const getUserFollowingsSV = (userId, limit) =>  {
+    return axios.get(`/user/get-user-followings/${userId}/${limit}`)
+}
+
+
 
 ///////
 const getAccountService = () => {
@@ -37,10 +46,11 @@ const getOtherUserInfoSV = (email) => {
 export {
     getAccountService,
     refreshNewToken,
-    // uploadAvatar,
     getUserAvatar,
     deleteUserAvatar,
     getOtherUserInfoSV,
+    getUserFollowersSV,
+    getUserFollowingsSV,
 
 
     getUserInfo,

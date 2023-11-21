@@ -1,10 +1,17 @@
 .profile-header {
     display: flex;
-    justify-content: space-between;
     padding: 12px;
     border-bottom: 1px solid #ddd;
     width: var(--frame-image-width);
+    height: var(--profile-header);
     margin: auto;
+
+    position: fixed;
+    top: var(--nav-height);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--background-color-light);
+    z-index: 10;
     
     @media (max-width: 500px) {
         width: var(--app-width-responsive);

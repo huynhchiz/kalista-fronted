@@ -116,7 +116,7 @@ export const fetchAccountInfo = createAsyncThunk('account/fetchAccount', async (
             refreshToken:res.DT.refreshToken,
         }
         let info = {
-            userId: res.DT.userId,
+            userId: res.DT.id || res.DT.userId,
             userGroupWithRoles: res.DT.userGroupWithRoles,
             email: res.DT.email,
             username: res.DT.username,
@@ -147,7 +147,7 @@ export const refreshToken = createAsyncThunk('account/refreshToken', async (api)
             refreshToken:res.DT.refreshToken,
         }
         let info = {
-            userId: res.DT.id,
+            userId: res.DT.id || res.DT.userId,
             userGroupWithRoles: res.DT.userGroupWithRoles,
             email: res.DT.email,
             username: res.DT.username,

@@ -1,13 +1,11 @@
 import './Profile.scss'
 import ProfileHeader from '../ProfileHeader/ProfileHeader'
 import ProfileContent from '../ProfileContent/ProfileContent'
-import NavBack from '../NavBack/NavBack'
-// import ModalList from '../ModalList/ModalList'
 
 import { Waypoint } from 'react-waypoint'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 import { dispatchGetUser, dispatchGetUserPosts } from '../../../dispatchs/dispatchUser'
 import { isFollowingUserSelector, userFollowersSelector, userFollowingsSelector, userInfoSelector, userPostsSelector } from '../../../redux/selectors/userSelector'
@@ -17,7 +15,6 @@ const Profile = () => {
 
     const [searchParam] = useSearchParams()
     const idParam = searchParam.get('user')
-
     const userInfo = useSelector(userInfoSelector)
     const userFollower = useSelector(userFollowersSelector)
     const userFollowing = useSelector(userFollowingsSelector)
@@ -25,7 +22,6 @@ const Profile = () => {
     const isFollowingUser = useSelector(isFollowingUserSelector)
     const userPosts = useSelector(userPostsSelector)
 
-    const navigate = useNavigate()
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -49,10 +45,7 @@ const Profile = () => {
 
     return (
         <div className='profile'>
-            <NavBack onGoBack={() => navigate(-1)} />
-
-            {/* <ModalList /> */}
-
+            
             <ProfileHeader
                 following={isFollowingUser}
                 email={userInfo && userInfo.email}

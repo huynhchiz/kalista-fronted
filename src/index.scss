@@ -13,10 +13,17 @@
     --app-width-responsive: 100vw;
     
     --frame-image-width: 500px;
+
+    --profile-header: 110px;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+// disable the scrollbar on body when open modal 'post-comment-wrapper'
+body:has(.post-comment-wrapper) {
+    overflow: hidden;
 }

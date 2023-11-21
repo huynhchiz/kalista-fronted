@@ -99,6 +99,8 @@ const Register = () => {
             let res = await registerUserService(data)
 
             if(res && +res.EC === 0) {
+                localStorage.setItem('registerSuccess', JSON.stringify(true))
+                localStorage.setItem('loginValue', JSON.stringify(email))
                 dispatch(loadPage())
                 navigate('/login')
 
