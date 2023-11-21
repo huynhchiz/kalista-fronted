@@ -23,6 +23,10 @@ const getHomePosts = (limit) => {
     return axios.get(`/post/get-home-posts/${limit}`)
 }
 
+const getExplorePosts = (limit) => {
+    return axios.get(`/post/get-explore-posts/${limit}`)
+}
+
 const likePostSV = (postId) => {
     return axios.post('/post/like-post', { postId })
 }
@@ -91,6 +95,7 @@ export {
     uploadVideo,
     uploadPost,
     getHomePosts,
+    getExplorePosts,
     likePostSV,
     getInfoPostSV,
     getPostCommentsSV,

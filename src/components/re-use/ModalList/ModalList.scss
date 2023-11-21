@@ -8,10 +8,11 @@
     align-items: center;
     justify-content: center;
     background-color: rgba($color: #000000, $alpha: 0.8);
-    z-index: 1;
+    z-index: 11;
 
     @media (max-width: 500px) {
-        padding: 6px;
+        width: var(--app-width-responsive);
+        padding: 12px;
     }
 
     .modal-list {
@@ -21,8 +22,9 @@
         border-radius: 3px;
 
         @media (max-width: 500px) {
+            margin-top: var(--nav-height);
             width: var(--app-width-responsive);
-            height: 80vh;
+            height: 60vh;
         }
 
         .modal-list-header {

@@ -52,5 +52,8 @@
     margin-bottom: var(--footer-height);
     padding-top: 4px;
     background-color: var(--background-color-light);
+}
 
+.show-posts-content-dark {
+    background-color: var(--background-color-dark) !important;
 }

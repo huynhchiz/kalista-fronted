@@ -1,49 +1,97 @@
 .explore {
     margin-top: var(--nav-height);
     margin-bottom: var(--footer-height);
-    padding-top: 4px;
     background-color: var(--background-color-light);
 
-    .explore-footer {
-        margin-top: 10px;
+    .explore-container {
         width: 100%;
-        height: 34px;
-        text-align: center;
 
-        p {
-            line-height: 34px;
-            animation: loading ease-in 1s infinite;
+        .explore-header {
+            height: 50px;
+            // box-shadow: 0px 2px 3px -1px rgba(94,93,93,0.54);
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10%;
+
+            .search-wrapper {
+                position: relative;
+                width: 50vw;
+
+                @media (max-width: 600px) {
+                    width: var(--app-width-responsive)
+                }
+
+                input {
+                    border: none;
+                    width: 100%;
+                    height: 32px;
+                    border-radius: 3px;
+                    background-color: beige;
+                    padding-left: 8px;
+                    
+                    &:focus-visible {
+                        outline: 2px solid var(--color-primary);
+                        outline-offset: 4px;
+                    }
+
+                    &::placeholder {
+                        color: #444444;
+                    }
+            
+                    &::selection {
+                        color: #fff;
+                        background-color: #000;
+                    }
+                }
+
+                .search-icon {
+                    font-size: 14px;
+                    position: absolute;
+                    top: 50%;
+                    right: 8px;
+                    transform: translateY(-50%);
+                    padding: 4px 12px;
+                    background-color: var(--color-primary);
+                    cursor: pointer;
+                    border-radius: 3px;
+                }
+            }
         }
 
-        .dark {
-            color: var(--text-white)
+        .explore-content {
+            margin-top: 6px;
+            width: 100%;
+            padding: 0 12px;
+
+            @media (min-width: 1000px) {
+                padding: 0 10%;
+            }
+            
+            .explore-frame {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+
+                .explore-single-preview-post {
+                    width: calc(100% / 3 - 4px);
+                    margin: 0 2px;
+                    
+                    img {
+                        width: 100%;
+                        aspect-ratio: 1 / 1;
+                    }
+                }
+            }
         }
     }
 }
 
 .explore-dark {
     background-color: var(--background-color-dark) !important;
-}
 
-@keyframes loading {
-    0% {
-        opacity: 0.2;
+    .explore-header {
+        border-bottom: none !important;
     }
-
-    25% {
-        opacity: 0.5;
-    }
-
-    50% {
-        opacity: 1;
-    }
-
-    75% {
-        opacity: 0.5;
-    }
-
-    100% {
-        opacity: 0.2;
-    }
-
 }

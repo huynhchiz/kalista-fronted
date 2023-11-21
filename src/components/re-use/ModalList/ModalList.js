@@ -4,8 +4,6 @@ import avatarUnset  from '../../../assets/images/user-avatar-unset.png'
 
 const ModalList = ({ list, title = 'list', footer, onClose }) => {
 
-    console.log(list);
-
     return(
         <div className='modal-list-wrapper' onClick={onClose}>
             <div className='modal-list' onClick={e => e.stopPropagation()}>

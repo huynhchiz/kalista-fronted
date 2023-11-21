@@ -14,24 +14,27 @@ import homePostsSlice from "../slices/homePostsSlice.js";
 import errorSlice from "../slices/errorSlice.js";
 import userSlice from "../slices/userSlice.js";
 import commentSlice from "../slices/commentSlice.js";
+import explorePostsSlice from "../slices/explorePostsSlice.js";
 
 const store = configureStore({
     reducer: {
-        // userLogin: userLoginSlice.reducer,
         darkTheme: themeSlice.reducer,
         loadPage: loadPageSlice.reducer,
         notiModal: notiModalSlice.reducer,
-        // posts: postsSlice.reducer,
-        follow: followSlice.reducer,
-        otherUser: otherUserSlice.reducer,
         positionScroll: positionScrollSlice.reducer,
-        previewPost: previewPostSlice.reducer,
-
         account: accountSlice.reducer,
         error: errorSlice.reducer,
         homePosts: homePostsSlice.reducer,
+        explorePosts: explorePostsSlice.reducer,
         user: userSlice.reducer,
         comments: commentSlice.reducer
+        
+
+            
+        // follow: followSlice.reducer,
+        // otherUser: otherUserSlice.reducer,
+        // previewPost: previewPostSlice.reducer,
+
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

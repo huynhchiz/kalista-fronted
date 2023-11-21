@@ -176,6 +176,7 @@ const Post = ({ className = '', postId, src, type, alt, caption, date, username,
                     ref={postCommentRef}
                     src={src}
                     postId={postId}
+                    typePost={type}
                     countComment={countComment}
                 />
             </div>

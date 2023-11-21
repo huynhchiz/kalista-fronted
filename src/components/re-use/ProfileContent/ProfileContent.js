@@ -4,12 +4,13 @@ import NavBack from '../NavBack/NavBack'
 
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import { themeSelector } from '../../../redux/selectors/themeSelector'
 
 const ProfileContent = ({ listPost }) => {
     const darkTheme = useSelector(themeSelector)
+    const location = useLocation()
 
     const [showPost, setShowPost] = useState(false)
     
@@ -35,7 +36,10 @@ const ProfileContent = ({ listPost }) => {
 
     return (
         <>  
-            <NavBack onGoBack={handleGoBack} />
+            {
+                (!showPost && location.pathname === '/my-profile') ? <></> :
+                <NavBack onGoBack={handleGoBack} />
+            }
 
             {!showPost ?
             <div className={`profile-content ${darkTheme ? 'profile-content-dark' : ''}`}>
@@ -64,7 +68,7 @@ const ProfileContent = ({ listPost }) => {
 
             :
 
-            <div className='show-posts-content'>
+            <div className={`show-posts-content${darkTheme ? ' show-posts-content-dark' : ''}`}>
                 {listPost && listPost.length > 0
                     && listPost.map(post => (
                         <Post

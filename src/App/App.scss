@@ -13,11 +13,17 @@
             position: fixed;
             top: 0;
             z-index: 100;
+            @media (max-width: 500px) {
+                width: var(--app-width-responsive)
+            }
         }
     
         .app-content {
             margin-top: var(--nav-height);
             background-color: var(--background-color-light);
+            @media (max-width: 500px) {
+                width: var(--app-width-responsive)
+            }
         }
 
         .app-content-dark {
@@ -29,6 +35,9 @@
             position: fixed;
             bottom: 0;
             z-index: 100;
+            @media (max-width: 500px) {
+                width: var(--app-width-responsive)
+            }
         }
 
         @media (max-width: 500px) {
@@ -36,5 +45,11 @@
         }
     }
 
-    
+    .app-container-dark {
+        background-color: var(--background-color-dark);
+    }
+}
+
+.app-dark {
+    background-color: var(--background-color-dark) !important;
 }

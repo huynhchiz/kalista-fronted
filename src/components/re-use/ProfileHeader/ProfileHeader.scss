@@ -43,10 +43,18 @@
             .count-follower {
                 display: flex;
                 margin-right: 12px;
+                cursor: pointer;
+                &:hover {
+                    text-decoration: underline;
+                }
             }
 
             .count-following {
                 display: flex;
+                cursor: pointer;
+                &:hover {
+                    text-decoration: underline;
+                }
             }
 
             span {
@@ -128,6 +136,7 @@
 }
 
 .profile-header-dark {
+    background-color: var(--background-color-dark);
     .profile-info {
 
         h3 {

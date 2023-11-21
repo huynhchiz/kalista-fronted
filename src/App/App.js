@@ -11,19 +11,14 @@ import NotiModal from '../components/re-use/NotiModal/NotiModal';
 import ErrorPage from '../components/ErrorPage/ErrorPage';
 
 import { themeSelector } from '../redux/selectors/themeSelector';
-// import { dispatchGetAccount } from '../dispatchs/dispatchAccount';
 
 function App() {
   const darkTheme = useSelector(themeSelector)
 
-  // useEffect(() => {
-  //   dispatchGetAccount()
-  // }, [])
-
   return (
     <BrowserRouter>
-      <div className="app">
-        <div className='app-container'>
+      <div className={`app${darkTheme ? ' app-dark' : ''}`}>
+        <div className={`app-container${darkTheme ? ' app-container-dark' : ''}`}>
 
           <div className='app-header'>
             <Nav />
@@ -35,7 +30,7 @@ function App() {
 
           <ErrorPage />
 
-          <div className={`app-content ${darkTheme ? 'app-content-dark' : ''}`} >
+          <div className={`app-content${darkTheme ? ' app-content-dark' : ''}`} >
             <AppRoutes />
           </div>
 

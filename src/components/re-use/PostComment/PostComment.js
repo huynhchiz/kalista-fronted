@@ -3,17 +3,17 @@ import { themeSelector } from '../../../redux/selectors/themeSelector'
 import Comment from '../Comment/Comment'
 import SmallLoad from '../SmallLoad/SmallLoad'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import { faCirclePlus, faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
 
 import { useSelector } from 'react-redux'
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 
 import { dispatchGetPostComments, dispatchResetComments } from '../../../dispatchs/dispatchComment'
 import { commentsSelector } from '../../../redux/selectors/commentSelector'
 import { createCommentSV } from '../../../service/postService'
 import { dispatchGetInfoPostHome } from '../../../dispatchs/dispatchPosts'
 
-const PostComment = forwardRef(({ src, postId, countComment }, ref) => {
+const PostComment = forwardRef(({ src, postId, countComment, typePost }, ref) => {
     const darkTheme = useSelector(themeSelector)
     const comments = useSelector(commentsSelector)
     const listComment = comments.list
@@ -23,6 +23,9 @@ const PostComment = forwardRef(({ src, postId, countComment }, ref) => {
     const [smallLoad, setSmallLoad] = useState(false)
     const [show, setShow] = useState(false)
     const [comment, setComment] = useState('')
+    const [playVideo, setPlayVideo] = useState(false)
+
+    const videoRef = useRef()
 
     useImperativeHandle(ref, () => ({
         fetchComments,
@@ -88,6 +91,16 @@ const PostComment = forwardRef(({ src, postId, countComment }, ref) => {
         }
     }
 
+    const handleTogglePlayVideo = () => {
+        if (videoRef.current.paused) {
+            setPlayVideo(true)
+            videoRef.current.play()
+        } else {
+            setPlayVideo(false)
+            videoRef.current.pause()
+        }
+    }
+
     return (
         show &&
         <div className={`post-comment-wrapper${darkTheme ? ' post-comment-wrapper-dark' : ''}`}
@@ -95,7 +108,25 @@ const PostComment = forwardRef(({ src, postId, countComment }, ref) => {
         >
             <div className='post-comment-container' onClick={e => e.stopPropagation()}>
                 <div className='post-preview'>
-                    <img src={src} alt='_preview-img' />
+                    {typePost === 'image' && <img src={src} alt='_preview-img' />}
+                    {typePost === 'video' && <>
+                        <video
+                            src={src} alt='_preview-img'
+                            ref={videoRef}                   
+                        />
+                        {!playVideo ?
+                            <div className='play-btn'                            
+                                onClick={handleTogglePlayVideo}>
+                                <FontAwesomeIcon icon={faPlay} />
+                            </div> :
+                            <div className='pause-btn'
+                                onClick={handleTogglePlayVideo}>
+                                <FontAwesomeIcon icon={faPause} />
+                            </div>
+                        }
+                    </>
+                        
+                    }
                 </div>
                 
                 <div className='post-comment' >
