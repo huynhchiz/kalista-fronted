@@ -1,3 +1,9 @@
+.preview-image, .preview-video {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+}
+
 .single-post-preview-wrapper {
     position: fixed;
     top: var(--nav-height);
@@ -18,7 +24,7 @@
         border-radius: 3px;
         
         .spp-header {
-            padding: 4px 2% 0 2%;
+            padding: 8px 2% 4px 2%;
             display: flex;
             align-items: center;
             .spp-avatar-wrapper {
@@ -29,7 +35,8 @@
                 }
             }
             h4 {
-                margin-left: 12px;
+                margin-left: 8px;
+                margin-bottom: 4px;
             }
         }
 
@@ -43,21 +50,34 @@
             .spp-content-post {
                 width: 60%;
                 padding-right: 4px;
-                img {
+                img, video {
                     width: 100%;
                     aspect-ratio: 1 / 1;
-                    object-fit: cover;
+                    // object-fit: cover;
                 }
             }
 
             .spp-content-comments {
-                margin-top: -4px;
                 width: 40%;
                 padding-left: 4px;
                 aspect-ratio: 1 / 1.5;
 
                 .spp-comments-frame {
                     padding: 4px;
+                    width: 100%;
+                    height: 100%;
+                    overflow-y: scroll;
+            
+                    &::-webkit-scrollbar {
+                        width: 6px;
+                        background-color: transparent;
+                    }
+            
+                    &::-webkit-scrollbar-thumb {
+                        background-color: #000000;
+                        border-radius: 2px;
+                    }
+
                     .comment-edit {
                         position: relative;
                         padding: 4px;
@@ -85,17 +105,22 @@
                             cursor: pointer;
                         }
                     }
-                    
-                    width: 100%;
-                    height: 100%;
-                    background-color: beige;
+                }
+
+                .load-more-cmts-btn {
+                    padding: 4px;
+                    display: flex;
+                    cursor: pointer;
+                    p {
+                        margin-left: 4px;
+                    }
                 }
             }
         }
 
         .spp-footer {
             width: 100%;
-            padding: 4px 2%;
+            padding: 4px 2% 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -113,4 +138,27 @@
             }
         }
     }
+}
+
+.sppw-dark {
+    .single-post-preview-frame {
+        background-color: var(--background-color-dark) !important;
+        border: 1px solid #555555;
+    }
+
+    .spp-header, .spp-footer {
+        color: var(--text-white);
+    }
+
+    .spp-comments-frame {
+        &::-webkit-scrollbar-thumb {
+            background-color: var(--color-primary) !important;
+        }
+
+        .load-more-cmts-btn, .no-comment, .max-comment {
+            color: var(--text-white) !important;
+        }
+    }
+
+
 }

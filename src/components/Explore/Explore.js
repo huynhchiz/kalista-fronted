@@ -61,7 +61,7 @@ const Explore = () => {
                                 postsExplore &&
                                 postsExplore.map(post => (
                                     <div className='explore-single-preview-post' key={'key_'+post.id}>
-                                        <PreviewPost type={post.type} src={post.src}/>
+                                        <PreviewPost data={post}/>
                                     </div>
                                 ))
                             }

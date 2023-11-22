@@ -24,6 +24,6 @@
 }
 
 // disable the scrollbar on body when open modal 'post-comment-wrapper'
-body:has(.post-comment-wrapper) {
+body:has(.post-comment-wrapper), body:has(.single-post-preview-wrapper) {
     overflow: hidden;
 }
