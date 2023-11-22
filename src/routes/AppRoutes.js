@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { useEffect } from 'react';
+import { dispatchGetAccount } from "../dispatchs/dispatchAccount";
 
 import Introduce from "../components/Introduce/Introduce";
 import Login from "../components/Login/Login";
@@ -12,9 +13,7 @@ import Explore from "../components/Explore/Explore";
 import Posting from "../components/Posting/Posting";
 import MyProfile from "../components/MyProfile/MyProfile";
 import Profile from "../components/re-use/Profile/Profile";
-// import { dispatchGetAccount } from "../dispatchFunctions/dispatchFunctions";
-import PreviewPost from "../components/re-use/PreviewPost/PreviewPost";
-import { dispatchGetAccount } from "../dispatchs/dispatchAccount";
+
 
 const AppRoutes = () => {
     let checkLogin = JSON.parse(localStorage.getItem('checkLogin'))
@@ -33,7 +32,6 @@ const AppRoutes = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/welcome" element={<Welcome />} />
             <Route path='/profile' element={<Profile />} />
-            <Route path='/preview' element={<PreviewPost />} />
 
             {/* privates */}
             <Route element={<PrivateRoutes />}>

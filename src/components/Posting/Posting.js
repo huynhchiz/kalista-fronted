@@ -8,11 +8,12 @@ import './Posting.scss'
 import BigButton from '../re-use/BigButton/BigButton'
 
 import { themeSelector } from '../../redux/selectors/themeSelector'
-// import { userLoginSelector } from '../../redux/selector'
 import { accInfoSelector } from '../../redux/selectors/accountSelector'
 import { uploadImage as uploadImageSV, uploadVideo as uploadVideoSV, uploadPost as uploadPostSV } from '../../service/postService'
 import { dispatchLoadPage, dispatchNoti } from '../../dispatchs/dispatchPageAction'
-import { dispatchGetHomePosts, dispatchGetUserPosts } from '../../dispatchFunctions/dispatchPosts'
+// import { dispatchGetHomePosts, dispatchGetUserPosts } from '../../dispatchFunctions/dispatchPosts'
+import { dispatchGetHomePosts } from '../../dispatchs/dispatchPosts'
+import { dispatchGetAccountPosts } from '../../dispatchs/dispatchAccount'
 import { dispatchResetScrollPosition } from '../../dispatchs/dispatchScrollPosition'
 
 const Posting = () => {
@@ -94,8 +95,8 @@ const Posting = () => {
             if(finalRes && +finalRes.EC === 0) {
                 dispatchNoti(finalRes.EM)
                 dispatchLoadPage()
-                // dispatchGetHomePosts(5)
-                // dispatchGetUserPosts(accountInfo.userId, 15)
+                dispatchGetHomePosts(5)
+                dispatchGetAccountPosts(15)
                 dispatchResetScrollPosition()
                 navigate('/')
 
@@ -123,8 +124,8 @@ const Posting = () => {
             if(finalRes && +finalRes.EC === 0) {
                 dispatchNoti(finalRes.EM)
                 dispatchLoadPage()
-                // dispatchGetHomePosts(5)
-                // dispatchGetUserPosts(userLogin.account.email, 15)
+                dispatchGetHomePosts(5)
+                dispatchGetAccountPosts(15)
                 dispatchResetScrollPosition()
                 navigate('/')
             } else {

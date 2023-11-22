@@ -1,5 +1,116 @@
-.single-post {
-    margin-top: var(--nav-height);
-    margin-bottom: var(--footer-height);
-    height: 100vh;
+.single-post-preview-wrapper {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    z-index: 20;
+    width: 100%;
+    height: calc(100% - var(--nav-height) - var(--footer-height));
+    background-color: rgba($color: #000000, $alpha: 0.5);
+
+    .single-post-preview-frame {
+        width: 98%;
+        max-width: 1000px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: var(--background-color-light);
+        border-radius: 3px;
+        
+        .spp-header {
+            padding: 4px 2% 0 2%;
+            display: flex;
+            align-items: center;
+            .spp-avatar-wrapper {
+                img {
+                    width: 32px;
+                    aspect-ratio: 1 / 1;
+                    border-radius: 50%;
+                }
+            }
+            h4 {
+                margin-left: 12px;
+            }
+        }
+
+        .spp-content {
+            width: 100%;
+            padding: 0 2%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .spp-content-post {
+                width: 60%;
+                padding-right: 4px;
+                img {
+                    width: 100%;
+                    aspect-ratio: 1 / 1;
+                    object-fit: cover;
+                }
+            }
+
+            .spp-content-comments {
+                margin-top: -4px;
+                width: 40%;
+                padding-left: 4px;
+                aspect-ratio: 1 / 1.5;
+
+                .spp-comments-frame {
+                    padding: 4px;
+                    .comment-edit {
+                        position: relative;
+                        padding: 4px;
+            
+                        textarea {
+                            padding: 4px 50px 4px 8px;
+                            width: 100%;
+                            height: 50px;
+                            background-color: var(--background-color-light);
+                            border: 1px solid var(--background-color-dark);
+                            border-radius: 3px;
+                        }
+            
+                        .create-comment-btn {
+                            width: 40px;
+                            height: 24px;
+                            line-height: 24px;
+                            text-align: center;
+                            position: absolute;
+                            bottom: 16px;
+                            right: 16px;
+                            border-radius: 3px;
+                            background-color: var(--background-color-dark);
+                            color: var(--text-white);
+                            cursor: pointer;
+                        }
+                    }
+                    
+                    width: 100%;
+                    height: 100%;
+                    background-color: beige;
+                }
+            }
+        }
+
+        .spp-footer {
+            width: 100%;
+            padding: 4px 2%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            h3 {
+                width: 59%;
+                margin-left: 4px;
+                font-size: 14px;
+                font-weight: 400;
+                overflow: hidden;
+                word-wrap: break-word;
+            }
+            p {
+                font-size: 12px;
+            }
+        }
+    }
 }

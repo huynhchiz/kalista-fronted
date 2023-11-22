@@ -2,7 +2,7 @@ import store from "../redux/store";
 
 import homePostsSlice, { fetchHomePosts, fetchInfoPostHome } from "../slices/homePostsSlice";
 import { getExplorePosts, getHomePosts, getInfoPostSV } from "../service/postService";
-import { fetchExplorePosts } from "../slices/explorePostsSlice";
+import explorePostsSlice, { fetchExplorePosts } from "../slices/explorePostsSlice";
 
 // home posts
 const dispatchGetHomePosts = (limit) => {
@@ -34,6 +34,10 @@ const dispatchGetExplorePosts = (limit) => {
     }))
 }
 
+const dispatchAddLimitExplorePosts = (limit) => {
+    store.dispatch(explorePostsSlice.actions.addLimit(limit))
+}
+
 export {
     dispatchGetHomePosts,
     dispatchAddLimitHomePosts,
@@ -41,5 +45,7 @@ export {
     dispatchGetInfoPostHome,
 
     dispatchGetExplorePosts,
+    dispatchAddLimitExplorePosts,
+
 
 }

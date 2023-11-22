@@ -15,11 +15,9 @@ const Comment = ({ data }) => {
     const darkTheme = useSelector(themeSelector)
     const commnentRef = useRef()
 
-    // const [like, setLike] = useState(data.liked)
     const [seeMoreBtn, setSeeMoreBtn] = useState(false)
     const [hideBtn, setHideBtn] = useState(false)
     const [showAllCmt, setShowAllCmt] = useState(false)
-    // const [countLike, setCountLike] = useState(0)
 
     useEffect(() => {
         if (data.comment.length >= 80) {
