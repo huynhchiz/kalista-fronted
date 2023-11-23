@@ -1,14 +1,15 @@
 import './Explore.scss'
+import SmallLoad from '../re-use/SmallLoad/SmallLoad'
+import PreviewPost from '../re-use/PreviewPost/PreviewPost'
+import { Waypoint } from 'react-waypoint'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { themeSelector } from '../../redux/selectors/themeSelector'
 import { explorePostsSelector, positionScrollSelector } from '../../redux/selectors/postSelector'
-import { useEffect, useState } from 'react'
 import { dispatchAddLimitExplorePosts, dispatchGetExplorePosts } from '../../dispatchs/dispatchPosts'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import { Waypoint } from 'react-waypoint'
-import SmallLoad from '../re-use/SmallLoad/SmallLoad'
-import PreviewPost from '../re-use/PreviewPost/PreviewPost'
 
 const Explore = () => {
     const darkTheme = useSelector(themeSelector)
@@ -61,7 +62,9 @@ const Explore = () => {
                                 postsExplore &&
                                 postsExplore.map(post => (
                                     <div className='explore-single-preview-post' key={'key_'+post.id}>
+
                                         <PreviewPost data={post}/>
+                                        
                                     </div>
                                 ))
                             }
