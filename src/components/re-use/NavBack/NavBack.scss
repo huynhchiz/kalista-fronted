@@ -1,5 +1,6 @@
 .nav-back {
     position: fixed;
+    z-index: 10;
     top: var(--nav-height);
     padding: 0 10%;
     width: 100%;

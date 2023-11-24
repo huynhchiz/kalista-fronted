@@ -45,6 +45,9 @@ const Explore = () => {
         if(+limit > 12) {
             dispatchGetExplorePosts(+limit)
         }
+        if(postsExplore && postsExplore.length < +limit) {
+            setFullPost(true)
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [limit])
 

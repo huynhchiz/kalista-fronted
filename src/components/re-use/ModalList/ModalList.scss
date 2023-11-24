@@ -40,6 +40,10 @@
                 align-items: center;
                 justify-content: space-between;
                 border-bottom: 1px solid #ddd;
+                cursor: pointer;
+                &:hover {
+                    background-color: #ddd;
+                }
 
                 img {
                     margin-right: 8px;
