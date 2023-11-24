@@ -14,6 +14,8 @@ import avatarUnset from '../../../assets/images/user-avatar-unset.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAnglesLeft, faBackward, faCirclePlus, faForward, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { faComments } from '@fortawesome/free-solid-svg-icons'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { dispatchSetScrollExplore, dispatchSetScrollHome } from '../../../dispatchs/dispatchScrollPosition'
 
 const PreviewPost = ({ data }) => {
     const darkTheme = useSelector(themeSelector)
@@ -21,6 +23,9 @@ const PreviewPost = ({ data }) => {
     const listComment = comments.list
     const explorePosts = useSelector(explorePostsSelector)
     const listExplore = explorePosts.list
+
+    const location = useLocation()
+    const navigate = useNavigate()
 
     const [dataPreview, setDataPreview] = useState(data)
     const [show, setShow] = useState(false)
@@ -132,6 +137,17 @@ const PreviewPost = ({ data }) => {
         }
     }
 
+    const handleNavigateToProfile = () => {
+        if(location.pathname === '/') {
+            dispatchSetScrollHome(window.scrollY)
+        }
+        if(location.pathname === '/explore') {
+            dispatchSetScrollExplore(window.scrollY)
+        }
+
+        navigate(`/profile?user=${dataPreview.userId}`)
+    }
+
     return (
         !show ?
         <div className='preview-unshown'>
@@ -175,7 +191,7 @@ const PreviewPost = ({ data }) => {
                 
                     {/* HEADER */}
                     <div className='spp-header'>
-                        <div className='spp-info-user'>
+                        <div className='spp-info-user' onClick={handleNavigateToProfile}>
                             <div className='spp-avatar-wrapper'>
                                 <img src={dataPreview.User.avatar ? dataPreview.User.avatar : avatarUnset} alt='_avatar' />
                             </div>

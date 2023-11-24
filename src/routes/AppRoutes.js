@@ -13,6 +13,7 @@ import Explore from "../components/Explore/Explore";
 import Posting from "../components/Posting/Posting";
 import MyProfile from "../components/MyProfile/MyProfile";
 import Profile from "../components/re-use/Profile/Profile";
+import Search from "../components/Search/Search";
 
 
 const AppRoutes = () => {
@@ -39,6 +40,7 @@ const AppRoutes = () => {
                 <Route path="/explore" element={<Explore />} />
                 <Route path="/posting" element={<Posting />} />
                 <Route path="/my-profile" element={<MyProfile />} />
+                <Route path="/search" element={<Search />} />
             </Route>
 
             

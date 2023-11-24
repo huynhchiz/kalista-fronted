@@ -1,10 +1,8 @@
 import { Outlet, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
-// import { userLoginSelector } from '../redux/selector';
 import { accAuthSelector } from '../redux/selectors/accountSelector';
 
 const PrivateRoutes = () => {
-   // const userLogin = useSelector(userLoginSelector);
    const accountAuth = useSelector(accAuthSelector)
 
    if (accountAuth && accountAuth.isAuth) {

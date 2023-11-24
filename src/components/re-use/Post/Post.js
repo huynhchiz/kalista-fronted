@@ -62,7 +62,7 @@ const Post = ({ className = '', postId, src, type, alt, caption, date, username,
         }
     }
     
-    const handleNavigateToProfile = (userId) => {
+    const handleNavigateToProfile = () => {
         if(location.pathname === '/') {
             dispatchSetScrollHome(window.scrollY)
         }
@@ -85,7 +85,7 @@ const Post = ({ className = '', postId, src, type, alt, caption, date, username,
                 {
                     showUserInfo ? 
                     <div className='post-user'>
-                        <div className='post-avatar' onClick={() => handleNavigateToProfile(email)}>
+                        <div className='post-avatar' onClick={handleNavigateToProfile}>
                             <img className='' src={avatar ? avatar : userAvatarUnset} alt='avatar'/>
                         </div>
 

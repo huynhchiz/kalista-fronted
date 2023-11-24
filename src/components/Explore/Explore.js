@@ -10,8 +10,11 @@ import { useSelector } from 'react-redux'
 import { themeSelector } from '../../redux/selectors/themeSelector'
 import { explorePostsSelector, positionScrollSelector } from '../../redux/selectors/postSelector'
 import { dispatchAddLimitExplorePosts, dispatchGetExplorePosts } from '../../dispatchs/dispatchPosts'
+import { useNavigate } from 'react-router-dom'
 
 const Explore = () => {
+    const navigate = useNavigate()
+
     const darkTheme = useSelector(themeSelector)
     const position = useSelector(positionScrollSelector)
 
@@ -20,6 +23,7 @@ const Explore = () => {
     const limit = explorePosts.limit
 
     const [fullPost, setFullPost] = useState(false)
+    const [inputSearch, setInputSearch] = useState('')
 
     useEffect(() => {
         window.scrollTo(0, position.explore)
@@ -44,6 +48,16 @@ const Explore = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [limit])
 
+    const handleChangeSearchInput = (e) => {
+        setInputSearch(e.target.value)
+    }
+
+    const handleSearch = () =>  {
+        if(inputSearch) {
+            navigate(`/search?value=${inputSearch}`)
+        }
+    }
+
     return (
         <>
             <div className={`explore ${darkTheme ? 'explore-dark' : ''}`}>
@@ -51,8 +65,13 @@ const Explore = () => {
 
                     <div className='explore-header'>
                         <div className='search-wrapper'>
-                            <input type='text' />
-                            <FontAwesomeIcon icon={faMagnifyingGlass} className='search-icon'/>
+                            <input 
+                                type='text'
+                                placeholder='Search with user name'
+                                value={inputSearch}
+                                onChange={handleChangeSearchInput}
+                              />
+                            <FontAwesomeIcon icon={faMagnifyingGlass} className='search-icon' onClick={handleSearch}/>
                         </div>
                     </div>
 

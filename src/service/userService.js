@@ -16,6 +16,10 @@ const getUserFollowingsSV = (userId, limit) =>  {
     return axios.get(`/user/get-user-followings/${userId}/${limit}`)
 }
 
+const searchUsersSV = (searchValue, limit) =>  {
+    return axios.get(`/user/get-search-users/${searchValue}/${limit}`)
+}
+
 
 
 ///////
@@ -51,6 +55,7 @@ export {
     getOtherUserInfoSV,
     getUserFollowersSV,
     getUserFollowingsSV,
+    searchUsersSV,
 
 
     getUserInfo,

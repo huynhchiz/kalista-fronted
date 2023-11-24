@@ -91,9 +91,15 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            
             .spp-info-user {
                 display: flex;
                 align-items: center;
+                cursor: pointer;
+                &:hover > h4 {
+                    text-decoration: underline;
+                }
+
                 .spp-avatar-wrapper {
                     img {
                         width: 32px;
