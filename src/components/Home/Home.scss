@@ -3,9 +3,9 @@
     margin-bottom: var(--footer-height);
     padding-top: 4px;
     background-color: var(--background-color-light);
+    overflow-y: hidden;
 
     .home-footer {
-        margin-top: 10px;
         width: 100%;
         height: 34px;
         text-align: center;

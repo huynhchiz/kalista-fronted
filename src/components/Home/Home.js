@@ -6,7 +6,6 @@ import './Home.scss'
 import Post from '../re-use/Post/Post'
 
 import { themeSelector } from '../../redux/selectors/themeSelector'
-
 import { positionScrollSelector } from '../../redux/selectors/postSelector'
 import { homePostsSelector } from '../../redux/selectors/postSelector'
 import { dispatchAddLimitHomePosts, dispatchGetHomePosts } from '../../dispatchs/dispatchPosts'
@@ -62,6 +61,7 @@ const Home = () => {
                     liked={post.liked}
                 />
             ))}
+            
             <div className='home-footer'>
                 <Waypoint
                     onEnter={handleAddLimit}

@@ -6,12 +6,12 @@ import { useNavigate } from 'react-router-dom'
 
 import './Posting.scss'
 import BigButton from '../re-use/BigButton/BigButton'
+import ZoomImage from '../re-use/ZoomImage/ZoomImage'
 
+import { uploadImage as uploadImageSV, uploadVideo as uploadVideoSV, uploadPost as uploadPostSV } from '../../service/postService'
 import { themeSelector } from '../../redux/selectors/themeSelector'
 import { accInfoSelector } from '../../redux/selectors/accountSelector'
-import { uploadImage as uploadImageSV, uploadVideo as uploadVideoSV, uploadPost as uploadPostSV } from '../../service/postService'
 import { dispatchLoadPage, dispatchNoti } from '../../dispatchs/dispatchPageAction'
-// import { dispatchGetHomePosts, dispatchGetUserPosts } from '../../dispatchFunctions/dispatchPosts'
 import { dispatchGetHomePosts } from '../../dispatchs/dispatchPosts'
 import { dispatchGetAccountPosts } from '../../dispatchs/dispatchAccount'
 import { dispatchResetScrollPosition } from '../../dispatchs/dispatchScrollPosition'
@@ -20,7 +20,6 @@ const Posting = () => {
     const navigate = useNavigate()
 
     const darkTheme = useSelector(themeSelector)
-    // const userLogin = useSelector(userLoginSelector)
     const accountInfo = useSelector(accInfoSelector) 
 
     const [filePreview, setFilePreview] = useState({
@@ -150,7 +149,10 @@ const Posting = () => {
                     {
                         filePreview.src ?
                         <>
-                            {filePreview.type === 'image' && <img alt='preview' src={filePreview.src} />}
+                            {filePreview.type === 'image' &&
+                                <ZoomImage alt='preview' src={filePreview.src} />
+                            }
+
                             {filePreview.type === 'video' && <video alt='preview' src={filePreview.src} autoPlay/>}
 
                             <div className='close-preview-btn' onClick={handleClosePreview}>

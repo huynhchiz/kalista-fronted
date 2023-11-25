@@ -91,10 +91,27 @@
                 display: flex;
                 justify-content: center;
             }
+
+            .load-more-post-explore {
+                padding: 24px 12px 32px;
+                display: flex;
+                justify-content: center;
+                p {
+                    cursor: pointer;
+                    font-size: 22px;
+                    text-decoration: underline;
+                    &:hover {
+                        opacity: 0.5;
+                    }
+                }
+            }
         }
     }
 }
 
 .explore-dark {
     background-color: var(--background-color-dark) !important;
+    .load-more-post-explore {
+        color: var(--color-primary);
+    }
 }

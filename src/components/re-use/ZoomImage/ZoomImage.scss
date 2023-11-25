@@ -1,0 +1,27 @@
+.zome-image-wrapper {
+    
+    .zoom-image {
+        width: var(--frame-image-width);
+        aspect-ratio: 1 / 1;
+
+        @media (max-width: 500px) {
+            width: var(--app-width-responsive);
+            aspect-ratio: 1 / 1;
+        }
+    }
+
+    .zooming {
+        width: auto;
+        aspect-ratio: unset;
+
+        @media (max-width: 500px) {
+            width: auto;
+            aspect-ratio: unset;
+        }
+
+    }
+}
+
+div[data-rmiz-modal-content] {
+    background-color: black;
+}

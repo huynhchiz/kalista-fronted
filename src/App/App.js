@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-// import { useEffect } from 'react';
 
 import './App.scss'
 import Nav from '../components/Nav/Nav';

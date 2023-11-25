@@ -1,21 +1,23 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
+
 import { createCommentSV } from '../../../service/postService'
-import { dispatchGetPostComments, dispatchResetComments } from '../../../dispatchs/dispatchComment'
-import { dispatchGetInfoPostExplore } from '../../../dispatchs/dispatchPosts'
 import { commentsSelector } from '../../../redux/selectors/commentSelector'
 import { themeSelector } from '../../../redux/selectors/themeSelector'
 import { explorePostsSelector } from '../../../redux/selectors/postSelector'
+import { dispatchGetPostComments, dispatchResetComments } from '../../../dispatchs/dispatchComment'
+import { dispatchGetInfoPostExplore } from '../../../dispatchs/dispatchPosts'
+import { dispatchSetScrollExplore, dispatchSetScrollHome } from '../../../dispatchs/dispatchScrollPosition'
 
 import './PreviewPost.scss'
 import Comment from '../Comment/Comment'
 import SmallLoad from '../SmallLoad/SmallLoad'
+import ZoomImage from '../ZoomImage/ZoomImage'
 import avatarUnset from '../../../assets/images/user-avatar-unset.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAnglesLeft, faBackward, faCirclePlus, faForward, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { faComments } from '@fortawesome/free-solid-svg-icons'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { dispatchSetScrollExplore, dispatchSetScrollHome } from '../../../dispatchs/dispatchScrollPosition'
 
 const PreviewPost = ({ data }) => {
     const darkTheme = useSelector(themeSelector)
@@ -211,7 +213,9 @@ const PreviewPost = ({ data }) => {
                     <div className='spp-content'>
                     
                         <div className={`spp-content-post${showCommentResponeSive ? ' spp-content-post-hide' : ''}`}>                        
-                            {dataPreview && (dataPreview.type === 'image' && <img src={dataPreview && dataPreview.src} alt={dataPreview.alt || '_sppImg'} />)}
+                            {dataPreview && (dataPreview.type === 'image' && 
+                                <ZoomImage src={dataPreview && dataPreview.src} alt={dataPreview.alt || '_sppImg'} />
+                            )}
                             {dataPreview && (dataPreview.type === 'video' && 
                             <>
                                 <video src={dataPreview && dataPreview.src} alt={dataPreview.alt || '_sppImg'} 

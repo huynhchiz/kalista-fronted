@@ -1,3 +1,8 @@
+.nav-back-search{
+    .nav-back-icon {
+        margin-top: 15px;
+    }
+}
 .search-container {
     .search-wrapper {
         position: fixed;
@@ -142,7 +147,7 @@
         }
 
         .search-page-footer {
-            margin-top: 14px;
+            padding: 14px;
             display: flex;
             justify-content: center;
             .load-more-result-btn {

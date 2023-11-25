@@ -9,6 +9,7 @@ import './Search.scss'
 import unsetAvatar from '../../assets/images/user-avatar-unset.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import SmallLoad from '../re-use/SmallLoad/SmallLoad'
 
 const Search = () =>  {
     const darkTheme = useSelector(themeSelector)
@@ -20,6 +21,7 @@ const Search = () =>  {
     const [limit, setLimit] = useState(5)
     const [maxResult, setMaxResult] = useState(false)
     const [inputSearch, setInputSearch] = useState('')
+    const [smallLoad, setSmallLoad] = useState(false)
 
     const navigate = useNavigate()
 
@@ -35,6 +37,7 @@ const Search = () =>  {
 
     useEffect(() => {
         fetchSearchUsers()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchValue, limit])
 
     const handleBack = () =>  {
@@ -61,12 +64,17 @@ const Search = () =>  {
     }
 
     const handleAddLimit = () =>  {
-        setLimit(limit + 5)
+        setSmallLoad(true)
+        setTimeout(() => {
+            setLimit(limit + 5)
+            setSmallLoad(false)
+        }, 1000)
     }
 
     return (
-        <>
-            <NavBack onGoBack={handleBack} />
+        <>  <div className='nav-back-search'>
+                <NavBack onGoBack={handleBack} />
+            </div>
 
             {/* search bar */}
             <div className='search-container'>
@@ -128,10 +136,15 @@ const Search = () =>  {
                     <div className='search-page-footer'>
                         {
                             !maxResult ? 
+
+                            (smallLoad ? <SmallLoad /> :
                             <div className='load-more-result-btn' onClick={handleAddLimit}>
                                 <p>Click for more results</p>
                                 <FontAwesomeIcon icon={faCirclePlus} />
-                            </div> :
+                            </div>)
+
+                            :
+
                             <div className='max-result'>
                                 <p>There are no more relevant search results</p>
                             </div>

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initPosts = {
-    limit: 12,
+    limit: 15,
     list: [],
 }
 

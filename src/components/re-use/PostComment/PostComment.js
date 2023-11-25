@@ -1,16 +1,17 @@
 import './PostComment.scss'
-import { themeSelector } from '../../../redux/selectors/themeSelector'
 import Comment from '../Comment/Comment'
 import SmallLoad from '../SmallLoad/SmallLoad'
+import ZoomImage from '../ZoomImage/ZoomImage'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus, faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
 
 import { useSelector } from 'react-redux'
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 
-import { dispatchGetPostComments, dispatchResetComments } from '../../../dispatchs/dispatchComment'
-import { commentsSelector } from '../../../redux/selectors/commentSelector'
 import { createCommentSV } from '../../../service/postService'
+import { themeSelector } from '../../../redux/selectors/themeSelector'
+import { commentsSelector } from '../../../redux/selectors/commentSelector'
+import { dispatchGetPostComments, dispatchResetComments } from '../../../dispatchs/dispatchComment'
 import { dispatchGetInfoPostHome } from '../../../dispatchs/dispatchPosts'
 
 const PostComment = forwardRef(({ src, postId, countComment, typePost }, ref) => {
@@ -108,7 +109,7 @@ const PostComment = forwardRef(({ src, postId, countComment, typePost }, ref) =>
         >
             <div className='post-comment-container' onClick={e => e.stopPropagation()}>
                 <div className='post-preview'>
-                    {typePost === 'image' && <img src={src} alt='_preview-img' />}
+                    {typePost === 'image' && <ZoomImage src={src} alt='_preview-img' />}
                     {typePost === 'video' && <>
                         <video
                             src={src} alt='_preview-img'
