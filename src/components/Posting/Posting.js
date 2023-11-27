@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 import './Posting.scss'
 import BigButton from '../re-use/BigButton/BigButton'
-import ZoomImage from '../re-use/ZoomImage/ZoomImage'
+import ImageZoom from '../re-use/ImageZoom/ImageZoom'
 
 import { uploadImage as uploadImageSV, uploadVideo as uploadVideoSV, uploadPost as uploadPostSV } from '../../service/postService'
 import { themeSelector } from '../../redux/selectors/themeSelector'
@@ -150,7 +150,7 @@ const Posting = () => {
                         filePreview.src ?
                         <>
                             {filePreview.type === 'image' &&
-                                <ZoomImage alt='preview' src={filePreview.src} />
+                                <ImageZoom alt='preview' src={filePreview.src} className={'unzoom-image'} />
                             }
 
                             {filePreview.type === 'video' && <video alt='preview' src={filePreview.src} autoPlay/>}

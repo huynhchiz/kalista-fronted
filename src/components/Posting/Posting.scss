@@ -24,6 +24,7 @@
             aspect-ratio: 1 / 1;
             background-color: #f0f0f0;
 
+
             // img {
             //     width: var(--frame-image-width);
             //     aspect-ratio: 1 / 1;
@@ -34,7 +35,7 @@
             //     }
             // }
 
-            video {
+            .unzoom-image, video {
                 width: var(--frame-image-width);
                 aspect-ratio: 1 / 1;
 

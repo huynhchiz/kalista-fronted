@@ -13,11 +13,11 @@ import { dispatchSetScrollExplore, dispatchSetScrollHome } from '../../../dispat
 import './PreviewPost.scss'
 import Comment from '../Comment/Comment'
 import SmallLoad from '../SmallLoad/SmallLoad'
-import ZoomImage from '../ZoomImage/ZoomImage'
 import avatarUnset from '../../../assets/images/user-avatar-unset.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAnglesLeft, faBackward, faCirclePlus, faForward, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { faComments } from '@fortawesome/free-solid-svg-icons'
+import ImageZoom from '../ImageZoom/ImageZoom'
 
 const PreviewPost = ({ data }) => {
     const darkTheme = useSelector(themeSelector)
@@ -214,7 +214,7 @@ const PreviewPost = ({ data }) => {
                     
                         <div className={`spp-content-post${showCommentResponeSive ? ' spp-content-post-hide' : ''}`}>                        
                             {dataPreview && (dataPreview.type === 'image' && 
-                                <ZoomImage src={dataPreview && dataPreview.src} alt={dataPreview.alt || '_sppImg'} />
+                                <ImageZoom src={dataPreview && dataPreview.src} alt={dataPreview.alt || '_sppImg'} className={'image-unzoom'} />
                             )}
                             {dataPreview && (dataPreview.type === 'video' && 
                             <>

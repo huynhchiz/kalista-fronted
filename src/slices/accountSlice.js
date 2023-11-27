@@ -104,6 +104,16 @@ const accountSlice = createSlice({
         .addCase(fetchAccountPosts.rejected, (state, action) => {
             state.posts = initAccount.posts;
         })
+        
+        .addCase(fetchInfoPostAccount.fulfilled, (state, action) => {
+            state.posts.list = state.posts.list.map(post => {
+                if(post.id === action.payload.id) {return action.payload}
+                return post
+            })
+        })
+        .addCase(fetchInfoPostAccount.rejected, (state, action) => {
+            state.posts.list = initAccount.posts.list;
+        })
     }
 })
 
@@ -209,6 +219,14 @@ export const fetchAccountPosts = createAsyncThunk('account/fetchAccountPosts', a
             count: res.DT.count,
         }
         return posts
+    }
+    return {}
+})
+
+export const fetchInfoPostAccount = createAsyncThunk('account/fetchInfoPostAccount', async ({ api, postId }) => {
+    let res = await api(postId)
+    if (res && +res.EC === 0) {
+        return res.DT
     }
     return {}
 })

@@ -42,12 +42,9 @@
 
         @media (min-width: 900px) {
             display: block;
-            video {
-                width: 100%;
-                aspect-ratio: 1 / 1;
-            }
-            .zoom-image {
-                width: 100%;
+            .image-unzoom, video {
+                max-width: 100%;
+                max-height: 100%;
             }
         }
 

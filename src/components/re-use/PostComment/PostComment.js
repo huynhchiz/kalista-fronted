@@ -1,7 +1,6 @@
 import './PostComment.scss'
 import Comment from '../Comment/Comment'
 import SmallLoad from '../SmallLoad/SmallLoad'
-import ZoomImage from '../ZoomImage/ZoomImage'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus, faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
 
@@ -13,6 +12,7 @@ import { themeSelector } from '../../../redux/selectors/themeSelector'
 import { commentsSelector } from '../../../redux/selectors/commentSelector'
 import { dispatchGetPostComments, dispatchResetComments } from '../../../dispatchs/dispatchComment'
 import { dispatchGetInfoPostHome } from '../../../dispatchs/dispatchPosts'
+import ImageZoom from '../ImageZoom/ImageZoom'
 
 const PostComment = forwardRef(({ src, postId, countComment, typePost }, ref) => {
     const darkTheme = useSelector(themeSelector)
@@ -109,7 +109,7 @@ const PostComment = forwardRef(({ src, postId, countComment, typePost }, ref) =>
         >
             <div className='post-comment-container' onClick={e => e.stopPropagation()}>
                 <div className='post-preview'>
-                    {typePost === 'image' && <ZoomImage src={src} alt='_preview-img' />}
+                    {typePost === 'image' && <ImageZoom src={src} alt='_preview-img' className={'image-unzoom'}/>}
                     {typePost === 'video' && <>
                         <video
                             src={src} alt='_preview-img'

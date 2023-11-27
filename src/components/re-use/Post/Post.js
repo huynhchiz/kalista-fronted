@@ -14,11 +14,18 @@ import { themeSelector } from '../../../redux/selectors/themeSelector'
 import { dispatchSetScrollHome, dispatchSetScrollExplore } from '../../../dispatchs/dispatchScrollPosition'
 import { likePostSV, unlikePostSV } from '../../../service/postService'
 import { dispatchGetInfoPostHome } from '../../../dispatchs/dispatchPosts'
+import ImageZoom from '../ImageZoom/ImageZoom'
+import { accInfoSelector } from '../../../redux/selectors/accountSelector'
+import { dispatchGetInfoPostAccount } from '../../../dispatchs/dispatchAccount'
 
 const Post = ({ className = '', postId, src, type, alt, caption, date, username, userId, email, avatar, countLike, countComment, liked, showUserInfo = true }) => {
     const navigate = useNavigate()
+
     const location = useLocation()
+
     const darkTheme = useSelector(themeSelector)
+    const accountInfo = useSelector(accInfoSelector)
+    const accountId = accountInfo.userId
 
     const [playVideo, setPlayVideo] = useState(false)
     const [seeMoreCaption, setSeeMoreCaption] = useState(false)
@@ -52,6 +59,11 @@ const Post = ({ className = '', postId, src, type, alt, caption, date, username,
         let res = await likePostSV(postId)
         if(res && +res.EC === 0) {
             dispatchGetInfoPostHome(postId)
+
+            // account post in my-profile page
+            if(+accountId === +userId) {
+                dispatchGetInfoPostAccount(postId)
+            }
         }
     }
 
@@ -59,6 +71,11 @@ const Post = ({ className = '', postId, src, type, alt, caption, date, username,
         let res = await unlikePostSV(postId)
         if(res && +res.EC === 0) {
             dispatchGetInfoPostHome(postId)
+
+            // account post in my-profile page
+            if(+accountId === +userId) {
+                dispatchGetInfoPostAccount(postId)
+            }
         }
     }
     
@@ -73,11 +90,12 @@ const Post = ({ className = '', postId, src, type, alt, caption, date, username,
         navigate(`/profile?user=${userId}`)
     }
 
-    const handleShowComments = () => {
+    const handleShowPreviewPost = () => {
         postCommentRef.current.handleShow()
         postCommentRef.current.fetchComments();
     }
 
+    
     return (
         <div className={`post${darkTheme ? ' post-dark' : ''}`}>
             <div className='post-frame'>
@@ -102,7 +120,9 @@ const Post = ({ className = '', postId, src, type, alt, caption, date, username,
                 
 
                 <div className='post-content'>
-                    {type === 'image' &&  <img src={src} alt={alt} onClick={handleShowComments}/>}
+                    {type === 'image' && 
+                        <ImageZoom src={src} alt={alt} className={'image-unzoom'} />
+                    }
                     {type ==='video' && 
                     <>
                         <Waypoint
@@ -135,7 +155,7 @@ const Post = ({ className = '', postId, src, type, alt, caption, date, username,
                             }
 
                             <div className='post-comments'
-                                onClick={handleShowComments}
+                                onClick={handleShowPreviewPost}
                             >
                                 <FontAwesomeIcon icon={faComments} />
                             </div>

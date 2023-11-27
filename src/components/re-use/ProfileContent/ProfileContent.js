@@ -81,7 +81,7 @@ const ProfileContent = ({ listPost }) => {
                             caption={post.caption}
                             date={post.date}
                             username={post.User.username}
-                            userId={post.User.id}
+                            userId={post.userId}
                             email={post.User.email}
                             avatar={post.User.avatar}
                             countLike={post.countLike}

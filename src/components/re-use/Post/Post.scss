@@ -87,20 +87,26 @@
     }
 
     .post-content {
+        width: var(--frame-image-width);
+        aspect-ratio: 1 / 1;
         position: relative;
         display: flex;
         justify-content: center;
+        align-items: center;
         cursor: pointer;
-
-        img, video {
-            width: var(--frame-image-width);
+        background-color: #f7f7f7;
+        border-radius: 3px;
+        
+        @media (max-width: 500px) {
+            width: var(--app-width-responsive);
             aspect-ratio: 1 / 1;
-            cursor: pointer;
+        }
 
-            @media (max-width: 500px) {
-                width: var(--app-width-responsive);
-                aspect-ratio: 1 / 1;
-            }
+        .image-unzoom, video {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            cursor: pointer;
         }
 
         .play-video-btn {

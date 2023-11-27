@@ -1,10 +1,11 @@
 import store from "../redux/store";
-import accountSlice, { fetchAccountAvatar, fetchAccountFollowers, fetchAccountFollowings, fetchAccountInfo, fetchAccountPosts, login, refreshToken } from "../slices/accountSlice";
+import accountSlice, { fetchAccountAvatar, fetchAccountFollowers, fetchAccountFollowings, fetchAccountInfo, fetchAccountPosts, fetchInfoPostAccount, refreshToken } from "../slices/accountSlice";
 
 import { getAccountAvatarSV, getAccountFollowersSV, getAccountFollowingsSV, getAccountInfoSV, getAccountPosts, refreshTokenSV } from "../service/accountService";
 import { dispatchResetHomePosts } from "./dispatchPosts";
 import { dispatchResetScrollPosition } from "./dispatchScrollPosition";
 import { dispatchSetError } from "./dispatchPageAction";
+import { getInfoPostSV } from "../service/postService";
 
 const dispatchLogin = (dataLogin) => {
     store.dispatch(accountSlice.actions.login(dataLogin))
@@ -53,6 +54,13 @@ const dispatchGetAccountPosts = (limit) => {
     }))
 }
 
+const dispatchGetInfoPostAccount = (postId) =>  {
+    store.dispatch(fetchInfoPostAccount({
+        api: getInfoPostSV,
+        postId: postId
+    }))
+}
+
 export {
     dispatchLogin,
     dispatchLogout,
@@ -62,4 +70,5 @@ export {
     dispatchGetAccountFollowers,
     dispatchGetAccountFollowings,
     dispatchGetAccountPosts,
+    dispatchGetInfoPostAccount,
 }

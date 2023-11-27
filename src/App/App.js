@@ -10,12 +10,15 @@ import NotiModal from '../components/re-use/NotiModal/NotiModal';
 import ErrorPage from '../components/ErrorPage/ErrorPage';
 
 import { themeSelector } from '../redux/selectors/themeSelector';
+import ZoomedImage from '../components/re-use/ZoomedImage/ZoomedImage';
 
 function App() {
   const darkTheme = useSelector(themeSelector)
 
   return (
     <BrowserRouter>
+      <ZoomedImage />
+
       <div className={`app${darkTheme ? ' app-dark' : ''}`}>
         <div className={`app-container${darkTheme ? ' app-container-dark' : ''}`}>
 
