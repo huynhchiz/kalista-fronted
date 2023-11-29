@@ -4,8 +4,11 @@ import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import ChatListItem from './ChatListItem'
 import ChatMessageItem from './ChatMessageItem'
+import { useSelector } from 'react-redux'
+import { themeSelector } from '../../redux/selectors/themeSelector'
 
 const ChatBoxs = () => {
+    const darkTheme = useSelector(themeSelector)
     const [hideList, setHideList] = useState(false)
 
     const handleToggleChatList = () => {
@@ -13,7 +16,7 @@ const ChatBoxs = () => {
     }
 
     return (
-        <div className='chat-boxs'>
+        <div className={`chat-boxs${darkTheme ? ' chat-boxs-dark' : ''}`}>
 
             <FontAwesomeIcon icon={faBars} className='chat-list-toggle-icon' onClick={handleToggleChatList} />
         
