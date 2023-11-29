@@ -35,9 +35,24 @@
             margin-right: 12px;
         }
     }
+
+    .nav-message {
+        margin-right: 48px;
+        height: var(--nav-height);
+
+        .nav-message-icon {
+            font-size: 22px;
+            margin-top: 4px;
+            cursor: pointer;
+        }
+    }
 }
 
 .nav-dark {
     background-color: var(--background-color-dark);
     box-shadow: 0;
+
+    .nav-message-icon {
+        color: var(--color-primary)
+    }
 }

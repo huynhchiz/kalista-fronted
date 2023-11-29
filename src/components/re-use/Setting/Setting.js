@@ -9,8 +9,6 @@ import { themeSelector } from '../../../redux/selectors/themeSelector'
 import { logoutUserService } from '../../../service/signService'
 import { dispatchLogout } from '../../../dispatchs/dispatchAccount'
 
-// import { dispatchLogout } from '../../../dispatchFunctions/dispatchFunctions'
-
 const Setting = () => {
     const darkTheme = useSelector(themeSelector)
     const [show, setShow] = useState(false)
@@ -18,7 +16,7 @@ const Setting = () => {
 
     const toggleSetting = () => {
         if(show) {
-            contentRef.current.style = 'top: -100%'
+            contentRef.current.style = 'top: -120%'
             setShow(false)
         } else {
             contentRef.current.style = 'top: 0'

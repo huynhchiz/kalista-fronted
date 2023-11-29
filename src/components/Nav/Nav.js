@@ -10,6 +10,8 @@ import navDarkLogo from '../../assets/images/navlogo-black.png'
 
 import { themeSelector } from '../../redux/selectors/themeSelector'
 import { dispatchSetError } from '../../dispatchs/dispatchPageAction'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMessage } from '@fortawesome/free-regular-svg-icons'
 
 const Nav = () => {
     const location = useLocation()
@@ -32,6 +34,10 @@ const Nav = () => {
         navigate('/welcome')
     }
 
+    const handleGoToChatBoxs = () => {
+        navigate('/chat-boxs')
+    }
+
     return (
         <div className={`nav ${darkTheme ? 'nav-dark' : ''}`}>
             {
@@ -42,14 +48,20 @@ const Nav = () => {
             }
 
             {showToggle ? 
-
                 <div className='nav-toggle'>
                     <div className='toggle-wrapper'>
                         <ThemeToggle />
                     </div>
                 </div>
-             :
-             <Setting />
+                :
+                <Setting />
+            }
+
+            {
+                location?.pathname === '/my-profile' &&
+                <div className='nav-message'>
+                    <FontAwesomeIcon icon={faMessage} className='nav-message-icon' onClick={handleGoToChatBoxs}/>
+                </div>
             }
             
             

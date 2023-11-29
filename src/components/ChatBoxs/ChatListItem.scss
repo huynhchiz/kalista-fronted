@@ -1,0 +1,41 @@
+.chat-list-item {
+    display: flex;
+    padding: 8px;
+    margin-top: 4px;
+    cursor: pointer;
+    &:hover {
+        background-color: rgb(200, 215, 228);
+    }
+
+    .chat-list-item-left {
+        img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+    }
+
+    .chat-list-item-right {
+        flex: 1;
+        margin-left: 6px;
+
+        .chat-list-item-username {
+            font-weight: 600;
+        }
+
+        .chat-list-item-preview-chat {
+
+            .preview-chat {
+
+            }
+        }
+    }
+
+    .chat-list-item-options {
+        margin-right: 4px;
+    }
+}
+
+.chat-list-item-active {
+    // background-color: rgb(150, 195, 235);
+}
