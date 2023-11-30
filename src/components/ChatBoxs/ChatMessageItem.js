@@ -1,17 +1,20 @@
+import { useSelector } from 'react-redux'
 import './ChatMessageItem.scss'
+import { themeSelector } from '../../redux/selectors/themeSelector'
 
-const ChatMessageItem = ({ isAccountMessage = false }) => {
+const ChatMessageItem = ({ isAccountMessage = false, message, dateTime }) => {
+    const darkTheme = useSelector(themeSelector)
 
 
     return (
-        <div className='chat-message-item'>
+        <div className={`chat-message-item${darkTheme ? ' chat-message-item-dark' : ''}`}>
             <div className={`message-item ${isAccountMessage ? ' message-item-account' : ''}`}>
                 <p className='message-item-content'>
-                    xin chao moi nguoi
+                    {message}
                 </p>
 
                 <p className='message-item-time'>
-                    12h00 20/11/2023
+                    {dateTime}
                 </p>
                 
             </div>

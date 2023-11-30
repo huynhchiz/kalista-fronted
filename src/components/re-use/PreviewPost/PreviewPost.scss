@@ -131,12 +131,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+
             .spp-content-post {
                 position: relative;
                 width: 60%;
                 aspect-ratio: 1 / 1;
                 min-width: var(--frame-image-width);
-                padding-right: 4px;
                 display: flex;
                 justify-content: center;
                 background-color: #f7f7f7;
@@ -280,6 +280,10 @@
     .single-post-preview-frame {
         background-color: var(--background-color-dark) !important;
         border: 1px solid #555555;
+    }
+
+    .spp-content-post {
+        background-color: var(--background-color-dark) !important;
     }
 
     .spp-header, .spp-footer {

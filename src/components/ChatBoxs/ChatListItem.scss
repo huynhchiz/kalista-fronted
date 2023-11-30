@@ -4,7 +4,7 @@
     margin-top: 4px;
     cursor: pointer;
     &:hover {
-        background-color: rgb(200, 215, 228);
+        background-color: rgb(231, 231, 231);
     }
 
     .chat-list-item-left {
@@ -36,6 +36,28 @@
     }
 }
 
+.chat-list-item:has(.chat-list-item-dark) {
+    &:hover {
+        background-color: #2c2c2c;
+    }
+    &:hover .chat-list-item-username {
+        color: var(--text-white) !important;    }
+
+    .chat-list-item-username {
+        color: rgb(199, 199, 199);
+    }
+    .preview-chat, .chat-list-item-options {
+        color: rgb(138, 138, 138);
+    }
+}
+
 .chat-list-item-active {
-    // background-color: rgb(150, 195, 235);
+    background-color: var(--color-primary);
+    .chat-list-item-username {
+        color: var(--text-white) !important;
+    }
+
+    &:hover {
+        background-color: var(--color-primary) !important;
+    }
 }

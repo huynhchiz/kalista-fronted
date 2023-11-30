@@ -1,18 +1,45 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './ChatBoxs.scss'
 import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ChatListItem from './ChatListItem'
-import ChatMessageItem from './ChatMessageItem'
 import { useSelector } from 'react-redux'
 import { themeSelector } from '../../redux/selectors/themeSelector'
+import ChatContent from './ChatContent'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { getChatbox } from '../../service/messageService'
 
 const ChatBoxs = () => {
     const darkTheme = useSelector(themeSelector)
+
     const [hideList, setHideList] = useState(false)
+    const [listMessage, setListMessage] = useState([])
+
+    const [searchParams] = useSearchParams()
+    const userIdParam = searchParams.get('user')
+    console.log({userIdParam});
+
+    const navigate = useNavigate()
 
     const handleToggleChatList = () => {
         setHideList(!hideList)
+    }
+
+    const fetchChatbox = async () =>  {
+        let res = await getChatbox(+userIdParam, 5)
+        if (res && +res.EC === 0) {
+            setListMessage(res.DT)
+        }
+    }
+    
+    useEffect(() => {
+        if(userIdParam) {
+            fetchChatbox()
+        }
+    }, [userIdParam])
+
+    const navigateToChatbox = () => {
+        navigate(`/chat-boxs?user=2`)
     }
 
     return (
@@ -34,65 +61,20 @@ const ChatBoxs = () => {
                 </div>
 
                 <div className='chat-list-main'>
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-                    <ChatListItem />
-
+                {
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => (
+                        <ChatListItem
+                            key={'key' + item} 
+                            onActive={navigateToChatbox}
+                        />
+                    ))
+                }
                 </div>
 
 
             </div>
-        
 
-            <div className={`chat-content${hideList ? ' chat-content-full' : ' chat-content-hide'}`}>
-                <div className='chat-content-header'>
-                    <img src='https://res.cloudinary.com/drk6juqrs/image/upload/v1701228063/qsbfx70fhnc4sa6cj0o9.jpg' alt='_avatar-chat' />
-                    <p className='chat-content-header-username'>huynh chi 90524</p>
-                </div>
-
-                <div className='chat-content-main'>
-                    <ChatMessageItem />
-                    <ChatMessageItem />
-                    <ChatMessageItem isAccountMessage/>
-                    <ChatMessageItem />
-                    <ChatMessageItem isAccountMessage/>
-                    <ChatMessageItem isAccountMessage/>
-                    <ChatMessageItem />
-                    <ChatMessageItem isAccountMessage/>
-                    <ChatMessageItem />
-                    <ChatMessageItem />
-                    <ChatMessageItem isAccountMessage/>
-                    <ChatMessageItem />
-                    <ChatMessageItem />
-                    <ChatMessageItem isAccountMessage/>
-                    <ChatMessageItem />
-                    <ChatMessageItem />
-                    <ChatMessageItem isAccountMessage/>
-                    <ChatMessageItem />
-                </div>
-
-                <div className='chat-content-footer'>
-                    <input type='text' />
-                    <div className='send-message-btn'>SEND</div>
-                </div>
-            </div>
+            <ChatContent hideList={hideList} darkTheme={darkTheme} listMessage={listMessage}/>
 
         </div>
     )

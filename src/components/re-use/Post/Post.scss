@@ -223,8 +223,16 @@
 }
 
 .post-dark {
+    + .post-dark {
+        border-top-color: #3b3b3b !important;
+    }
+
     p {
         color: var(--text-white)
+    }
+
+    .post-content {
+        background-color: #181818;
     }
 
     .post-interactions {
