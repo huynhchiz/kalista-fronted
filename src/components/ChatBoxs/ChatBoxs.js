@@ -8,22 +8,32 @@ import { themeSelector } from '../../redux/selectors/themeSelector'
 import ChatContent from './ChatContent'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getChatbox } from '../../service/messageService'
+import { accFollowingsSelector } from '../../redux/selectors/accountSelector'
+import { dispatchGetAccountFollowings } from '../../dispatchs/dispatchAccount'
 
 const ChatBoxs = () => {
     const darkTheme = useSelector(themeSelector)
+    const followings = useSelector(accFollowingsSelector)
+    const listFollowings = followings.list
+
+    console.log(listFollowings);
 
     const [hideList, setHideList] = useState(false)
     const [listMessage, setListMessage] = useState([])
+    const [limitFollowings, setLimitFollowings] = useState(15)
 
     const [searchParams] = useSearchParams()
     const userIdParam = searchParams.get('user')
-    console.log({userIdParam});
 
     const navigate = useNavigate()
 
     const handleToggleChatList = () => {
         setHideList(!hideList)
     }
+
+    useEffect(() => {
+        dispatchGetAccountFollowings(limitFollowings)
+    }, [])
 
     const fetchChatbox = async () =>  {
         let res = await getChatbox(+userIdParam, 5)
@@ -38,8 +48,8 @@ const ChatBoxs = () => {
         }
     }, [userIdParam])
 
-    const navigateToChatbox = () => {
-        navigate(`/chat-boxs?user=2`)
+    const navigateToChatbox = (userId) => {
+        navigate(`/chat-boxs?user=${userId}`)
     }
 
     return (
@@ -62,10 +72,13 @@ const ChatBoxs = () => {
 
                 <div className='chat-list-main'>
                 {
-                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => (
+                    listFollowings?.length > 0 && 
+                    listFollowings.map(item => (
                         <ChatListItem
-                            key={'key' + item} 
-                            onActive={navigateToChatbox}
+                            key={'key' + item.id} 
+                            onActive={() => navigateToChatbox(item.id)}
+                            avatar={item.avatar}
+                            username={item.username}
                         />
                     ))
                 }

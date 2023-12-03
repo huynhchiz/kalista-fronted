@@ -4,8 +4,9 @@ import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import { useSelector } from 'react-redux'
 import { themeSelector } from '../../redux/selectors/themeSelector'
 import { useRef } from 'react'
+import unsetAvatar from '../../assets/images/user-avatar-unset.png'
 
-const ChatListItem = ({ onActive }) => {
+const ChatListItem = ({ avatar, username, onActive }) => {
     const darkTheme = useSelector(themeSelector)
     const chatListItemRef = useRef()
 
@@ -29,11 +30,11 @@ const ChatListItem = ({ onActive }) => {
             <span className={darkTheme ? 'chat-list-item-dark' : ''}></span>
 
             <div className='chat-list-item-left'>
-                <img src='https://res.cloudinary.com/drk6juqrs/image/upload/v1701228063/qsbfx70fhnc4sa6cj0o9.jpg' alt='_avatar-chat' />
+                <img src={avatar ? avatar : unsetAvatar} alt='_avatar-chat' />
             </div>
 
             <div className='chat-list-item-right'>
-                <p className='chat-list-item-username'>huynh chi 90524</p>
+                <p className='chat-list-item-username'>{username ? username : 'unname'}</p>
 
                 <div className='chat-list-item-preview-chat'>
                     <p className='preview-chat'>
