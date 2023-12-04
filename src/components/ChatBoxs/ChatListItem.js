@@ -6,7 +6,7 @@ import { themeSelector } from '../../redux/selectors/themeSelector'
 import { useRef } from 'react'
 import unsetAvatar from '../../assets/images/user-avatar-unset.png'
 
-const ChatListItem = ({ avatar, username, onActive }) => {
+const ChatListItem = ({ avatar, username, onActive, lastMessage }) => {
     const darkTheme = useSelector(themeSelector)
     const chatListItemRef = useRef()
 
@@ -38,7 +38,7 @@ const ChatListItem = ({ avatar, username, onActive }) => {
 
                 <div className='chat-list-item-preview-chat'>
                     <p className='preview-chat'>
-                        hello ban
+                        {lastMessage ? lastMessage : ''}
                     </p>
                 </div>
             </div>

@@ -6,24 +6,18 @@ import ChatListItem from './ChatListItem'
 import { useSelector } from 'react-redux'
 import { themeSelector } from '../../redux/selectors/themeSelector'
 import ChatContent from './ChatContent'
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import { getChatbox } from '../../service/messageService'
-import { accFollowingsSelector } from '../../redux/selectors/accountSelector'
-import { dispatchGetAccountFollowings } from '../../dispatchs/dispatchAccount'
+import { useNavigate } from 'react-router-dom'
+import { listChatboxSelector } from '../../redux/selectors/accountSelector'
+import { dispatchGetListChatbox } from '../../dispatchs/dispatchAccount'
 
 const ChatBoxs = () => {
     const darkTheme = useSelector(themeSelector)
-    const followings = useSelector(accFollowingsSelector)
-    const listFollowings = followings.list
+    const listChatbox = useSelector(listChatboxSelector)
 
-    console.log(listFollowings);
-
+    const [limitList, setLimitList] = useState(20)    
     const [hideList, setHideList] = useState(false)
-    const [listMessage, setListMessage] = useState([])
-    const [limitFollowings, setLimitFollowings] = useState(15)
-
-    const [searchParams] = useSearchParams()
-    const userIdParam = searchParams.get('user')
+    const [avatarUser, setAvatarUser] = useState()
+    const [currentChatboxId, setCurrentChatboxId] = useState()
 
     const navigate = useNavigate()
 
@@ -32,24 +26,13 @@ const ChatBoxs = () => {
     }
 
     useEffect(() => {
-        dispatchGetAccountFollowings(limitFollowings)
+        dispatchGetListChatbox(limitList)
     }, [])
 
-    const fetchChatbox = async () =>  {
-        let res = await getChatbox(+userIdParam, 5)
-        if (res && +res.EC === 0) {
-            setListMessage(res.DT)
-        }
-    }
-    
-    useEffect(() => {
-        if(userIdParam) {
-            fetchChatbox()
-        }
-    }, [userIdParam])
-
-    const navigateToChatbox = (userId) => {
+    const navigateToChatbox = (userId, userAvatar, chatboxId) => {
         navigate(`/chat-boxs?user=${userId}`)
+        setAvatarUser(userAvatar)
+        setCurrentChatboxId(chatboxId)
     }
 
     return (
@@ -72,13 +55,14 @@ const ChatBoxs = () => {
 
                 <div className='chat-list-main'>
                 {
-                    listFollowings?.length > 0 && 
-                    listFollowings.map(item => (
+                    listChatbox?.length > 0 && 
+                    listChatbox.map(item => (
                         <ChatListItem
                             key={'key' + item.id} 
-                            onActive={() => navigateToChatbox(item.id)}
-                            avatar={item.avatar}
-                            username={item.username}
+                            onActive={() => navigateToChatbox(item.otherUser.id, item.otherUser.avatar, item.id)}
+                            avatar={item.otherUser.avatar}
+                            username={item.otherUser.username}
+                            lastMessage={item.lastMessage}
                         />
                     ))
                 }
@@ -87,7 +71,12 @@ const ChatBoxs = () => {
 
             </div>
 
-            <ChatContent hideList={hideList} darkTheme={darkTheme} listMessage={listMessage}/>
+            <ChatContent 
+                hideList={hideList}
+                darkTheme={darkTheme}
+                chatboxId={currentChatboxId}
+                avatarUser={avatarUser}
+             />
 
         </div>
     )

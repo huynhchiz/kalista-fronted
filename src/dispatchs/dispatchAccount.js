@@ -1,11 +1,12 @@
 import store from "../redux/store";
-import accountSlice, { fetchAccountAvatar, fetchAccountFollowers, fetchAccountFollowings, fetchAccountInfo, fetchAccountPosts, fetchInfoPostAccount, refreshToken } from "../slices/accountSlice";
+import accountSlice, { fetchAccountAvatar, fetchAccountFollowers, fetchAccountFollowings, fetchAccountInfo, fetchAccountPosts, fetchInfoPostAccount, fetchListChatbox, refreshToken } from "../slices/accountSlice";
 
 import { getAccountAvatarSV, getAccountFollowersSV, getAccountFollowingsSV, getAccountInfoSV, getAccountPosts, refreshTokenSV } from "../service/accountService";
 import { dispatchResetHomePosts } from "./dispatchPosts";
 import { dispatchResetScrollPosition } from "./dispatchScrollPosition";
 import { dispatchSetError } from "./dispatchPageAction";
 import { getInfoPostSV } from "../service/postService";
+import { getListChatbox } from "../service/messageService";
 
 const dispatchLogin = (dataLogin) => {
     store.dispatch(accountSlice.actions.login(dataLogin))
@@ -61,6 +62,13 @@ const dispatchGetInfoPostAccount = (postId) =>  {
     }))
 }
 
+const dispatchGetListChatbox = (limit) => {
+    store.dispatch(fetchListChatbox({
+        api: getListChatbox,
+        limit: limit
+    }))
+}
+
 export {
     dispatchLogin,
     dispatchLogout,
@@ -71,4 +79,6 @@ export {
     dispatchGetAccountFollowings,
     dispatchGetAccountPosts,
     dispatchGetInfoPostAccount,
+
+    dispatchGetListChatbox,
 }

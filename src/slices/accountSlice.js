@@ -24,7 +24,8 @@ const initAccount = {
     posts: {
         count: 0,
         list: []
-    }
+    },
+    listChatbox: [],
 }
 
 const accountSlice = createSlice({
@@ -113,6 +114,14 @@ const accountSlice = createSlice({
         })
         .addCase(fetchInfoPostAccount.rejected, (state, action) => {
             state.posts.list = initAccount.posts.list;
+        })
+
+        
+        .addCase(fetchListChatbox.fulfilled, (state, action) => {
+            state.listChatbox = action.payload
+        })
+        .addCase(fetchListChatbox.rejected, (state, action) => {
+            state.listChatbox = initAccount.listChatbox;
         })
     }
 })
@@ -229,6 +238,14 @@ export const fetchInfoPostAccount = createAsyncThunk('account/fetchInfoPostAccou
         return res.DT
     }
     return {}
+})
+
+export const fetchListChatbox = createAsyncThunk('account/fetchListChatbox', async ({ api, limit }) => {
+    let res = await api(limit)
+    if (res && +res.EC === 0) {
+        return res.DT
+    }
+    return []
 })
 
 export default accountSlice
