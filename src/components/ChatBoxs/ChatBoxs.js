@@ -1,14 +1,16 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './ChatBoxs.scss'
 import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import ChatListItem from './ChatListItem'
 import { useSelector } from 'react-redux'
 import { themeSelector } from '../../redux/selectors/themeSelector'
 import ChatContent from './ChatContent'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { listChatboxSelector } from '../../redux/selectors/accountSelector'
 import { dispatchGetListChatbox } from '../../dispatchs/dispatchAccount'
+
+import socketIOClient from 'socket.io-client'
 
 const ChatBoxs = () => {
     const darkTheme = useSelector(themeSelector)
@@ -17,9 +19,30 @@ const ChatBoxs = () => {
     const [limitList, setLimitList] = useState(20)    
     const [hideList, setHideList] = useState(false)
     const [avatarUser, setAvatarUser] = useState()
+    const [username, setUsername] = useState('')
     const [currentChatboxId, setCurrentChatboxId] = useState()
 
+    const [searchParams] = useSearchParams()
+    const userIdParam = searchParams.get('user')
+
     const navigate = useNavigate()
+    
+    const socketRef = useRef();
+    
+    useEffect(() => {
+        socketRef.current = socketIOClient.connect('http://localhost:3434')
+
+        // mỗi khi có tin nhắn thì mess sẽ được render thêm 
+        socketRef.current.on('sendDataServer', dataGot => {
+            console.log({dataGot});
+            dispatchGetListChatbox(limitList)
+        })
+        
+        return () => {
+            socketRef.current.disconnect();
+        };
+
+    }, []);
 
     const handleToggleChatList = () => {
         setHideList(!hideList)
@@ -29,10 +52,14 @@ const ChatBoxs = () => {
         dispatchGetListChatbox(limitList)
     }, [])
 
-    const navigateToChatbox = (userId, userAvatar, chatboxId) => {
+    const navigateToChatbox = (userId, username, userAvatar, chatboxId) => {
         navigate(`/chat-boxs?user=${userId}`)
+        setUsername(username)
         setAvatarUser(userAvatar)
         setCurrentChatboxId(chatboxId)
+        if(window.innerWidth < 850) {
+            setHideList(true)
+        }
     }
 
     return (
@@ -58,8 +85,13 @@ const ChatBoxs = () => {
                     listChatbox?.length > 0 && 
                     listChatbox.map(item => (
                         <ChatListItem
-                            key={'key' + item.id} 
-                            onActive={() => navigateToChatbox(item.otherUser.id, item.otherUser.avatar, item.id)}
+                            key={'key' + item.id}
+                            onActive={() => navigateToChatbox(
+                                item.otherUser.id,
+                                item.otherUser.username,
+                                item.otherUser.avatar, 
+                                item.id
+                            )}
                             avatar={item.otherUser.avatar}
                             username={item.otherUser.username}
                             lastMessage={item.lastMessage}
@@ -71,12 +103,17 @@ const ChatBoxs = () => {
 
             </div>
 
-            <ChatContent 
-                hideList={hideList}
-                darkTheme={darkTheme}
-                chatboxId={currentChatboxId}
-                avatarUser={avatarUser}
-             />
+            {
+                userIdParam && 
+                <ChatContent 
+                    hideList={hideList}
+                    darkTheme={darkTheme}
+                    chatboxId={currentChatboxId}
+                    avatarUser={avatarUser}
+                    username={username}
+                    socketRef={socketRef}
+                 />
+            }
 
         </div>
     )

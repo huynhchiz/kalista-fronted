@@ -8,7 +8,7 @@ import { createMessage, getChatbox } from '../../service/messageService';
 import { useSearchParams } from 'react-router-dom'
 import { dispatchGetListChatbox } from '../../dispatchs/dispatchAccount';
 
-const ChatContent = ({ hideList, darkTheme, chatboxId, avatarUser }) => {
+const ChatContent = ({ hideList, darkTheme, chatboxId, avatarUser, username, socketRef }) => {
     const accountInfo = useSelector(accInfoSelector)
     const accountId = accountInfo.userId
 
@@ -30,6 +30,12 @@ const ChatContent = ({ hideList, darkTheme, chatboxId, avatarUser }) => {
             fetchChatbox()
         }
     }, [userIdParam])
+
+    useEffect(() => {
+        socketRef.current.on('sendDataServer', dataGot => {
+            fetchChatbox()            
+        })
+    })
 
     const handleChangeMessage = (e) => {
         setMessage(e.target.value)
@@ -56,6 +62,7 @@ const ChatContent = ({ hideList, darkTheme, chatboxId, avatarUser }) => {
                 fetchChatbox()
                 dispatchGetListChatbox(20)
                 setMessage('')
+                socketRef.current.emit('sendDataClient', message)
             }
         }
     }
@@ -64,7 +71,7 @@ const ChatContent = ({ hideList, darkTheme, chatboxId, avatarUser }) => {
         <div className={`chat-content${hideList ? ' chat-content-full' : ' chat-content-hide'}${darkTheme ? ' chat-content-dark' : ''}`}>
             <div className='chat-content-header'>
                 <img src={avatarUser ? avatarUser : unsetAvatar} alt='_avatar-chat' />
-                <p className='chat-content-header-username'>{}</p>
+                <p className='chat-content-header-username'>{username ? username : ''}</p>
             </div>
 
             <div className='chat-content-main'>

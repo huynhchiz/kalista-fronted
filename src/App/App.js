@@ -12,8 +12,10 @@ import ErrorPage from '../components/ErrorPage/ErrorPage';
 import { themeSelector } from '../redux/selectors/themeSelector';
 import ZoomedImage from '../components/re-use/ZoomedImage/ZoomedImage';
 
+
 function App() {
   const darkTheme = useSelector(themeSelector)
+
 
   return (
     <BrowserRouter>

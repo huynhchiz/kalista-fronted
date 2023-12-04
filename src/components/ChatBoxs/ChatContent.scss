@@ -29,6 +29,8 @@
         width: 100%;
         height: calc(100% - var(--nav-height) - 70px);
         overflow-y: scroll;
+        display: flex;
+        flex-direction: column-reverse;
 
         &::-webkit-scrollbar {
             width: 6px;
