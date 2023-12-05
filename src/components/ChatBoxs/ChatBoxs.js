@@ -32,9 +32,12 @@ const ChatBoxs = () => {
     useEffect(() => {
         socketRef.current = socketIOClient.connect('http://localhost:3434')
 
+        socketRef.current.on('getId', data => {
+            console.log({data});
+        })
+
         // mỗi khi có tin nhắn thì mess sẽ được render thêm 
         socketRef.current.on('sendDataServer', dataGot => {
-            console.log({dataGot});
             dispatchGetListChatbox(limitList)
         })
         

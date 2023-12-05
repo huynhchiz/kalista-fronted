@@ -33,9 +33,9 @@ const ChatContent = ({ hideList, darkTheme, chatboxId, avatarUser, username, soc
 
     useEffect(() => {
         socketRef.current.on('sendDataServer', dataGot => {
-            fetchChatbox()            
+            // fetchChatbox()
         })
-    })
+    }, [])
 
     const handleChangeMessage = (e) => {
         setMessage(e.target.value)
