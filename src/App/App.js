@@ -11,11 +11,31 @@ import ErrorPage from '../components/ErrorPage/ErrorPage';
 
 import { themeSelector } from '../redux/selectors/themeSelector';
 import ZoomedImage from '../components/re-use/ZoomedImage/ZoomedImage';
+import { useEffect, useRef } from 'react';
 
+import socketIOClient from 'socket.io-client'
+import { accInfoSelector } from '../redux/selectors/accountSelector';
 
 function App() {
   const darkTheme = useSelector(themeSelector)
+  const accInfo = useSelector(accInfoSelector)
+  const accountId = accInfo.userId
 
+  const socketRef = useRef();
+  useEffect(() => {
+    socketRef.current = socketIOClient.connect('http://localhost:3434')
+    
+    return () => {
+        socketRef.current.disconnect(accountId);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if(accountId) {
+      socketRef.current.emit('online', accountId)
+    }
+  }, [accountId])
 
   return (
     <BrowserRouter>
@@ -35,7 +55,7 @@ function App() {
           <ErrorPage />
 
           <div className={`app-content${darkTheme ? ' app-content-dark' : ''}`} >
-            <AppRoutes />
+            <AppRoutes socketRef={socketRef} />
           </div>
 
           <div className='app-footer'>

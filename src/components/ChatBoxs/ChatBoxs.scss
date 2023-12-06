@@ -78,6 +78,20 @@
                 background-color: rgb(121, 121, 121);
                 border-radius: 2px;
             }
+
+            .chat-list-add {
+                margin-top: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+
+                p {
+                    font-weight: 600;
+                    margin-right: 6px;
+                    margin-bottom: 2px;
+                }
+            }
         }
     }
 
@@ -129,5 +143,9 @@
         .chat-list-search-btn {
             color: var(--color-primary);
         }
+    }
+
+    .chat-list-add {
+        color: var(--color-primary) !important;
     }
 }

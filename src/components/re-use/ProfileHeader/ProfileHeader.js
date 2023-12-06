@@ -14,7 +14,7 @@ import { dispatchGetUser, dispatchGetUserFollowers, dispatchGetUserFollowings } 
 import { userFollowersSelector, userFollowingsSelector } from '../../../redux/selectors/userSelector'
 
 
-const ProfileHeader = ({ following, email, userAvatar, username, userId, countFollowers, countFollowings, countPosts }) => {
+const ProfileHeader = ({ following, userAvatar, username, userId, countFollowers, countFollowings, countPosts }) => {
     const darkTheme = useSelector(themeSelector)
     const accountInfo = useSelector(accInfoSelector)
     

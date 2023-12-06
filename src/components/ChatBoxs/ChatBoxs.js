@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './ChatBoxs.scss'
-import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useState, useRef } from 'react'
+import { faBars, faCirclePlus, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { useEffect, useState } from 'react'
 import ChatListItem from './ChatListItem'
 import { useSelector } from 'react-redux'
 import { themeSelector } from '../../redux/selectors/themeSelector'
@@ -10,41 +10,47 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { listChatboxSelector } from '../../redux/selectors/accountSelector'
 import { dispatchGetListChatbox } from '../../dispatchs/dispatchAccount'
 
-import socketIOClient from 'socket.io-client'
 
-const ChatBoxs = () => {
+const ChatBoxs = ({ socketRef }) => {
     const darkTheme = useSelector(themeSelector)
     const listChatbox = useSelector(listChatboxSelector)
+    const listChatboxId = listChatbox.map(item => item.id)
+    // const listChatboxUserId = listChatbox.map(item => item.otherUser.id)
 
     const [limitList, setLimitList] = useState(20)    
     const [hideList, setHideList] = useState(false)
     const [avatarUser, setAvatarUser] = useState()
     const [username, setUsername] = useState('')
+    const [currentUserId, setCurrentUserId] = useState()
     const [currentChatboxId, setCurrentChatboxId] = useState()
 
     const [searchParams] = useSearchParams()
     const userIdParam = searchParams.get('user')
 
     const navigate = useNavigate()
+
     
-    const socketRef = useRef();
     
     useEffect(() => {
-        socketRef.current = socketIOClient.connect('http://localhost:3434')
+        listChatboxId.forEach(item => {
+            socketRef.current.on(`sendMessageFromChatbox${item}`, dataGot => {
+                dispatchGetListChatbox(limitList)
+            })
+        });
 
-        socketRef.current.on('getId', data => {
-            console.log({data});
-        })
-
-        // mỗi khi có tin nhắn thì mess sẽ được render thêm 
-        socketRef.current.on('sendDataServer', dataGot => {
-            dispatchGetListChatbox(limitList)
-        })
+        // console.log(listChatboxUserId);
+        // listChatboxUserId.forEach(item => {
+        //     socketRef.current.on(`checkOnline${item}`, data => {
+        //         console.log('check online ', data);
+        //     })
+        // })
         
-        return () => {
-            socketRef.current.disconnect();
-        };
-
+        // listChatboxUserId.forEach(item => {
+        //     socketRef.current.on(`checkOffline${item}`, data => {
+        //         console.log('check offline ', data);
+        //     })
+        // })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleToggleChatList = () => {
@@ -53,10 +59,12 @@ const ChatBoxs = () => {
 
     useEffect(() => {
         dispatchGetListChatbox(limitList)
-    }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [limitList])
 
     const navigateToChatbox = (userId, username, userAvatar, chatboxId) => {
         navigate(`/chat-boxs?user=${userId}`)
+        setCurrentUserId(userId)
         setUsername(username)
         setAvatarUser(userAvatar)
         setCurrentChatboxId(chatboxId)
@@ -101,6 +109,10 @@ const ChatBoxs = () => {
                         />
                     ))
                 }
+                    <div className='chat-list-add' onClick={() => setLimitList(limitList + 20)}>
+                        <p>load more</p>
+                        <FontAwesomeIcon icon={faCirclePlus} className='chat-list-add-icon' />
+                    </div>
                 </div>
 
 
@@ -113,9 +125,10 @@ const ChatBoxs = () => {
                     darkTheme={darkTheme}
                     chatboxId={currentChatboxId}
                     avatarUser={avatarUser}
+                    userId={currentUserId}
                     username={username}
                     socketRef={socketRef}
-                 />
+                />
             }
 
         </div>

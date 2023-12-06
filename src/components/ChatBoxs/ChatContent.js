@@ -5,10 +5,10 @@ import { accInfoSelector } from '../../redux/selectors/accountSelector';
 import unsetAvatar from '../../assets/images/user-avatar-unset.png'
 import { useEffect, useState } from 'react';
 import { createMessage, getChatbox } from '../../service/messageService';
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { dispatchGetListChatbox } from '../../dispatchs/dispatchAccount';
 
-const ChatContent = ({ hideList, darkTheme, chatboxId, avatarUser, username, socketRef }) => {
+const ChatContent = ({ hideList, darkTheme, chatboxId, avatarUser, userId, username, socketRef }) => {
     const accountInfo = useSelector(accInfoSelector)
     const accountId = accountInfo.userId
 
@@ -17,11 +17,12 @@ const ChatContent = ({ hideList, darkTheme, chatboxId, avatarUser, username, soc
 
     const [message, setMessage] = useState('')
     const [listMessage, setListMessage] = useState([])
+    const navigate = useNavigate()
 
     const fetchChatbox = async () =>  {
         let res = await getChatbox(+userIdParam, +chatboxId, 15)
         if (res && +res.EC === 0) {
-            setListMessage(res.DT)
+            setListMessage(res.DT.chatboxMessage)
         }
     }
     
@@ -29,13 +30,29 @@ const ChatContent = ({ hideList, darkTheme, chatboxId, avatarUser, username, soc
         if(userIdParam) {
             fetchChatbox()
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userIdParam])
 
     useEffect(() => {
-        socketRef.current.on('sendDataServer', dataGot => {
-            // fetchChatbox()
-        })
+        if(socketRef?.current) {
+            socketRef.current.on(`sendMessageFromChatbox${chatboxId}`, dataGot => {
+                fetchChatbox()
+            })
+        }        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        // khuc nay dang ko hieu
+        socketRef.current.on(`checkOnline${userIdParam}`, (data) => {
+            console.log('check online ', data);
+        })
+
+        socketRef.current.on(`checkOffline${userIdParam}`, (data) => {
+            console.log('check offline ', data);
+        })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userIdParam, socketRef])
 
     const handleChangeMessage = (e) => {
         setMessage(e.target.value)
@@ -62,16 +79,23 @@ const ChatContent = ({ hideList, darkTheme, chatboxId, avatarUser, username, soc
                 fetchChatbox()
                 dispatchGetListChatbox(20)
                 setMessage('')
-                socketRef.current.emit('sendDataClient', message)
+
+                socketRef.current.emit(`sendMessage`, chatboxId)
             }
         }
+    }
+
+    const handleNavigateToProfile = () => {
+        navigate(`/profile?user=${userIdParam}`)
     }
     
     return (
         <div className={`chat-content${hideList ? ' chat-content-full' : ' chat-content-hide'}${darkTheme ? ' chat-content-dark' : ''}`}>
             <div className='chat-content-header'>
-                <img src={avatarUser ? avatarUser : unsetAvatar} alt='_avatar-chat' />
-                <p className='chat-content-header-username'>{username ? username : ''}</p>
+                <div className='chat-content-header-info' onClick={handleNavigateToProfile}>
+                    <img src={avatarUser ? avatarUser : unsetAvatar} alt='_avatar-chat' />
+                    <p className='chat-content-header-username'>{username ? username : ''}</p>
+                </div>
             </div>
 
             <div className='chat-content-main'>

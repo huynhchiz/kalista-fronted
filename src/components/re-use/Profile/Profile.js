@@ -27,7 +27,7 @@ const Profile = () => {
         window.scrollTo(0, 0)
         dispatchGetUser(idParam)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [idParam])
 
     const handleAddLimit = () => {
         let condition = (+(userPost.count) < +limit - 15)
