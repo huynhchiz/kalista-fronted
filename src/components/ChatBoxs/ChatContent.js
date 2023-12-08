@@ -17,13 +17,18 @@ const ChatContent = ({ hideList, darkTheme, chatboxId, avatarUser, userId, usern
 
     const [message, setMessage] = useState('')
     const [listMessage, setListMessage] = useState([])
+    const [limitMess, setLimitMess] = useState(15)
     const navigate = useNavigate()
 
     const fetchChatbox = async () =>  {
-        let res = await getChatbox(+userIdParam, +chatboxId, 15)
+        let res = await getChatbox(+userIdParam, +chatboxId, +limitMess)
         if (res && +res.EC === 0) {
             setListMessage(res.DT.chatboxMessage)
         }
+    }
+
+    const handleAddLimitMess = () => {
+        setLimitMess(limitMess + 15)
     }
     
     useEffect(() => {
@@ -31,7 +36,7 @@ const ChatContent = ({ hideList, darkTheme, chatboxId, avatarUser, userId, usern
             fetchChatbox()
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userIdParam])
+    }, [userIdParam, limitMess])
 
     useEffect(() => {
         if(socketRef?.current) {
@@ -110,6 +115,9 @@ const ChatContent = ({ hideList, darkTheme, chatboxId, avatarUser, userId, usern
                         />
                     ))
                 }
+                <div className='add-message-btn' onClick={handleAddLimitMess}>
+                    <p>Load more message</p>
+                </div>
             </div>
 
             <div className='chat-content-footer'>

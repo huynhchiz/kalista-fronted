@@ -17,10 +17,9 @@
 
     // chat list
     .chat-list {
-        padding-left: 6px;
         width: 30%;
         max-width: 360px;
-        height: calc(100vh - var(--nav-height) - var(--footer-height));
+        height: calc(100vh - var(--nav-height));
         transition: width ease 0.5s;
         border-right: 1px solid #ddd;
 
@@ -34,15 +33,19 @@
             height: calc(var(--nav-height) + 10px);
             display: flex;
             align-items: center;
-            justify-content: center;
             border-bottom: 1px solid #ddd;
 
+            span {
+                width: 56px;
+                height: 100%;
+            }
+
             .chat-list-search {
+                flex: 1;
                 position: relative;
 
                 input {
-                    margin-left: 24px;
-                    min-width: 200px;
+                    width: 94%;
                     height: 24px;
                     border-radius: 3px;
                     border: 1px solid #ddd;
@@ -56,7 +59,7 @@
                     position: absolute;
                     top: 50%;
                     transform: translateY(-45%);
-                    right: 4px;
+                    right: 10%;
                     cursor: pointer;
                     &:hover {
                         opacity: 0.5;
@@ -80,13 +83,17 @@
             }
 
             .chat-list-add {
-                margin-top: 10px;
+                margin-left: 6px;
+                padding: 10px 0;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 cursor: pointer;
+                background-color: #6d6d6d;
+                opacity: 0.8;
 
                 p {
+                    color: var(--color-primary);
                     font-weight: 600;
                     margin-right: 6px;
                     margin-bottom: 2px;
@@ -143,9 +150,5 @@
         .chat-list-search-btn {
             color: var(--color-primary);
         }
-    }
-
-    .chat-list-add {
-        color: var(--color-primary) !important;
     }
 }

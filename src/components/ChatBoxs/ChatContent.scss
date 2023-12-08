@@ -1,6 +1,6 @@
 .chat-content {
     flex: 1;
-    height: calc(100vh - var(--nav-height) - var(--footer-height));
+    height: calc(100vh - var(--nav-height));
     transition: width ease 0.5s;
     position: relative;
     background-color: #f8f8f8;
@@ -45,6 +45,16 @@
         &::-webkit-scrollbar-thumb {
             background-color: rgb(121, 121, 121);
             border-radius: 2px;
+        }
+
+        .add-message-btn {
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #eeeeee;
+            &:hover p {
+                text-decoration: underline;
+            }
         }
     }
 
@@ -123,6 +133,13 @@
         border-bottom-color: rgb(51, 51, 51) !important;
         background-color: var(--background-color-dark) !important;
     }
+
+    .chat-content-main {
+        .add-message-btn {
+            background-color: #6d6b6b;
+        }
+    }
+
     .chat-content-footer {
         input {
             color: var(--text-white);

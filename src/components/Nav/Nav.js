@@ -30,6 +30,10 @@ const Nav = () => {
     }, [location.pathname])
 
     const handleCLickLogo = () => {
+        if(location.pathname === '/chat-boxs') {
+            navigate('/')
+            return;
+        }
         dispatchSetError(false)
         navigate('/welcome')
     }

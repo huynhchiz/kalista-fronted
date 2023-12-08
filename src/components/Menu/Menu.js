@@ -64,6 +64,7 @@ const Menu = () => {
     }
 
     return (
+        location.pathname !== '/chat-boxs' &&
         accountAuth && accountAuth.isAuth && location.pathname !== '/welcome' &&
         <div
             className={`menu ${darkTheme ? 'menu-dark' : ''}`}

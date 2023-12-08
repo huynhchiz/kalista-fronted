@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './ChatBoxs.scss'
 import { faBars, faCirclePlus, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ChatListItem from './ChatListItem'
 import { useSelector } from 'react-redux'
 import { themeSelector } from '../../redux/selectors/themeSelector'
@@ -9,13 +9,13 @@ import ChatContent from './ChatContent'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { listChatboxSelector } from '../../redux/selectors/accountSelector'
 import { dispatchGetListChatbox } from '../../dispatchs/dispatchAccount'
+import socketIOClient from 'socket.io-client'
 
 
-const ChatBoxs = ({ socketRef }) => {
+const ChatBoxs = () => {
     const darkTheme = useSelector(themeSelector)
     const listChatbox = useSelector(listChatboxSelector)
     const listChatboxId = listChatbox.map(item => item.id)
-    // const listChatboxUserId = listChatbox.map(item => item.otherUser.id)
 
     const [limitList, setLimitList] = useState(20)    
     const [hideList, setHideList] = useState(false)
@@ -27,29 +27,22 @@ const ChatBoxs = ({ socketRef }) => {
     const [searchParams] = useSearchParams()
     const userIdParam = searchParams.get('user')
 
-    const navigate = useNavigate()
+    const navigate = useNavigate()    
+    
+    const socketRef = useRef();
 
-    
-    
     useEffect(() => {
+        socketRef.current = socketIOClient.connect('http://localhost:3434')
+
         listChatboxId.forEach(item => {
             socketRef.current.on(`sendMessageFromChatbox${item}`, dataGot => {
                 dispatchGetListChatbox(limitList)
             })
-        });
+        })
 
-        // console.log(listChatboxUserId);
-        // listChatboxUserId.forEach(item => {
-        //     socketRef.current.on(`checkOnline${item}`, data => {
-        //         console.log('check online ', data);
-        //     })
-        // })
-        
-        // listChatboxUserId.forEach(item => {
-        //     socketRef.current.on(`checkOffline${item}`, data => {
-        //         console.log('check offline ', data);
-        //     })
-        // })
+        return () => {
+            socketRef.current.disconnect();
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -79,8 +72,8 @@ const ChatBoxs = ({ socketRef }) => {
             <FontAwesomeIcon icon={faBars} className='chat-list-toggle-icon' onClick={handleToggleChatList} />
         
             <div className={`chat-list${hideList ? ' chat-list-hide' : ' chat-list-full'}`}>
-
                 <div className='chat-list-header'>
+                    <span></span>
                     <div className='chat-list-search'>
 
                         <input type='text' />

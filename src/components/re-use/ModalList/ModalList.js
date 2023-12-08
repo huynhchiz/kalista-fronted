@@ -7,6 +7,7 @@ const ModalList = ({ list, title = 'list', footer, onClose }) => {
     const navigate = useNavigate()
     const handleNavigateToProfile = (userId) => {
         navigate(`/profile?user=${userId}`)
+        onClose()
     }
 
     return(
