@@ -39,11 +39,11 @@ const ChatContent = ({ hideList, darkTheme, chatboxId, avatarUser, userId, usern
     }, [userIdParam, limitMess])
 
     useEffect(() => {
-        if(socketRef?.current) {
+        // if(socketRef?.current) {
             socketRef.current.on(`sendMessageFromChatbox${chatboxId}`, dataGot => {
                 fetchChatbox()
             })
-        }        
+        // }        
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
