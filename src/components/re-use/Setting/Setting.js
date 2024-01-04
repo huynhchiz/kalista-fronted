@@ -8,11 +8,13 @@ import BigButton from '../BigButton/BigButton'
 import { themeSelector } from '../../../redux/selectors/themeSelector'
 import { logoutUserService } from '../../../service/signService'
 import { dispatchLogout } from '../../../dispatchs/dispatchAccount'
+import { useNavigate } from 'react-router-dom'
 
 const Setting = () => {
     const darkTheme = useSelector(themeSelector)
     const [show, setShow] = useState(false)
     const contentRef = useRef()
+    const navigate = useNavigate()
 
     const toggleSetting = () => {
         if(show) {
@@ -29,6 +31,10 @@ const Setting = () => {
         if(res && +res.EC === 0) {
             dispatchLogout()
         }
+    }
+
+    const handleToEditInfo = () => {
+        navigate('/edit-information')
     }
 
     return (
@@ -48,8 +54,16 @@ const Setting = () => {
                     </div>
 
                     <div className='setting-content-main'>
-                        <div className='setting-main-item'>Setting ...</div>
-                        <div className='setting-main-item'>Setting ...</div>
+                        <div className='setting-main-item'>
+                            <div className='setting-item-button' onClick={handleToEditInfo}>
+                                Change your information
+                            </div>
+                        </div>
+                        <div className='setting-main-item'>
+                            <div className='setting-item-button' onClick={handleToEditInfo}>
+                                Change your password
+                            </div>
+                        </div>
                         <div className='setting-main-item'>Setting ...</div>
                         <div className='setting-main-item'>Setting ...</div>
                         <div className='setting-main-item'>Setting ...</div>

@@ -43,8 +43,17 @@
                 justify-content: center;
                 align-items: center;
                 color: var(--text-black);
-
                 font-size: 18px;
+
+                .setting-item-button {
+                    // border: 1px solid rgb(139, 138, 138);
+                    padding: 4px;
+                    border-radius: 3px;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: var(--color-primary);
+                    }
+                }
             }
 
             .logout-btn {
