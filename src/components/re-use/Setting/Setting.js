@@ -34,6 +34,7 @@ const Setting = () => {
     }
 
     const handleToEditInfo = () => {
+        toggleSetting()
         navigate('/edit-information')
     }
 

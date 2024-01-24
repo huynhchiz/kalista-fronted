@@ -1,0 +1,45 @@
+.edit-info {
+    padding: 5%;
+
+    h2 {
+        margin-bottom: 24px;
+    }
+
+    .edit-info-name {
+        display: flex;
+        align-items: center;
+        height: 30px;
+    }
+
+    .edit-info-name-label {
+        display: inline-block;
+        width: 150px;
+        font-size: 17px;
+    }
+
+    .edit-info-name-input {
+        height: 100%;
+        max-width: 300px;
+        flex: 1;
+        padding: 4px;
+    }
+
+    .edit-info-done-btn {
+        margin-top: 24px;
+        padding: 4px;
+        font-size: 24px;
+        text-align: center;
+        border: 1px solid var(--color-primary);
+        border-radius: 3px;
+
+        &:hover {
+            background-color: var(--color-primary);
+            cursor: pointer;
+        }
+
+        @media (min-width: 500px) {
+            width: 450px;
+        }
+    
+    }
+}

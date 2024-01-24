@@ -13,7 +13,7 @@ const NavBack = ({ onGoBack }) => {
             <FontAwesomeIcon 
                 icon={faAngleLeft}
                 className='nav-back-icon'
-                onClick={onGoBack}    
+                onClick={onGoBack}
             />
         </div>
     )

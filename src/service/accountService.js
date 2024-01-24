@@ -40,6 +40,12 @@ const getAccountPosts = (limit) => {
     return axios.get(`/account/get-posts/${limit}`)
 }
 
+const updateAccountInfo = (data) => {
+    return axios.post(`/account/update-info/`, {
+        newUsername: data.newUsername
+    })
+}
+
 export {
     getAccountInfoSV,
     getAccountAvatarSV,
@@ -50,5 +56,6 @@ export {
     getAccountFollowingsSV,
     deleteAvatar,
     uploadAvatar,
-    getAccountPosts
+    getAccountPosts,
+    updateAccountInfo
 }

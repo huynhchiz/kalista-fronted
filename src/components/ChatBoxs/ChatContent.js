@@ -39,23 +39,12 @@ const ChatContent = ({ hideList, darkTheme, chatboxId, avatarUser, userId, usern
     }, [userIdParam, limitMess])
 
     useEffect(() => {
-        // if(socketRef?.current) {
+        if(socketRef && socketRef.current) {
             socketRef.current.on(`sendMessageFromChatbox${chatboxId}`, dataGot => {
+                console.log({dataGot});
                 fetchChatbox()
             })
-        // }        
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    useEffect(() => {
-        // khuc nay dang ko hieu
-        socketRef.current.on(`checkOnline${userIdParam}`, (data) => {
-            console.log('check online ', data);
-        })
-
-        socketRef.current.on(`checkOffline${userIdParam}`, (data) => {
-            console.log('check offline ', data);
-        })
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userIdParam, socketRef])
 

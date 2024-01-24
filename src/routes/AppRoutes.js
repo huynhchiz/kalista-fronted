@@ -15,6 +15,7 @@ import MyProfile from "../components/MyProfile/MyProfile";
 import Profile from "../components/re-use/Profile/Profile";
 import Search from "../components/Search/Search";
 import ChatBoxs from "../components/ChatBoxs/ChatBoxs";
+import EditInfo from "../components/re-use/EditInfo/EditInfo";
 
 
 const AppRoutes = ({ socketRef }) => {
@@ -43,6 +44,7 @@ const AppRoutes = ({ socketRef }) => {
                 <Route path="/my-profile" element={<MyProfile />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/chat-boxs" element={<ChatBoxs socketRef={socketRef}/>} />
+                <Route path="/edit-information" element={<EditInfo />} />
             </Route>
 
             

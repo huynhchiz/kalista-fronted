@@ -22,7 +22,7 @@ const Nav = () => {
     const [showToggle, setShowToggle] = useState(false)
 
     useEffect(() => {
-        if (location.pathname !== '/my-profile') {
+        if (location.pathname !== '/my-profile' && location.pathname !== '/edit-information') {
             setShowToggle(true)
         } else {
             setShowToggle(false)
@@ -58,7 +58,12 @@ const Nav = () => {
                     </div>
                 </div>
                 :
-                <Setting />
+                <>
+                    {
+                        location.pathname !== '/edit-information' &&
+                        <Setting />
+                    }
+                </>
             }
 
             {
